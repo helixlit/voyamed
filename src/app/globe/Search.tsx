@@ -78,16 +78,16 @@ export default function Search({
         <input
           type="text"
           onKeyDown={handleKeyDown}
-          placeholder="Such nach einem Land..."
+          placeholder="Suche nach einem Land..."
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          className="z-50 w-full rounded-xl border p-2 bg-foreground text-background
+          className="z-50 w-full rounded-xl border-2 p-2 bg-foreground text-background
           focus:outline-0
           "
         />
         {
           query && (
-            <ul className={"z-50 border rounded-xl p-2 bg-foreground text-background"}>
+            <ul className={"z-50 border-2 rounded-xl p-2 bg-foreground text-background"}>
               {filteredCountries.length > 0 ? (
                 filteredCountries.map((country, index) => {
                   if (!country.properties) return;
@@ -97,8 +97,8 @@ export default function Search({
                       onClick={() => handleSelect(country)}
                       className={`cursor-pointer
                         ${index === selectedCountryIndex
-                          ? "text-red-600"
-                          : "text-blue-400"}
+                          ? "text-highlight"
+                          : "text-background"}
                       `}
                     >
                       {country.properties.name}

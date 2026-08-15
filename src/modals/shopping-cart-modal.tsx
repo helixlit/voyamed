@@ -1,7 +1,8 @@
+import ShoppingCart from "@/components/shopping-cart";
 import { useModalStore } from "@/utils/ModalState"
 
 
-export default function ShoppingCart() {
+export default function ShoppingCartModal() {
     const isOpen = useModalStore((state) => state.modals.shoppingCart.open);
     const beginClose = useModalStore((state) => state.modals.shoppingCart.beginClose);
     const close = useModalStore((state) => state.close);
@@ -21,7 +22,9 @@ export default function ShoppingCart() {
                             }}
                                 className=" text-foreground/80 hover:text-foreground hover:text-shadow-[0_100px_100px_(--bg-highlight)] cursor-pointer">✖</button>
                         </div>
-                        <div className="grow m-auto pt-2 text-cs text-foreground/80">Einkaufswagen noch leer...</div>
+
+                        <ShoppingCart />
+
                         <div className="px-5 border-t-2 py-4 text-cxs">
                             <div className="flex justify-between pb-2 px-2">
                                 <p>Gesamt</p>

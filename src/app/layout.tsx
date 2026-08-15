@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
+
 import "./globals.css";
-import Modals from "../modals/Modals";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+
+import Modals from "@/modals/modal";
+import Header from "@/components/header";
+import Footer from "@/components/footer";
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -28,7 +30,7 @@ export default function RootLayout({
       lang="en"
       className={`${outfit.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col max-w-screen">
+      <body className=" min-h-screen flex flex-col max-w-screen ">
         <Header />
         {children}
         <Footer />

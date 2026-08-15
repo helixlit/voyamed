@@ -7,7 +7,7 @@ export default function Header() {
     const open = useModalStore((state) => state.open);
 
     return (
-        <header className='z-100 p-4 font-outfit text-4xl border-foreground/80 border-b-3 flex items-center justify-between sticky top-0 bg-background select-none'>
+        <header className='z-100 p-4 font-outfit text-4xl border-foreground border-b-3 flex items-center justify-between sticky top-0 bg-background select-none'>
             <div className="flex items-center">
                 <Link href={"/"}>
                     <div className="flex gap-5 items-center align-middle text-cm">

@@ -2,10 +2,11 @@
 @import '../styles/utils.css';
 
 :root {
-  --background: #f7f3e3f1;
-  --foreground: #000000;
-  --highlight: var(--color-amber-500);
-  --prim: var(--color-sky-950);
+  --background: #f4f3f2;
+  --foreground: #001219;
+  --highlight: #ee9b00;
+  --prim: #94d2bd;
+  --secondary: #005f73;
 }
 
 @theme inline {
@@ -13,6 +14,7 @@
   --color-foreground: var(--foreground);
   --color-highlight: var(--highlight);
   --color-prim: var(--prim);
+  --color-secondary: var(--secondary);
   --font-outfit: var(--font-outfit);
 }
 

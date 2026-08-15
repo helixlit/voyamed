@@ -35,7 +35,7 @@ export default function Hero() {
   }, [index]);
 
   return (
-    <section className="relative  select-none">
+    <section className="relative  select-none bg-black">
       {slides.map((slide, i) => (
         <Image
           key={slide.image}
@@ -43,7 +43,6 @@ export default function Hero() {
           alt="...loading"
           fill
           priority
-
           className={`
             object-cover text-center transition-opacity duration-1500 brightness-80
             ${i === index ? "opacity-0" : "opacity-100"}

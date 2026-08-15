@@ -68,7 +68,7 @@ export default function FQA() {
           return (
             <div
               key={q.question}
-              className="p-3 first:border-t border-b border-foreground/80 max-h-auto overflow-hidden w-200 m-auto relative"
+              className="p-3 first:border-t border-b border-foreground/80 max-h-auto overflow-hidden m-auto relative max-w-fit"
             >
 
               <label
@@ -86,25 +86,27 @@ export default function FQA() {
                     div.current.style.maxHeight = input.current.checked ? `${p.current?.scrollHeight}px` : `0px`;
                   }}
                 />
-                <div className="flex flex-row justify-between align-middle itmes-center w-full hover:text-highlight">
+                <div className="flex flex-row justify-between align-middle itmes-center w-full hover:text-highlight gap-5">
                   <p ref={pQ} className="text-cs">{q.question}</p>
-                  <span className="relative w-5 h-5">
-                    <span
-                      className={`
-      absolute left-1/2 top-1/2 h-0.5 w-5 bg-current
-      translate-y-2.25 -translate-x-3.5
+                  <div className="flex items-center justify-center ">
+                    <div className="relative w-5 h-5">
+                      <span
+                        className={`
+      absolute h-0.5 w-5 bg-current
+      translate-y-2.25
       transition-transform duration-300
       rotate-0 group-has-checked:rotate-135
     `}
-                    />
+                      />
 
-                    <span
-                      className={`
-      absolute left-1/2 top-1/2 h-5 w-0.5 bg-current -translate-x-1.25
+                      <span
+                        className={`
+      absolute h-5 w-0.5 bg-current -translate-x-1/2 translate-x-[0.25px] left-1/2
       transition-transform duration-300 group-has-checked:rotate-135
     `}
-                    />
-                  </span>
+                      />
+                    </div>
+                  </div>
                 </div>
                 <div ref={div} className="max-h-0 transition-all duration-300">
                   <p
