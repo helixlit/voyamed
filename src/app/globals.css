@@ -1,6 +1,7 @@
-@import 'tailwindcss';
-@import '../styles/utils.css';
+@import "tailwindcss";
+@import "../styles/utils.css";
 
+/* https://coolors.co/palette/001219-005f73-0a9396-94d2bd-e9d8a6-ee9b00-ca6702-bb3e03-ae2012-9b2226 */
 :root {
   --background: #f4f3f2;
   --foreground: #001219;
@@ -18,12 +19,13 @@
   --font-outfit: var(--font-outfit);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #433999;
-    --foreground: #ededed;
-  }
-}
+/* @media (prefers-color-scheme: dark) { */
+/*   :root { */
+/*     --background: #001219; */
+/*     --foreground: #ededed; */
+/*     --prim: #9b2226; */
+/*   } */
+/* } */
 
 body {
   background: var(--background);
