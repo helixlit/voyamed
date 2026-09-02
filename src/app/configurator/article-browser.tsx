@@ -1,52 +1,54 @@
-"use client"
+"use client";
 
-import ArticleSearch from "./article-search"
-import { use, useEffect, useState } from "react"
-import { queryShopArticleCount, queryShopArticles } from "@/utils/query"
-import ArticlePagination from "./article-pagination"
-import { Article } from "@/utils/types"
+import ArticleSearch from "./article-search";
+import { useEffect, useState } from "react";
+import { queryShopArticleCount, queryShopArticles } from "@/utils/query";
+import ArticlePagination from "./article-pagination";
+import Article from "./article";
+import { ArticleClient } from "@/utils/types";
 
-type Props = {
-  searchParams: Promise<{
-    page?: string
-    search?: string
-    category?: string
-    sort?: string
-  }>
-}
-
-export default function ArticleBrowser({ searchParams }: Props) {
+export default function ArticleBrowser() {
   const [query, setQuery] = useState<string>("");
 
-  const [queriedArticles, setQueriedArticles] = useState<Array<Article>>([]);
+  const [queriedArticles, setQueriedArticles] = useState<Array<ArticleClient>>(
+    [],
+  );
   const [queriedArticleCount, setQueriedArticleCount] = useState<number>(0);
 
   const [currentPage, setCurrentPage] = useState<number>(1);
 
   const take = 10;
 
-  useEffect(() => {
-    async function queryPrisma() {
-      setQueriedArticles((await queryShopArticles(
-        query, take, take * (currentPage - 1)))
-        .map(article => ({
-          ...article,
-          id: article.pzn,
-        })));
-      setQueriedArticleCount(await queryShopArticleCount(query));
-    }
-    queryPrisma();
-  }, [query, currentPage])
+  async function queryPrisma() {
+    setQueriedArticles(
+      await queryShopArticles(query, take, take * (currentPage - 1)),
+    );
+    setQueriedArticleCount(await queryShopArticleCount(query));
+  }
 
   useEffect(() => {
-    setCurrentPage(1);
-  }, [query])
+    queryPrisma();
+  }, [currentPage]);
+
+  useEffect(() => {
+    if (currentPage != 1) run();
+    async function run() {
+      setCurrentPage(1);
+    }
+    const timeout = setTimeout(async () => {
+      queryPrisma();
+    }, 500);
+
+    return () => clearTimeout(timeout);
+  }, [query]);
 
   return (
     <div className="w-full rounded-2xl bg-secondary text-background flex flex-col">
       <div className="flex items-stretch px-10 py-5 space-x-5">
-        <h3 className="text-cm ">Artikelsuche</h3>
-        <div className=" relative w-full">
+        <div className="flex items-center">
+          <h3 className="text-cm ">Artikelsuche</h3>
+        </div>
+        <div className=" relative w-full h-full min-w-0">
           <ArticleSearch
             query={query}
             setQuery={setQuery}
@@ -61,15 +63,11 @@ export default function ArticleBrowser({ searchParams }: Props) {
         {queriedArticles && (
           <ul>
             {queriedArticles.length > 0 ? (
-              queriedArticles.map((item, index) => {
-                return (
-                  <li key={item.pzn}>
-                    {item.name}
-                  </li>
-                )
+              queriedArticles.map((article: ArticleClient) => {
+                return <Article article={article} key={article.pzn} />;
               })
             ) : (
-              <li key='li-no-results'>Keine Ergebnisse</li>
+              <li key="li-no-results">Keine Ergebnisse</li>
             )}
           </ul>
         )}
@@ -79,6 +77,6 @@ export default function ArticleBrowser({ searchParams }: Props) {
         setCurrentPage={setCurrentPage}
         queriedArticleCount={queriedArticleCount}
       />
-    </div >
-  )
+    </div>
+  );
 }

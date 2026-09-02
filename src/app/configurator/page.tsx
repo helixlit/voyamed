@@ -3,9 +3,9 @@ import Suitcase from "./suitcase";
 
 export default function page() {
   return (
-    <div className="grow flex flex-row w-full p-4 gap-4">
+    <div className="flex flex-row max-[1000px]:flex-col w-full p-4 gap-4">
       <Suitcase />
-      <Browser searchParams={null} />
+      <Browser />
     </div>
-  )
+  );
 }

@@ -7,7 +7,6 @@ CREATE TABLE "Article" (
     "unit" TEXT NOT NULL,
     "purchaseUnit" INTEGER NOT NULL,
     "price" DECIMAL(65,30) NOT NULL,
-    "prescription" BOOLEAN,
 
     CONSTRAINT "Article_pkey" PRIMARY KEY ("pzn")
 );
@@ -20,8 +19,19 @@ CREATE TABLE "ShopArticle" (
     CONSTRAINT "ShopArticle_pkey" PRIMARY KEY ("id")
 );
 
--- CreateIndex
-CREATE UNIQUE INDEX "ShopArticle_articlePZN_key" ON "ShopArticle"("articlePZN");
+-- CreateTable
+CREATE TABLE "ArticleAttribute" (
+    "id" SERIAL NOT NULL,
+    "option" TEXT NOT NULL,
+    "value" TEXT NOT NULL,
+    "key" TEXT NOT NULL,
+    "articlePZN" TEXT NOT NULL,
+
+    CONSTRAINT "ArticleAttribute_pkey" PRIMARY KEY ("id")
+);
 
 -- AddForeignKey
 ALTER TABLE "ShopArticle" ADD CONSTRAINT "ShopArticle_articlePZN_fkey" FOREIGN KEY ("articlePZN") REFERENCES "Article"("pzn") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "ArticleAttribute" ADD CONSTRAINT "ArticleAttribute_articlePZN_fkey" FOREIGN KEY ("articlePZN") REFERENCES "Article"("pzn") ON DELETE RESTRICT ON UPDATE CASCADE;

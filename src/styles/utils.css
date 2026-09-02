@@ -17,3 +17,23 @@
 @utility text-cxxs {
   font-size: clamp(0.25rem, 0.25rem + 1vw, 0.75rem);
 }
+
+@utility h-cl {
+  height: clamp(0.75rem, 0.75rem + 3vw, 2.25rem);
+}
+
+@utility h-cm {
+  height: clamp(0.5rem, 0.5rem + 2vw, 1.5rem);
+}
+
+@utility h-cs {
+  height: clamp(0.375rem, 0.375rem + 1.5vw, 1.125rem);
+}
+
+@utility h-cxs {
+  height: clamp(0.3125rem, 0.3125rem + 1.25vw, 0.9375rem);
+}
+
+@utility h-cxxs {
+  height: clamp(0.25rem, 0.25rem + 1vw, 0.75rem);
+}

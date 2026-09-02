@@ -31,9 +31,9 @@ export async function main() {
       });
 
       console.debug(`Created ShopArticle for PZN ${articlePzn}`);
-    } catch (e) {
+    } catch {
       console.error(
-        `Could not add Article with PZN ${articlePzn} to ShopArticles! Error: ${e}`,
+        `Could not add Article with PZN ${articlePzn} to ShopArticles!`,
       );
     }
   }
