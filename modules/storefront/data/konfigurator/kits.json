@@ -1,0 +1,261 @@
+{
+  "regel": "Kit = basis ∪ klimazonen[<zone>].hinzufuegen ∪ aktivitaeten[<akt>].hinzufuegen − aktivitaeten[<akt>].entfernen. Bei hygiene_risiko = 'hoch' zusätzlich hygiene_hoch.hinzufuegen. Danach Duplikate (gleiche Wirkstoffgruppe, z. B. Ibuprofen 20/50) über 'ersetzt' auflösen.",
+  "basis": {
+    "name": "Grundausstattung (immer dabei)",
+    "produkte": [
+      "18379483",
+      "15613524",
+      "14299913",
+      "03400496",
+      "04274616",
+      "14293508",
+      "07463832",
+      "01580241",
+      "18021913",
+      "00970690",
+      "00999831",
+      "07727923",
+      "01669981",
+      "00749293"
+    ]
+  },
+  "klimazonen": {
+    "tropisch": {
+      "name": "Tropisch",
+      "beschreibung": "Feucht-heiß, ganzjährig warm; Mücken (Dengue, Malaria), hohes Durchfall- und Hautinfektionsrisiko.",
+      "entspricht_kit": "Tropic Set",
+      "hinzufuegen": [
+        "07338535",
+        "00325707",
+        "18320165",
+        "04796852",
+        "09938328",
+        "03056515",
+        "10714350",
+        "09152533",
+        "07243036",
+        "00161996",
+        "02737756",
+        "03930478"
+      ]
+    },
+    "subtropisch": {
+      "name": "Subtropisch / Mittelmeer",
+      "beschreibung": "Heiße Sommer, milde Winter; starke Sonne, mäßiges Mücken- und Durchfallrisiko.",
+      "entspricht_kit": "Europe (Süd) / World",
+      "hinzufuegen": [
+        "18320165",
+        "07338535",
+        "04796852",
+        "10796980",
+        "00161996",
+        "04081171"
+      ]
+    },
+    "trocken": {
+      "name": "Trocken / Wüste & Steppe",
+      "beschreibung": "Extreme Hitze am Tag, trockene Luft, Staub, Sand; Kreislauf und Schleimhäute belastet.",
+      "entspricht_kit": "World",
+      "hinzufuegen": [
+        "18320165",
+        "00989376",
+        "02506258",
+        "01578681",
+        "03194795",
+        "04796852",
+        "10796980",
+        "03949265"
+      ]
+    },
+    "gemaessigt": {
+      "name": "Gemäßigt",
+      "beschreibung": "Mitteleuropa-Klima, vier Jahreszeiten; Erkältungen häufiger, niedriges Infektionsrisiko.",
+      "entspricht_kit": "Europe",
+      "hinzufuegen": [
+        "30006048",
+        "01479157",
+        "03991095",
+        "02506258"
+      ]
+    },
+    "kalt": {
+      "name": "Kalt / Polar & Hochgebirge",
+      "beschreibung": "Kälte, trockene Heizungsluft, Schnee-Reflexion (UV), Erkältungs- und Verletzungsrisiko.",
+      "entspricht_kit": "Adventure Kit",
+      "hinzufuegen": [
+        "00010808",
+        "01479157",
+        "01578681",
+        "30006048",
+        "00989376",
+        "02295643",
+        "03991095",
+        "18661423"
+      ]
+    }
+  },
+  "hygiene_hoch": {
+    "name": "Zusatz bei hohem Hygiene-Risiko",
+    "beschreibung": "Länder mit eingeschränkter Wasser-/Lebensmittelhygiene (unabhängig vom Klima).",
+    "hinzufuegen": [
+      "04796852",
+      "09938328",
+      "07243036",
+      "01900332"
+    ]
+  },
+  "activities": {
+    "staedtetrip": {
+      "name": "Städtetrip",
+      "beschreibung": "Kurzreise, viel zu Fuß, Restaurantessen, wenig Natur.",
+      "hinzufuegen": [
+        "17312324",
+        "16507534"
+      ],
+      "entfernen": [
+        "00325707",
+        "02737756",
+        "03930478"
+      ]
+    },
+    "strand_badeurlaub": {
+      "name": "Strand & Badeurlaub",
+      "beschreibung": "Sonne, Salzwasser, Pool, Sand.",
+      "hinzufuegen": [
+        "18320165",
+        "10796980",
+        "08700978",
+        "04081171",
+        "04010136",
+        "02528343|10"
+      ],
+      "entfernen": [
+        "00325707"
+      ]
+    },
+    "wandern_trekking": {
+      "name": "Wandern & Trekking",
+      "beschreibung": "Tagesetappen, Blasen, Verstauchungen, Höhe, weit weg vom nächsten Arzt.",
+      "hinzufuegen": [
+        "18379508",
+        "04704198",
+        "04668321",
+        "02295643",
+        "03930478",
+        "07317711",
+        "02737756",
+        "04010136",
+        "03949265",
+        "03194795"
+      ],
+      "entfernen": [
+        "18379483"
+      ]
+    },
+    "backpacking_rundreise": {
+      "name": "Backpacking & Rundreise",
+      "beschreibung": "Lange Reise, wechselnde Unterkünfte, Streetfood, Busse und Nachtzüge.",
+      "hinzufuegen": [
+        "18379508",
+        "04796852",
+        "09938328",
+        "03056515",
+        "07243036",
+        "02483617",
+        "17312324",
+        "06938658"
+      ],
+      "entfernen": [
+        "18379483"
+      ]
+    },
+    "wintersport": {
+      "name": "Wintersport",
+      "beschreibung": "Ski, Snowboard, Kälte, Sturzverletzungen, Schnee-UV.",
+      "hinzufuegen": [
+        "04704198",
+        "07466931",
+        "02295643",
+        "30006048",
+        "01578681",
+        "00989376",
+        "00010808",
+        "03991095"
+      ],
+      "entfernen": [
+        "07338535",
+        "00325707"
+      ]
+    },
+    "kreuzfahrt_segeln": {
+      "name": "Kreuzfahrt & Segeln",
+      "beschreibung": "Seegang, Buffets, viele Menschen auf engem Raum (Noroviren).",
+      "hinzufuegen": [
+        "01116555",
+        "06938658",
+        "07243036",
+        "18320165",
+        "00989376",
+        "16507534"
+      ],
+      "entfernen": [
+        "00325707"
+      ]
+    },
+    "safari_dschungel": {
+      "name": "Safari & Dschungel",
+      "beschreibung": "Abgelegene Gebiete, Insekten, Hitze, Verletzungsrisiko, lange Wege zum Arzt.",
+      "hinzufuegen": [
+        "07338535",
+        "00325707",
+        "10714350",
+        "03930478",
+        "07317711",
+        "02737756",
+        "04796852",
+        "09938328",
+        "09152533",
+        "18379508",
+        "03917265"
+      ],
+      "entfernen": [
+        "18379483"
+      ]
+    },
+    "geschaeftsreise": {
+      "name": "Geschäftsreise",
+      "beschreibung": "Kurz, Hotel, Flüge, Meetings – kompakt und unauffällig.",
+      "hinzufuegen": [
+        "17312324",
+        "16507534",
+        "05883671",
+        "10326895"
+      ],
+      "entfernen": [
+        "00325707",
+        "02737756",
+        "03930478",
+        "18021913",
+        "01669981"
+      ]
+    }
+  },
+  "ersetzt": {
+    "18379508": [
+      "18379483",
+      "18379477"
+    ],
+    "18379483": [
+      "18379477"
+    ],
+    "15613524": [
+      "03366196"
+    ],
+    "07243036": [
+      "00970690"
+    ],
+    "18320165": [
+      "30006048"
+    ]
+  }
+}

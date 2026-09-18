@@ -1,0 +1,35 @@
+{
+  "status": "created",
+  "fqn": "COMPOSER_STOREFRONT_INPUT-var",
+  "logicalId": "COMPOSER_STOREFRONT_INPUT-var",
+  "instanceId": "32ed4e7b50c3f1f530ecab63191e11d7",
+  "resourceType": "Prisma.EnvironmentVariable",
+  "props": {
+    "project": "local",
+    "key": "COMPOSER_STOREFRONT_INPUT",
+    "value": {
+      "__redacted__": "{\"stripeSecretKey\":{\"$secret\":\"STRIPE_SECRET_KEY\"}}"
+    },
+    "class": "production"
+  },
+  "attr": {
+    "environmentVariableId": "COMPOSER_STOREFRONT_INPUT",
+    "projectId": "local",
+    "branchId": null,
+    "class": "production",
+    "key": "COMPOSER_STOREFRONT_INPUT",
+    "value": {
+      "__redacted__": "{\"stripeSecretKey\":{\"$secret\":\"STRIPE_SECRET_KEY\"}}"
+    },
+    "valueKid": "",
+    "isManagedBySystem": false,
+    "createdAt": "1970-01-01T00:00:00.000Z",
+    "updatedAt": "1970-01-01T00:00:00.000Z"
+  },
+  "bindings": [],
+  "providerVersion": 0,
+  "downstream": [
+    "storefront-deploy"
+  ],
+  "removalPolicy": "destroy"
+}

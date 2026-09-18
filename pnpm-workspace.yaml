@@ -1,6 +1,29 @@
+packages:
+  - 'modules/*'
 allowBuilds:
   '@prisma/engines': true
   esbuild: true
+  msgpackr-extract: true
+  workerd: true
   prisma: true
   sharp: false
   unrs-resolver: false
+minimumReleaseAgeExclude:
+  - '@prisma/orm-family-sql@8.0.0-rc.9'
+  - '@prisma/orm-framework@8.0.0-rc.9'
+  - '@prisma/orm-postgres@8.0.0-rc.9'
+  - '@prisma/orm-target-postgres@8.0.0-rc.9'
+  - '@prisma/orm-toolchain@8.0.0-rc.9'
+  - '@alchemy.run/cloudflare-runtime@2.0.0-beta.77'
+  - '@alchemy.run/floci@2.0.0-beta.77'
+  - '@alchemy.run/node-utils@2.0.0-beta.77'
+  - '@distilled.cloud/aws@1.0.0-rc.9'
+  - '@distilled.cloud/axiom@1.0.0-rc.9'
+  - '@distilled.cloud/cloudflare@1.0.0-rc.9'
+  - '@distilled.cloud/core@1.0.0-rc.9'
+  - '@distilled.cloud/fly-io@1.0.0-rc.9'
+  - '@distilled.cloud/hetzner@1.0.0-rc.9'
+  - '@distilled.cloud/neon@1.0.0-rc.9'
+  - '@distilled.cloud/planetscale@1.0.0-rc.9'
+  - '@distilled.cloud/railway@1.0.0-rc.9'
+  - alchemy@2.0.0-beta.77

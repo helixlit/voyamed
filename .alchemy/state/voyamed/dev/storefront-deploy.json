@@ -1,0 +1,49 @@
+{
+  "status": "updated",
+  "fqn": "storefront-deploy",
+  "logicalId": "storefront-deploy",
+  "instanceId": "c1e0088e5149e6b704217483f1856403",
+  "resourceType": "Prisma.Deployment",
+  "props": {
+    "app": "storefront",
+    "artifactPath": "/tmp/prisma-composer-compute-1000/b5505f756087c37a/storefront.tar.gz",
+    "artifactContentType": "application/gzip",
+    "triggers": {
+      "COMPOSER_STOREFRONT_CATALOG_URL": {
+        "__redacted__": "http://localhost:3001"
+      },
+      "COMPOSER_STOREFRONT_CATALOG_SERVICEKEY": {
+        "__redacted__": "d48ad5df8dea15c029dc98c709d33d77c379446b5664ad99ab4189569361b1a8"
+      },
+      "COMPOSER_STOREFRONT_PORT": {
+        "__redacted__": "3000"
+      },
+      "COMPOSER_STOREFRONT_INPUT": {
+        "__redacted__": "{\"stripeSecretKey\":{\"$secret\":\"STRIPE_SECRET_KEY\"}}"
+      },
+      "COMPOSER_STOREFRONT_ORIGIN": {
+        "__redacted__": "\"http://localhost:3000\""
+      },
+      "STRIPE_SECRET_KEY:updatedAt": "?"
+    },
+    "portMapping": {
+      "http": 3000
+    },
+    "start": true,
+    "promote": true
+  },
+  "attr": {
+    "deploymentId": "b5505f756087c37a1583447b9756f83ecd0010dd5544e78b5b2e2ebc7ee4141b",
+    "appId": "storefront",
+    "foundryVersionId": "b5505f756087c37a1583447b9756f83ecd0010dd5544e78b5b2e2ebc7ee4141b",
+    "status": "running",
+    "previewDomain": null,
+    "artifactHash": "b5505f756087c37a1583447b9756f83ecd0010dd5544e78b5b2e2ebc7ee4141b",
+    "appEndpointDomain": "http://localhost:3000",
+    "createdAt": "1970-01-01T00:00:00.000Z"
+  },
+  "bindings": [],
+  "providerVersion": 0,
+  "downstream": [],
+  "removalPolicy": "destroy"
+}

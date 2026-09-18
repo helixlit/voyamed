@@ -1,0 +1,35 @@
+{
+  "status": "created",
+  "fqn": "COMPOSER_CATALOG_SERVICE_INPUT-var",
+  "logicalId": "COMPOSER_CATALOG_SERVICE_INPUT-var",
+  "instanceId": "61257aeaf2ab1eda10ad4ccbc1c66286",
+  "resourceType": "Prisma.EnvironmentVariable",
+  "props": {
+    "project": "local",
+    "key": "COMPOSER_CATALOG_SERVICE_INPUT",
+    "value": {
+      "__redacted__": "{\"antoniusUrl\":{\"$secret\":\"BASE_URL\"},\"antoniusUser\":{\"$secret\":\"USERNAME\"},\"antoniusPassword\":{\"$secret\":\"PASSWORD\"}}"
+    },
+    "class": "production"
+  },
+  "attr": {
+    "environmentVariableId": "COMPOSER_CATALOG_SERVICE_INPUT",
+    "projectId": "local",
+    "branchId": null,
+    "class": "production",
+    "key": "COMPOSER_CATALOG_SERVICE_INPUT",
+    "value": {
+      "__redacted__": "{\"antoniusUrl\":{\"$secret\":\"BASE_URL\"},\"antoniusUser\":{\"$secret\":\"USERNAME\"},\"antoniusPassword\":{\"$secret\":\"PASSWORD\"}}"
+    },
+    "valueKid": "",
+    "isManagedBySystem": false,
+    "createdAt": "1970-01-01T00:00:00.000Z",
+    "updatedAt": "1970-01-01T00:00:00.000Z"
+  },
+  "bindings": [],
+  "providerVersion": 0,
+  "downstream": [
+    "catalog.service-deploy"
+  ],
+  "removalPolicy": "destroy"
+}

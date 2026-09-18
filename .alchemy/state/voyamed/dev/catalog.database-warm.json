@@ -1,0 +1,21 @@
+{
+  "status": "created",
+  "fqn": "catalog.database-warm",
+  "logicalId": "catalog.database-warm",
+  "instanceId": "227c7df99496cedf45af54a12fa5d581",
+  "resourceType": "PrismaCloud.PgWarm",
+  "props": {
+    "url": "postgres://postgres:postgres@localhost:51310/template1?sslmode=disable"
+  },
+  "attr": {
+    "url": "postgres://postgres:postgres@localhost:51310/template1?sslmode=disable"
+  },
+  "bindings": [],
+  "providerVersion": 0,
+  "downstream": [
+    "catalog.database-migrate",
+    "COMPOSER_CATALOG_SERVICE_DB_URL-var",
+    "catalog.service-deploy"
+  ],
+  "removalPolicy": "destroy"
+}

@@ -1,0 +1,35 @@
+{
+  "status": "created",
+  "fqn": "COMPOSER_CATALOG_SERVICE_PORT-var",
+  "logicalId": "COMPOSER_CATALOG_SERVICE_PORT-var",
+  "instanceId": "891d4a89f1ff8c116dddacdc56048851",
+  "resourceType": "Prisma.EnvironmentVariable",
+  "props": {
+    "project": "local",
+    "key": "COMPOSER_CATALOG_SERVICE_PORT",
+    "value": {
+      "__redacted__": "3000"
+    },
+    "class": "production"
+  },
+  "attr": {
+    "environmentVariableId": "COMPOSER_CATALOG_SERVICE_PORT",
+    "projectId": "local",
+    "branchId": null,
+    "class": "production",
+    "key": "COMPOSER_CATALOG_SERVICE_PORT",
+    "value": {
+      "__redacted__": "3000"
+    },
+    "valueKid": "",
+    "isManagedBySystem": false,
+    "createdAt": "1970-01-01T00:00:00.000Z",
+    "updatedAt": "1970-01-01T00:00:00.000Z"
+  },
+  "bindings": [],
+  "providerVersion": 0,
+  "downstream": [
+    "catalog.service-deploy"
+  ],
+  "removalPolicy": "destroy"
+}

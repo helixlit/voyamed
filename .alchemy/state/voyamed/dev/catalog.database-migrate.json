@@ -1,0 +1,328 @@
+{
+  "status": "created",
+  "fqn": "catalog.database-migrate",
+  "logicalId": "catalog.database-migrate",
+  "instanceId": "5bb363267e1599d5b099a120cf84a1a7",
+  "resourceType": "PrismaOrm.Migration",
+  "props": {
+    "url": "postgres://postgres:postgres@localhost:51310/template1?sslmode=disable",
+    "contractJson": {
+      "schemaVersion": "1",
+      "targetFamily": "sql",
+      "target": "postgres",
+      "profileHash": "3916f444a8a17ad749191acf9e08dad97d1a327b88c2f1d45d12f240296aa8b2",
+      "roots": {
+        "article": {
+          "model": "Article",
+          "namespace": "public"
+        },
+        "shopArticle": {
+          "model": "ShopArticle",
+          "namespace": "public"
+        }
+      },
+      "domain": {
+        "namespaces": {
+          "public": {
+            "models": {
+              "Article": {
+                "fields": {
+                  "active": {
+                    "nullable": false,
+                    "type": {
+                      "codecId": "pg/bool@1",
+                      "kind": "scalar"
+                    }
+                  },
+                  "name": {
+                    "nullable": false,
+                    "type": {
+                      "codecId": "pg/text@1",
+                      "kind": "scalar"
+                    }
+                  },
+                  "priceCents": {
+                    "nullable": false,
+                    "type": {
+                      "codecId": "pg/int4@1",
+                      "kind": "scalar"
+                    }
+                  },
+                  "purchaseUnit": {
+                    "nullable": false,
+                    "type": {
+                      "codecId": "pg/int4@1",
+                      "kind": "scalar"
+                    }
+                  },
+                  "pzn": {
+                    "nullable": false,
+                    "type": {
+                      "codecId": "pg/text@1",
+                      "kind": "scalar"
+                    }
+                  },
+                  "supplier": {
+                    "nullable": false,
+                    "type": {
+                      "codecId": "pg/text@1",
+                      "kind": "scalar"
+                    }
+                  },
+                  "unit": {
+                    "nullable": false,
+                    "type": {
+                      "codecId": "pg/text@1",
+                      "kind": "scalar"
+                    }
+                  }
+                },
+                "relations": {
+                  "shopArticles": {
+                    "cardinality": "1:N",
+                    "on": {
+                      "localFields": [
+                        "pzn"
+                      ],
+                      "targetFields": [
+                        "pzn"
+                      ]
+                    },
+                    "to": {
+                      "model": "ShopArticle",
+                      "namespace": "public"
+                    }
+                  }
+                },
+                "storage": {
+                  "fields": {
+                    "active": {
+                      "column": "active"
+                    },
+                    "name": {
+                      "column": "name"
+                    },
+                    "priceCents": {
+                      "column": "priceCents"
+                    },
+                    "purchaseUnit": {
+                      "column": "purchaseUnit"
+                    },
+                    "pzn": {
+                      "column": "pzn"
+                    },
+                    "supplier": {
+                      "column": "supplier"
+                    },
+                    "unit": {
+                      "column": "unit"
+                    }
+                  },
+                  "namespaceId": "public",
+                  "table": "article"
+                }
+              },
+              "ShopArticle": {
+                "fields": {
+                  "id": {
+                    "nullable": false,
+                    "type": {
+                      "codecId": "pg/int4@1",
+                      "kind": "scalar"
+                    }
+                  },
+                  "pzn": {
+                    "nullable": false,
+                    "type": {
+                      "codecId": "pg/text@1",
+                      "kind": "scalar"
+                    }
+                  }
+                },
+                "relations": {
+                  "article": {
+                    "cardinality": "N:1",
+                    "on": {
+                      "localFields": [
+                        "pzn"
+                      ],
+                      "targetFields": [
+                        "pzn"
+                      ]
+                    },
+                    "to": {
+                      "model": "Article",
+                      "namespace": "public"
+                    }
+                  }
+                },
+                "storage": {
+                  "fields": {
+                    "id": {
+                      "column": "id"
+                    },
+                    "pzn": {
+                      "column": "pzn"
+                    }
+                  },
+                  "namespaceId": "public",
+                  "table": "shopArticle"
+                }
+              }
+            }
+          }
+        }
+      },
+      "storage": {
+        "namespaces": {
+          "public": {
+            "entries": {
+              "table": {
+                "article": {
+                  "columns": {
+                    "active": {
+                      "codecId": "pg/bool@1",
+                      "nativeType": "bool",
+                      "nullable": false
+                    },
+                    "name": {
+                      "codecId": "pg/text@1",
+                      "nativeType": "text",
+                      "nullable": false
+                    },
+                    "priceCents": {
+                      "codecId": "pg/int4@1",
+                      "nativeType": "int4",
+                      "nullable": false
+                    },
+                    "purchaseUnit": {
+                      "codecId": "pg/int4@1",
+                      "nativeType": "int4",
+                      "nullable": false
+                    },
+                    "pzn": {
+                      "codecId": "pg/text@1",
+                      "nativeType": "text",
+                      "nullable": false
+                    },
+                    "supplier": {
+                      "codecId": "pg/text@1",
+                      "nativeType": "text",
+                      "nullable": false
+                    },
+                    "unit": {
+                      "codecId": "pg/text@1",
+                      "nativeType": "text",
+                      "nullable": false
+                    }
+                  },
+                  "foreignKeys": [],
+                  "indexes": [],
+                  "primaryKey": {
+                    "columns": [
+                      "pzn"
+                    ]
+                  },
+                  "uniques": []
+                },
+                "shopArticle": {
+                  "columns": {
+                    "id": {
+                      "codecId": "pg/int4@1",
+                      "default": {
+                        "expression": "autoincrement()",
+                        "kind": "function"
+                      },
+                      "nativeType": "int4",
+                      "nullable": false
+                    },
+                    "pzn": {
+                      "codecId": "pg/text@1",
+                      "nativeType": "text",
+                      "nullable": false
+                    }
+                  },
+                  "foreignKeys": [
+                    {
+                      "source": {
+                        "columns": [
+                          "pzn"
+                        ],
+                        "namespaceId": "public",
+                        "tableName": "shopArticle"
+                      },
+                      "target": {
+                        "columns": [
+                          "pzn"
+                        ],
+                        "namespaceId": "public",
+                        "tableName": "article"
+                      }
+                    }
+                  ],
+                  "indexes": [
+                    {
+                      "columns": [
+                        "pzn"
+                      ],
+                      "name": "shopArticle_pzn_idx_6de239b7",
+                      "prefix": "shopArticle_pzn_idx",
+                      "unique": false
+                    }
+                  ],
+                  "primaryKey": {
+                    "columns": [
+                      "id"
+                    ]
+                  },
+                  "uniques": []
+                }
+              }
+            },
+            "id": "public",
+            "kind": "postgres-schema"
+          }
+        },
+        "storageHash": "3115d00552e5cdb6493ab73a16b1b01c94420b62b373ddde5aa0aab4b2d283cf"
+      },
+      "capabilities": {
+        "postgres": {
+          "distinctOn": true,
+          "jsonAgg": true,
+          "lateral": true,
+          "limit": true,
+          "orderBy": true,
+          "returning": true
+        },
+        "sql": {
+          "checkConstraint": true,
+          "defaultInInsert": true,
+          "enums": true,
+          "lateral": true,
+          "returning": true,
+          "scalarList": true
+        }
+      },
+      "extensions": {},
+      "meta": {},
+      "_generated": {
+        "warning": "⚠️  GENERATED FILE - DO NOT EDIT",
+        "message": "This file is automatically generated by \"prisma contract emit\".",
+        "regenerate": "To regenerate, run: prisma contract emit"
+      }
+    },
+    "migrationsDir": "/home/helixlit/voyamed/modules/catalog/migrations",
+    "targetHash": "3115d00552e5cdb6493ab73a16b1b01c94420b62b373ddde5aa0aab4b2d283cf",
+    "invariants": [],
+    "packHeadRefHashes": [],
+    "configPath": "/home/helixlit/voyamed/modules/catalog/prisma.config.ts"
+  },
+  "attr": {
+    "storageHash": "3115d00552e5cdb6493ab73a16b1b01c94420b62b373ddde5aa0aab4b2d283cf",
+    "invariants": []
+  },
+  "bindings": [],
+  "providerVersion": 0,
+  "downstream": [],
+  "removalPolicy": "destroy"
+}

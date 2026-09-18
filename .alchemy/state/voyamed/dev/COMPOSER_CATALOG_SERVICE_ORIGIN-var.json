@@ -1,0 +1,35 @@
+{
+  "status": "created",
+  "fqn": "COMPOSER_CATALOG_SERVICE_ORIGIN-var",
+  "logicalId": "COMPOSER_CATALOG_SERVICE_ORIGIN-var",
+  "instanceId": "2fd31af8fa49aba6ee740b0dabe37425",
+  "resourceType": "Prisma.EnvironmentVariable",
+  "props": {
+    "project": "local",
+    "key": "COMPOSER_CATALOG_SERVICE_ORIGIN",
+    "value": {
+      "__redacted__": "\"http://localhost:3001\""
+    },
+    "class": "production"
+  },
+  "attr": {
+    "environmentVariableId": "COMPOSER_CATALOG_SERVICE_ORIGIN",
+    "projectId": "local",
+    "branchId": null,
+    "class": "production",
+    "key": "COMPOSER_CATALOG_SERVICE_ORIGIN",
+    "value": {
+      "__redacted__": "\"http://localhost:3001\""
+    },
+    "valueKid": "",
+    "isManagedBySystem": false,
+    "createdAt": "1970-01-01T00:00:00.000Z",
+    "updatedAt": "1970-01-01T00:00:00.000Z"
+  },
+  "bindings": [],
+  "providerVersion": 0,
+  "downstream": [
+    "catalog.service-deploy"
+  ],
+  "removalPolicy": "destroy"
+}

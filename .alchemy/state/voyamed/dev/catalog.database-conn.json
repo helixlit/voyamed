@@ -1,0 +1,43 @@
+{
+  "status": "created",
+  "fqn": "catalog.database-conn",
+  "logicalId": "catalog.database-conn",
+  "instanceId": "ff273befd0a6c1060bb86a8e9da0ec65",
+  "resourceType": "Prisma.Connection",
+  "props": {
+    "database": {
+      "databaseId": "pcdev-voyamed-catalog-database",
+      "databaseName": "catalog.database",
+      "projectId": "local",
+      "status": "ready",
+      "region": "us-east-1",
+      "isDefault": false,
+      "branchId": null,
+      "defaultConnectionId": null,
+      "createdAt": "1970-01-01T00:00:00.000Z",
+      "directConnectionString": {
+        "__redacted__": "postgres://postgres:postgres@localhost:51310/template1?sslmode=disable"
+      }
+    },
+    "name": "catalog.database"
+  },
+  "attr": {
+    "connectionId": "pcdev-voyamed-catalog-database",
+    "connectionName": "catalog.database",
+    "databaseId": "pcdev-voyamed-catalog-database",
+    "kind": "postgres",
+    "createdAt": "1970-01-01T00:00:00.000Z",
+    "directConnectionString": {
+      "__redacted__": "postgres://postgres:postgres@localhost:51310/template1?sslmode=disable"
+    },
+    "databaseUrl": {
+      "__redacted__": "postgres://postgres:postgres@localhost:51310/template1?sslmode=disable"
+    }
+  },
+  "bindings": [],
+  "providerVersion": 0,
+  "downstream": [
+    "catalog.database-warm"
+  ],
+  "removalPolicy": "destroy"
+}

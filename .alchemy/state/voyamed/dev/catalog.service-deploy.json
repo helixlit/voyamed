@@ -1,0 +1,54 @@
+{
+  "status": "updated",
+  "fqn": "catalog.service-deploy",
+  "logicalId": "catalog.service-deploy",
+  "instanceId": "daf4fa59993ebd3a39d6b3f4e0775f52",
+  "resourceType": "Prisma.Deployment",
+  "props": {
+    "app": "catalog.service",
+    "artifactPath": "/tmp/prisma-composer-compute-1000/61c7719e1bab22e7/catalog.service.tar.gz",
+    "artifactContentType": "application/gzip",
+    "triggers": {
+      "COMPOSER_CATALOG_SERVICE_DB_URL": {
+        "__redacted__": "postgres://postgres:postgres@localhost:51310/template1?sslmode=disable"
+      },
+      "COMPOSER_CATALOG_SERVICE_PORT": {
+        "__redacted__": "3000"
+      },
+      "COMPOSER_CATALOG_SERVICE_INPUT": {
+        "__redacted__": "{\"antoniusUrl\":{\"$secret\":\"BASE_URL\"},\"antoniusUser\":{\"$secret\":\"USERNAME\"},\"antoniusPassword\":{\"$secret\":\"PASSWORD\"}}"
+      },
+      "COMPOSER_CATALOG_SERVICE_RPC_ACCEPTED_KEYS": {
+        "__redacted__": "[\"d48ad5df8dea15c029dc98c709d33d77c379446b5664ad99ab4189569361b1a8\"]"
+      },
+      "COMPOSER_CATALOG_SERVICE_ORIGIN": {
+        "__redacted__": "\"http://localhost:3001\""
+      },
+      "BASE_URL:updatedAt": "?",
+      "PASSWORD:updatedAt": "?",
+      "USERNAME:updatedAt": "?"
+    },
+    "portMapping": {
+      "http": 3000
+    },
+    "start": true,
+    "promote": true
+  },
+  "attr": {
+    "deploymentId": "61c7719e1bab22e72a14d351bbc110f046bcfd534039b435b5cecb493e89a657",
+    "appId": "catalog.service",
+    "foundryVersionId": "61c7719e1bab22e72a14d351bbc110f046bcfd534039b435b5cecb493e89a657",
+    "status": "running",
+    "previewDomain": null,
+    "artifactHash": "61c7719e1bab22e72a14d351bbc110f046bcfd534039b435b5cecb493e89a657",
+    "appEndpointDomain": "http://localhost:3001",
+    "createdAt": "1970-01-01T00:00:00.000Z"
+  },
+  "bindings": [],
+  "providerVersion": 0,
+  "downstream": [
+    "COMPOSER_STOREFRONT_CATALOG_URL-var",
+    "storefront-deploy"
+  ],
+  "removalPolicy": "destroy"
+}

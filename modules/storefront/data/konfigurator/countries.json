@@ -1,0 +1,2128 @@
+{
+  "countries": [
+    {
+      "code": "AF",
+      "iso3": "AFG",
+      "name_en": "Afghanistan",
+      "name": "Afghanistan",
+      "region": "Asien",
+      "klimazone": "trocken",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "AL",
+      "iso3": "ALB",
+      "name_en": "Albania",
+      "name": "Albanien",
+      "region": "Europa",
+      "klimazone": "subtropisch",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "DZ",
+      "iso3": "DZA",
+      "name_en": "Algeria",
+      "name": "Algerien",
+      "region": "Nordafrika",
+      "klimazone": "trocken",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "AS",
+      "iso3": "ASM",
+      "name_en": "American Samoa",
+      "name": "Amerikanisch-Samoa",
+      "region": "Ozeanien",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "VI",
+      "iso3": "VIR",
+      "name_en": "Virgin Islands, U.S.",
+      "name": "Amerikanische Jungferninseln",
+      "region": "Mittelamerika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "AD",
+      "iso3": "AND",
+      "name_en": "Andorra",
+      "name": "Andorra",
+      "region": "Europa",
+      "klimazone": "gemaessigt",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "AO",
+      "iso3": "AGO",
+      "name_en": "Angola",
+      "name": "Angola",
+      "region": "Afrika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "AI",
+      "iso3": "AIA",
+      "name_en": "Anguilla",
+      "name": "Anguilla",
+      "region": "Mittelamerika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "AQ",
+      "iso3": "ATA",
+      "name_en": "Antarctica",
+      "name": "Antarktis",
+      "region": "Antarktis",
+      "klimazone": "kalt",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "AG",
+      "iso3": "ATG",
+      "name_en": "Antigua and Barbuda",
+      "name": "Antigua und Barbuda",
+      "region": "Mittelamerika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "AR",
+      "iso3": "ARG",
+      "name_en": "Argentina",
+      "name": "Argentinien",
+      "region": "Südamerika",
+      "klimazone": "gemaessigt",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "AM",
+      "iso3": "ARM",
+      "name_en": "Armenia",
+      "name": "Armenien",
+      "region": "Asien",
+      "klimazone": "gemaessigt",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "AW",
+      "iso3": "ABW",
+      "name_en": "Aruba",
+      "name": "Aruba",
+      "region": "Mittelamerika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "AZ",
+      "iso3": "AZE",
+      "name_en": "Azerbaijan",
+      "name": "Aserbaidschan",
+      "region": "Asien",
+      "klimazone": "gemaessigt",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "AU",
+      "iso3": "AUS",
+      "name_en": "Australia",
+      "name": "Australien",
+      "region": "Ozeanien",
+      "klimazone": "subtropisch",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "BS",
+      "iso3": "BHS",
+      "name_en": "Bahamas",
+      "name": "Bahamas",
+      "region": "Mittelamerika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "BH",
+      "iso3": "BHR",
+      "name_en": "Bahrain",
+      "name": "Bahrain",
+      "region": "Naher Osten",
+      "klimazone": "trocken",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "BD",
+      "iso3": "BGD",
+      "name_en": "Bangladesh",
+      "name": "Bangladesch",
+      "region": "Asien",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "BB",
+      "iso3": "BRB",
+      "name_en": "Barbados",
+      "name": "Barbados",
+      "region": "Mittelamerika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "BY",
+      "iso3": "BLR",
+      "name_en": "Belarus",
+      "name": "Belarus",
+      "region": "Europa",
+      "klimazone": "gemaessigt",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "BE",
+      "iso3": "BEL",
+      "name_en": "Belgium",
+      "name": "Belgien",
+      "region": "Europa",
+      "klimazone": "gemaessigt",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "BZ",
+      "iso3": "BLZ",
+      "name_en": "Belize",
+      "name": "Belize",
+      "region": "Mittelamerika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "BJ",
+      "iso3": "BEN",
+      "name_en": "Benin",
+      "name": "Benin",
+      "region": "Afrika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "BM",
+      "iso3": "BMU",
+      "name_en": "Bermuda",
+      "name": "Bermuda",
+      "region": "Nordamerika",
+      "klimazone": "subtropisch",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "BT",
+      "iso3": "BTN",
+      "name_en": "Bhutan",
+      "name": "Bhutan",
+      "region": "Asien",
+      "klimazone": "kalt",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "BO",
+      "iso3": "BOL",
+      "name_en": "Bolivia",
+      "name": "Bolivien",
+      "region": "Südamerika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "BQ",
+      "iso3": "BES",
+      "name_en": "Bonaire, Sint Eustatius and Saba",
+      "name": "Bonaire, Sint Eustatius und Saba",
+      "region": "Mittelamerika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "BA",
+      "iso3": "BIH",
+      "name_en": "Bosnia and Herzegovina",
+      "name": "Bosnien und Herzegowina",
+      "region": "Europa",
+      "klimazone": "gemaessigt",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "BW",
+      "iso3": "BWA",
+      "name_en": "Botswana",
+      "name": "Botswana",
+      "region": "Afrika",
+      "klimazone": "trocken",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "BR",
+      "iso3": "BRA",
+      "name_en": "Brazil",
+      "name": "Brasilien",
+      "region": "Südamerika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "VG",
+      "iso3": "VGB",
+      "name_en": "Virgin Islands, British",
+      "name": "Britische Jungferninseln",
+      "region": "Mittelamerika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "BN",
+      "iso3": "BRN",
+      "name_en": "Brunei Darussalam",
+      "name": "Brunei",
+      "region": "Asien",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "BG",
+      "iso3": "BGR",
+      "name_en": "Bulgaria",
+      "name": "Bulgarien",
+      "region": "Europa",
+      "klimazone": "gemaessigt",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "BF",
+      "iso3": "BFA",
+      "name_en": "Burkina Faso",
+      "name": "Burkina Faso",
+      "region": "Afrika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "BI",
+      "iso3": "BDI",
+      "name_en": "Burundi",
+      "name": "Burundi",
+      "region": "Afrika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "CL",
+      "iso3": "CHL",
+      "name_en": "Chile",
+      "name": "Chile",
+      "region": "Südamerika",
+      "klimazone": "gemaessigt",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "CN",
+      "iso3": "CHN",
+      "name_en": "China",
+      "name": "China",
+      "region": "Asien",
+      "klimazone": "gemaessigt",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "CK",
+      "iso3": "COK",
+      "name_en": "Cook Islands",
+      "name": "Cookinseln",
+      "region": "Ozeanien",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "CR",
+      "iso3": "CRI",
+      "name_en": "Costa Rica",
+      "name": "Costa Rica",
+      "region": "Mittelamerika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "CW",
+      "iso3": "CUW",
+      "name_en": "Curaçao",
+      "name": "Curaçao",
+      "region": "Mittelamerika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "CD",
+      "iso3": "COD",
+      "name_en": "Congo, The Democratic Republic of the",
+      "name": "Demokratische Republik Kongo",
+      "region": "Afrika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "DE",
+      "iso3": "DEU",
+      "name_en": "Germany",
+      "name": "Deutschland",
+      "region": "Europa",
+      "klimazone": "gemaessigt",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "DM",
+      "iso3": "DMA",
+      "name_en": "Dominica",
+      "name": "Dominica",
+      "region": "Mittelamerika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "DO",
+      "iso3": "DOM",
+      "name_en": "Dominican Republic",
+      "name": "Dominikanische Republik",
+      "region": "Mittelamerika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "DJ",
+      "iso3": "DJI",
+      "name_en": "Djibouti",
+      "name": "Dschibuti",
+      "region": "Afrika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "DK",
+      "iso3": "DNK",
+      "name_en": "Denmark",
+      "name": "Dänemark",
+      "region": "Europa",
+      "klimazone": "gemaessigt",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "EC",
+      "iso3": "ECU",
+      "name_en": "Ecuador",
+      "name": "Ecuador",
+      "region": "Südamerika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "SV",
+      "iso3": "SLV",
+      "name_en": "El Salvador",
+      "name": "El Salvador",
+      "region": "Mittelamerika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "CI",
+      "iso3": "CIV",
+      "name_en": "Côte d'Ivoire",
+      "name": "Elfenbeinküste",
+      "region": "Afrika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "ER",
+      "iso3": "ERI",
+      "name_en": "Eritrea",
+      "name": "Eritrea",
+      "region": "Afrika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "EE",
+      "iso3": "EST",
+      "name_en": "Estonia",
+      "name": "Estland",
+      "region": "Europa",
+      "klimazone": "gemaessigt",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "SZ",
+      "iso3": "SWZ",
+      "name_en": "Eswatini",
+      "name": "Eswatini",
+      "region": "Afrika",
+      "klimazone": "subtropisch",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "FK",
+      "iso3": "FLK",
+      "name_en": "Falkland Islands (Malvinas)",
+      "name": "Falklandinseln",
+      "region": "Südamerika",
+      "klimazone": "kalt",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "FJ",
+      "iso3": "FJI",
+      "name_en": "Fiji",
+      "name": "Fidschi",
+      "region": "Ozeanien",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "FI",
+      "iso3": "FIN",
+      "name_en": "Finland",
+      "name": "Finnland",
+      "region": "Europa",
+      "klimazone": "kalt",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "FR",
+      "iso3": "FRA",
+      "name_en": "France",
+      "name": "Frankreich",
+      "region": "Europa",
+      "klimazone": "gemaessigt",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "GF",
+      "iso3": "GUF",
+      "name_en": "French Guiana",
+      "name": "Französisch-Guayana",
+      "region": "Südamerika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "PF",
+      "iso3": "PYF",
+      "name_en": "French Polynesia",
+      "name": "Französisch-Polynesien",
+      "region": "Ozeanien",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "FO",
+      "iso3": "FRO",
+      "name_en": "Faroe Islands",
+      "name": "Färöer",
+      "region": "Europa",
+      "klimazone": "kalt",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "GA",
+      "iso3": "GAB",
+      "name_en": "Gabon",
+      "name": "Gabun",
+      "region": "Afrika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "GM",
+      "iso3": "GMB",
+      "name_en": "Gambia",
+      "name": "Gambia",
+      "region": "Afrika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "GE",
+      "iso3": "GEO",
+      "name_en": "Georgia",
+      "name": "Georgien",
+      "region": "Asien",
+      "klimazone": "gemaessigt",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "GH",
+      "iso3": "GHA",
+      "name_en": "Ghana",
+      "name": "Ghana",
+      "region": "Afrika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "GI",
+      "iso3": "GIB",
+      "name_en": "Gibraltar",
+      "name": "Gibraltar",
+      "region": "Europa",
+      "klimazone": "subtropisch",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "GD",
+      "iso3": "GRD",
+      "name_en": "Grenada",
+      "name": "Grenada",
+      "region": "Mittelamerika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "GR",
+      "iso3": "GRC",
+      "name_en": "Greece",
+      "name": "Griechenland",
+      "region": "Europa",
+      "klimazone": "subtropisch",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "GL",
+      "iso3": "GRL",
+      "name_en": "Greenland",
+      "name": "Grönland",
+      "region": "Europa",
+      "klimazone": "kalt",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "GP",
+      "iso3": "GLP",
+      "name_en": "Guadeloupe",
+      "name": "Guadeloupe",
+      "region": "Mittelamerika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "GU",
+      "iso3": "GUM",
+      "name_en": "Guam",
+      "name": "Guam",
+      "region": "Ozeanien",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "GT",
+      "iso3": "GTM",
+      "name_en": "Guatemala",
+      "name": "Guatemala",
+      "region": "Mittelamerika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "GN",
+      "iso3": "GIN",
+      "name_en": "Guinea",
+      "name": "Guinea",
+      "region": "Afrika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "GW",
+      "iso3": "GNB",
+      "name_en": "Guinea-Bissau",
+      "name": "Guinea-Bissau",
+      "region": "Afrika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "GY",
+      "iso3": "GUY",
+      "name_en": "Guyana",
+      "name": "Guyana",
+      "region": "Südamerika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "HT",
+      "iso3": "HTI",
+      "name_en": "Haiti",
+      "name": "Haiti",
+      "region": "Mittelamerika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "HN",
+      "iso3": "HND",
+      "name_en": "Honduras",
+      "name": "Honduras",
+      "region": "Mittelamerika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "HK",
+      "iso3": "HKG",
+      "name_en": "Hong Kong",
+      "name": "Hongkong",
+      "region": "Asien",
+      "klimazone": "subtropisch",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "IN",
+      "iso3": "IND",
+      "name_en": "India",
+      "name": "Indien",
+      "region": "Asien",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "ID",
+      "iso3": "IDN",
+      "name_en": "Indonesia",
+      "name": "Indonesien",
+      "region": "Asien",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "IQ",
+      "iso3": "IRQ",
+      "name_en": "Iraq",
+      "name": "Irak",
+      "region": "Naher Osten",
+      "klimazone": "trocken",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "IR",
+      "iso3": "IRN",
+      "name_en": "Iran",
+      "name": "Iran",
+      "region": "Naher Osten",
+      "klimazone": "trocken",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "IE",
+      "iso3": "IRL",
+      "name_en": "Ireland",
+      "name": "Irland",
+      "region": "Europa",
+      "klimazone": "gemaessigt",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "IS",
+      "iso3": "ISL",
+      "name_en": "Iceland",
+      "name": "Island",
+      "region": "Europa",
+      "klimazone": "kalt",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "IL",
+      "iso3": "ISR",
+      "name_en": "Israel",
+      "name": "Israel",
+      "region": "Naher Osten",
+      "klimazone": "subtropisch",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "IT",
+      "iso3": "ITA",
+      "name_en": "Italy",
+      "name": "Italien",
+      "region": "Europa",
+      "klimazone": "subtropisch",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "JM",
+      "iso3": "JAM",
+      "name_en": "Jamaica",
+      "name": "Jamaika",
+      "region": "Mittelamerika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "JP",
+      "iso3": "JPN",
+      "name_en": "Japan",
+      "name": "Japan",
+      "region": "Asien",
+      "klimazone": "gemaessigt",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "YE",
+      "iso3": "YEM",
+      "name_en": "Yemen",
+      "name": "Jemen",
+      "region": "Naher Osten",
+      "klimazone": "trocken",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "JO",
+      "iso3": "JOR",
+      "name_en": "Jordan",
+      "name": "Jordanien",
+      "region": "Naher Osten",
+      "klimazone": "trocken",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "KY",
+      "iso3": "CYM",
+      "name_en": "Cayman Islands",
+      "name": "Kaimaninseln",
+      "region": "Mittelamerika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "KH",
+      "iso3": "KHM",
+      "name_en": "Cambodia",
+      "name": "Kambodscha",
+      "region": "Asien",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "CM",
+      "iso3": "CMR",
+      "name_en": "Cameroon",
+      "name": "Kamerun",
+      "region": "Afrika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "CA",
+      "iso3": "CAN",
+      "name_en": "Canada",
+      "name": "Kanada",
+      "region": "Nordamerika",
+      "klimazone": "kalt",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "CV",
+      "iso3": "CPV",
+      "name_en": "Cabo Verde",
+      "name": "Kap Verde",
+      "region": "Afrika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "KZ",
+      "iso3": "KAZ",
+      "name_en": "Kazakhstan",
+      "name": "Kasachstan",
+      "region": "Asien",
+      "klimazone": "gemaessigt",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "QA",
+      "iso3": "QAT",
+      "name_en": "Qatar",
+      "name": "Katar",
+      "region": "Naher Osten",
+      "klimazone": "trocken",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "KE",
+      "iso3": "KEN",
+      "name_en": "Kenya",
+      "name": "Kenia",
+      "region": "Afrika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "KG",
+      "iso3": "KGZ",
+      "name_en": "Kyrgyzstan",
+      "name": "Kirgisistan",
+      "region": "Asien",
+      "klimazone": "gemaessigt",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "KI",
+      "iso3": "KIR",
+      "name_en": "Kiribati",
+      "name": "Kiribati",
+      "region": "Ozeanien",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "CO",
+      "iso3": "COL",
+      "name_en": "Colombia",
+      "name": "Kolumbien",
+      "region": "Südamerika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "KM",
+      "iso3": "COM",
+      "name_en": "Comoros",
+      "name": "Komoren",
+      "region": "Afrika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "XK",
+      "iso3": "XKX",
+      "name_en": "Kosovo",
+      "name": "Kosovo",
+      "region": "Europa",
+      "klimazone": "gemaessigt",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "HR",
+      "iso3": "HRV",
+      "name_en": "Croatia",
+      "name": "Kroatien",
+      "region": "Europa",
+      "klimazone": "subtropisch",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "CU",
+      "iso3": "CUB",
+      "name_en": "Cuba",
+      "name": "Kuba",
+      "region": "Mittelamerika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "KW",
+      "iso3": "KWT",
+      "name_en": "Kuwait",
+      "name": "Kuwait",
+      "region": "Naher Osten",
+      "klimazone": "trocken",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "LA",
+      "iso3": "LAO",
+      "name_en": "Laos",
+      "name": "Laos",
+      "region": "Asien",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "LS",
+      "iso3": "LSO",
+      "name_en": "Lesotho",
+      "name": "Lesotho",
+      "region": "Afrika",
+      "klimazone": "subtropisch",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "LV",
+      "iso3": "LVA",
+      "name_en": "Latvia",
+      "name": "Lettland",
+      "region": "Europa",
+      "klimazone": "gemaessigt",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "LB",
+      "iso3": "LBN",
+      "name_en": "Lebanon",
+      "name": "Libanon",
+      "region": "Naher Osten",
+      "klimazone": "subtropisch",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "LR",
+      "iso3": "LBR",
+      "name_en": "Liberia",
+      "name": "Liberia",
+      "region": "Afrika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "LY",
+      "iso3": "LBY",
+      "name_en": "Libya",
+      "name": "Libyen",
+      "region": "Nordafrika",
+      "klimazone": "trocken",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "LI",
+      "iso3": "LIE",
+      "name_en": "Liechtenstein",
+      "name": "Liechtenstein",
+      "region": "Europa",
+      "klimazone": "gemaessigt",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "LT",
+      "iso3": "LTU",
+      "name_en": "Lithuania",
+      "name": "Litauen",
+      "region": "Europa",
+      "klimazone": "gemaessigt",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "LU",
+      "iso3": "LUX",
+      "name_en": "Luxembourg",
+      "name": "Luxemburg",
+      "region": "Europa",
+      "klimazone": "gemaessigt",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "MO",
+      "iso3": "MAC",
+      "name_en": "Macao",
+      "name": "Macau",
+      "region": "Asien",
+      "klimazone": "subtropisch",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "MG",
+      "iso3": "MDG",
+      "name_en": "Madagascar",
+      "name": "Madagaskar",
+      "region": "Afrika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "MW",
+      "iso3": "MWI",
+      "name_en": "Malawi",
+      "name": "Malawi",
+      "region": "Afrika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "MY",
+      "iso3": "MYS",
+      "name_en": "Malaysia",
+      "name": "Malaysia",
+      "region": "Asien",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "MV",
+      "iso3": "MDV",
+      "name_en": "Maldives",
+      "name": "Malediven",
+      "region": "Asien",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "ML",
+      "iso3": "MLI",
+      "name_en": "Mali",
+      "name": "Mali",
+      "region": "Afrika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "MT",
+      "iso3": "MLT",
+      "name_en": "Malta",
+      "name": "Malta",
+      "region": "Europa",
+      "klimazone": "subtropisch",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "MA",
+      "iso3": "MAR",
+      "name_en": "Morocco",
+      "name": "Marokko",
+      "region": "Nordafrika",
+      "klimazone": "subtropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "MH",
+      "iso3": "MHL",
+      "name_en": "Marshall Islands",
+      "name": "Marshallinseln",
+      "region": "Ozeanien",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "MQ",
+      "iso3": "MTQ",
+      "name_en": "Martinique",
+      "name": "Martinique",
+      "region": "Mittelamerika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "MR",
+      "iso3": "MRT",
+      "name_en": "Mauritania",
+      "name": "Mauretanien",
+      "region": "Nordafrika",
+      "klimazone": "trocken",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "MU",
+      "iso3": "MUS",
+      "name_en": "Mauritius",
+      "name": "Mauritius",
+      "region": "Afrika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "YT",
+      "iso3": "MYT",
+      "name_en": "Mayotte",
+      "name": "Mayotte",
+      "region": "Afrika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "MX",
+      "iso3": "MEX",
+      "name_en": "Mexico",
+      "name": "Mexiko",
+      "region": "Nordamerika",
+      "klimazone": "subtropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "FM",
+      "iso3": "FSM",
+      "name_en": "Micronesia, Federated States of",
+      "name": "Mikronesien",
+      "region": "Ozeanien",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "MD",
+      "iso3": "MDA",
+      "name_en": "Moldova",
+      "name": "Moldau",
+      "region": "Europa",
+      "klimazone": "gemaessigt",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "MC",
+      "iso3": "MCO",
+      "name_en": "Monaco",
+      "name": "Monaco",
+      "region": "Europa",
+      "klimazone": "gemaessigt",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "MN",
+      "iso3": "MNG",
+      "name_en": "Mongolia",
+      "name": "Mongolei",
+      "region": "Asien",
+      "klimazone": "kalt",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "ME",
+      "iso3": "MNE",
+      "name_en": "Montenegro",
+      "name": "Montenegro",
+      "region": "Europa",
+      "klimazone": "subtropisch",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "MS",
+      "iso3": "MSR",
+      "name_en": "Montserrat",
+      "name": "Montserrat",
+      "region": "Mittelamerika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "MZ",
+      "iso3": "MOZ",
+      "name_en": "Mozambique",
+      "name": "Mosambik",
+      "region": "Afrika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "MM",
+      "iso3": "MMR",
+      "name_en": "Myanmar",
+      "name": "Myanmar",
+      "region": "Asien",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "NA",
+      "iso3": "NAM",
+      "name_en": "Namibia",
+      "name": "Namibia",
+      "region": "Afrika",
+      "klimazone": "trocken",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "NR",
+      "iso3": "NRU",
+      "name_en": "Nauru",
+      "name": "Nauru",
+      "region": "Ozeanien",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "NP",
+      "iso3": "NPL",
+      "name_en": "Nepal",
+      "name": "Nepal",
+      "region": "Asien",
+      "klimazone": "kalt",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "NC",
+      "iso3": "NCL",
+      "name_en": "New Caledonia",
+      "name": "Neukaledonien",
+      "region": "Ozeanien",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "NZ",
+      "iso3": "NZL",
+      "name_en": "New Zealand",
+      "name": "Neuseeland",
+      "region": "Ozeanien",
+      "klimazone": "gemaessigt",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "NI",
+      "iso3": "NIC",
+      "name_en": "Nicaragua",
+      "name": "Nicaragua",
+      "region": "Mittelamerika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "NL",
+      "iso3": "NLD",
+      "name_en": "Netherlands",
+      "name": "Niederlande",
+      "region": "Europa",
+      "klimazone": "gemaessigt",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "NE",
+      "iso3": "NER",
+      "name_en": "Niger",
+      "name": "Niger",
+      "region": "Afrika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "NG",
+      "iso3": "NGA",
+      "name_en": "Nigeria",
+      "name": "Nigeria",
+      "region": "Afrika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "NU",
+      "iso3": "NIU",
+      "name_en": "Niue",
+      "name": "Niue",
+      "region": "Ozeanien",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "KP",
+      "iso3": "PRK",
+      "name_en": "North Korea",
+      "name": "Nordkorea",
+      "region": "Asien",
+      "klimazone": "gemaessigt",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "MK",
+      "iso3": "MKD",
+      "name_en": "North Macedonia",
+      "name": "Nordmazedonien",
+      "region": "Europa",
+      "klimazone": "gemaessigt",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "NO",
+      "iso3": "NOR",
+      "name_en": "Norway",
+      "name": "Norwegen",
+      "region": "Europa",
+      "klimazone": "kalt",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "MP",
+      "iso3": "MNP",
+      "name_en": "Northern Mariana Islands",
+      "name": "Nördliche Marianen",
+      "region": "Ozeanien",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "OM",
+      "iso3": "OMN",
+      "name_en": "Oman",
+      "name": "Oman",
+      "region": "Naher Osten",
+      "klimazone": "trocken",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "TL",
+      "iso3": "TLS",
+      "name_en": "Timor-Leste",
+      "name": "Osttimor",
+      "region": "Asien",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "PK",
+      "iso3": "PAK",
+      "name_en": "Pakistan",
+      "name": "Pakistan",
+      "region": "Asien",
+      "klimazone": "trocken",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "PW",
+      "iso3": "PLW",
+      "name_en": "Palau",
+      "name": "Palau",
+      "region": "Ozeanien",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "PS",
+      "iso3": "PSE",
+      "name_en": "Palestine, State of",
+      "name": "Palästina",
+      "region": "Naher Osten",
+      "klimazone": "subtropisch",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "PA",
+      "iso3": "PAN",
+      "name_en": "Panama",
+      "name": "Panama",
+      "region": "Mittelamerika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "PG",
+      "iso3": "PNG",
+      "name_en": "Papua New Guinea",
+      "name": "Papua-Neuguinea",
+      "region": "Asien",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "PY",
+      "iso3": "PRY",
+      "name_en": "Paraguay",
+      "name": "Paraguay",
+      "region": "Südamerika",
+      "klimazone": "subtropisch",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "PE",
+      "iso3": "PER",
+      "name_en": "Peru",
+      "name": "Peru",
+      "region": "Südamerika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "PH",
+      "iso3": "PHL",
+      "name_en": "Philippines",
+      "name": "Philippinen",
+      "region": "Asien",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "PL",
+      "iso3": "POL",
+      "name_en": "Poland",
+      "name": "Polen",
+      "region": "Europa",
+      "klimazone": "gemaessigt",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "PT",
+      "iso3": "PRT",
+      "name_en": "Portugal",
+      "name": "Portugal",
+      "region": "Europa",
+      "klimazone": "subtropisch",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "PR",
+      "iso3": "PRI",
+      "name_en": "Puerto Rico",
+      "name": "Puerto Rico",
+      "region": "Mittelamerika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "CG",
+      "iso3": "COG",
+      "name_en": "Congo",
+      "name": "Republik Kongo",
+      "region": "Afrika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "RW",
+      "iso3": "RWA",
+      "name_en": "Rwanda",
+      "name": "Ruanda",
+      "region": "Afrika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "RO",
+      "iso3": "ROU",
+      "name_en": "Romania",
+      "name": "Rumänien",
+      "region": "Europa",
+      "klimazone": "gemaessigt",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "RU",
+      "iso3": "RUS",
+      "name_en": "Russian Federation",
+      "name": "Russland",
+      "region": "Europa",
+      "klimazone": "kalt",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "RE",
+      "iso3": "REU",
+      "name_en": "Réunion",
+      "name": "Réunion",
+      "region": "Afrika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "BL",
+      "iso3": "BLM",
+      "name_en": "Saint Barthélemy",
+      "name": "Saint-Barthélemy",
+      "region": "Mittelamerika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "MF",
+      "iso3": "MAF",
+      "name_en": "Saint Martin (French part)",
+      "name": "Saint-Martin",
+      "region": "Mittelamerika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "PM",
+      "iso3": "SPM",
+      "name_en": "Saint Pierre and Miquelon",
+      "name": "Saint-Pierre und Miquelon",
+      "region": "Nordamerika",
+      "klimazone": "kalt",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "SB",
+      "iso3": "SLB",
+      "name_en": "Solomon Islands",
+      "name": "Salomonen",
+      "region": "Ozeanien",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "ZM",
+      "iso3": "ZMB",
+      "name_en": "Zambia",
+      "name": "Sambia",
+      "region": "Afrika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "WS",
+      "iso3": "WSM",
+      "name_en": "Samoa",
+      "name": "Samoa",
+      "region": "Ozeanien",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "SM",
+      "iso3": "SMR",
+      "name_en": "San Marino",
+      "name": "San Marino",
+      "region": "Europa",
+      "klimazone": "gemaessigt",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "SA",
+      "iso3": "SAU",
+      "name_en": "Saudi Arabia",
+      "name": "Saudi-Arabien",
+      "region": "Naher Osten",
+      "klimazone": "trocken",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "SE",
+      "iso3": "SWE",
+      "name_en": "Sweden",
+      "name": "Schweden",
+      "region": "Europa",
+      "klimazone": "kalt",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "CH",
+      "iso3": "CHE",
+      "name_en": "Switzerland",
+      "name": "Schweiz",
+      "region": "Europa",
+      "klimazone": "gemaessigt",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "SN",
+      "iso3": "SEN",
+      "name_en": "Senegal",
+      "name": "Senegal",
+      "region": "Afrika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "RS",
+      "iso3": "SRB",
+      "name_en": "Serbia",
+      "name": "Serbien",
+      "region": "Europa",
+      "klimazone": "gemaessigt",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "SC",
+      "iso3": "SYC",
+      "name_en": "Seychelles",
+      "name": "Seychellen",
+      "region": "Afrika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "SL",
+      "iso3": "SLE",
+      "name_en": "Sierra Leone",
+      "name": "Sierra Leone",
+      "region": "Afrika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "ZW",
+      "iso3": "ZWE",
+      "name_en": "Zimbabwe",
+      "name": "Simbabwe",
+      "region": "Afrika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "SG",
+      "iso3": "SGP",
+      "name_en": "Singapore",
+      "name": "Singapur",
+      "region": "Asien",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "SX",
+      "iso3": "SXM",
+      "name_en": "Sint Maarten (Dutch part)",
+      "name": "Sint Maarten",
+      "region": "Mittelamerika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "SK",
+      "iso3": "SVK",
+      "name_en": "Slovakia",
+      "name": "Slowakei",
+      "region": "Europa",
+      "klimazone": "gemaessigt",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "SI",
+      "iso3": "SVN",
+      "name_en": "Slovenia",
+      "name": "Slowenien",
+      "region": "Europa",
+      "klimazone": "gemaessigt",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "SO",
+      "iso3": "SOM",
+      "name_en": "Somalia",
+      "name": "Somalia",
+      "region": "Afrika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "ES",
+      "iso3": "ESP",
+      "name_en": "Spain",
+      "name": "Spanien",
+      "region": "Europa",
+      "klimazone": "subtropisch",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "LK",
+      "iso3": "LKA",
+      "name_en": "Sri Lanka",
+      "name": "Sri Lanka",
+      "region": "Asien",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "SH",
+      "iso3": "SHN",
+      "name_en": "Saint Helena, Ascension and Tristan da Cunha",
+      "name": "St. Helena",
+      "region": "Afrika",
+      "klimazone": "subtropisch",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "KN",
+      "iso3": "KNA",
+      "name_en": "Saint Kitts and Nevis",
+      "name": "St. Kitts und Nevis",
+      "region": "Mittelamerika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "LC",
+      "iso3": "LCA",
+      "name_en": "Saint Lucia",
+      "name": "St. Lucia",
+      "region": "Mittelamerika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "VC",
+      "iso3": "VCT",
+      "name_en": "Saint Vincent and the Grenadines",
+      "name": "St. Vincent und die Grenadinen",
+      "region": "Mittelamerika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "SD",
+      "iso3": "SDN",
+      "name_en": "Sudan",
+      "name": "Sudan",
+      "region": "Nordafrika",
+      "klimazone": "trocken",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "SR",
+      "iso3": "SUR",
+      "name_en": "Suriname",
+      "name": "Suriname",
+      "region": "Südamerika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "SJ",
+      "iso3": "SJM",
+      "name_en": "Svalbard and Jan Mayen",
+      "name": "Svalbard",
+      "region": "Europa",
+      "klimazone": "kalt",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "SY",
+      "iso3": "SYR",
+      "name_en": "Syria",
+      "name": "Syrien",
+      "region": "Naher Osten",
+      "klimazone": "trocken",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "ST",
+      "iso3": "STP",
+      "name_en": "Sao Tome and Principe",
+      "name": "São Tomé und Príncipe",
+      "region": "Afrika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "ZA",
+      "iso3": "ZAF",
+      "name_en": "South Africa",
+      "name": "Südafrika",
+      "region": "Afrika",
+      "klimazone": "subtropisch",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "KR",
+      "iso3": "KOR",
+      "name_en": "South Korea",
+      "name": "Südkorea",
+      "region": "Asien",
+      "klimazone": "gemaessigt",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "SS",
+      "iso3": "SSD",
+      "name_en": "South Sudan",
+      "name": "Südsudan",
+      "region": "Afrika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "TJ",
+      "iso3": "TJK",
+      "name_en": "Tajikistan",
+      "name": "Tadschikistan",
+      "region": "Asien",
+      "klimazone": "gemaessigt",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "TW",
+      "iso3": "TWN",
+      "name_en": "Taiwan",
+      "name": "Taiwan",
+      "region": "Asien",
+      "klimazone": "subtropisch",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "TZ",
+      "iso3": "TZA",
+      "name_en": "Tanzania",
+      "name": "Tansania",
+      "region": "Afrika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "TH",
+      "iso3": "THA",
+      "name_en": "Thailand",
+      "name": "Thailand",
+      "region": "Asien",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "TG",
+      "iso3": "TGO",
+      "name_en": "Togo",
+      "name": "Togo",
+      "region": "Afrika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "TK",
+      "iso3": "TKL",
+      "name_en": "Tokelau",
+      "name": "Tokelau",
+      "region": "Ozeanien",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "TO",
+      "iso3": "TON",
+      "name_en": "Tonga",
+      "name": "Tonga",
+      "region": "Ozeanien",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "TT",
+      "iso3": "TTO",
+      "name_en": "Trinidad and Tobago",
+      "name": "Trinidad und Tobago",
+      "region": "Mittelamerika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "TD",
+      "iso3": "TCD",
+      "name_en": "Chad",
+      "name": "Tschad",
+      "region": "Afrika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "CZ",
+      "iso3": "CZE",
+      "name_en": "Czechia",
+      "name": "Tschechien",
+      "region": "Europa",
+      "klimazone": "gemaessigt",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "TN",
+      "iso3": "TUN",
+      "name_en": "Tunisia",
+      "name": "Tunesien",
+      "region": "Nordafrika",
+      "klimazone": "subtropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "TM",
+      "iso3": "TKM",
+      "name_en": "Turkmenistan",
+      "name": "Turkmenistan",
+      "region": "Asien",
+      "klimazone": "trocken",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "TC",
+      "iso3": "TCA",
+      "name_en": "Turks and Caicos Islands",
+      "name": "Turks- und Caicosinseln",
+      "region": "Mittelamerika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "TV",
+      "iso3": "TUV",
+      "name_en": "Tuvalu",
+      "name": "Tuvalu",
+      "region": "Ozeanien",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "TR",
+      "iso3": "TUR",
+      "name_en": "Türkiye",
+      "name": "Türkei",
+      "region": "Naher Osten",
+      "klimazone": "subtropisch",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "US",
+      "iso3": "USA",
+      "name_en": "United States",
+      "name": "USA",
+      "region": "Nordamerika",
+      "klimazone": "gemaessigt",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "UG",
+      "iso3": "UGA",
+      "name_en": "Uganda",
+      "name": "Uganda",
+      "region": "Afrika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "UA",
+      "iso3": "UKR",
+      "name_en": "Ukraine",
+      "name": "Ukraine",
+      "region": "Europa",
+      "klimazone": "gemaessigt",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "HU",
+      "iso3": "HUN",
+      "name_en": "Hungary",
+      "name": "Ungarn",
+      "region": "Europa",
+      "klimazone": "gemaessigt",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "UY",
+      "iso3": "URY",
+      "name_en": "Uruguay",
+      "name": "Uruguay",
+      "region": "Südamerika",
+      "klimazone": "subtropisch",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "UZ",
+      "iso3": "UZB",
+      "name_en": "Uzbekistan",
+      "name": "Usbekistan",
+      "region": "Asien",
+      "klimazone": "trocken",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "VU",
+      "iso3": "VUT",
+      "name_en": "Vanuatu",
+      "name": "Vanuatu",
+      "region": "Ozeanien",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "VA",
+      "iso3": "VAT",
+      "name_en": "Holy See (Vatican City State)",
+      "name": "Vatikanstadt",
+      "region": "Europa",
+      "klimazone": "gemaessigt",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "VE",
+      "iso3": "VEN",
+      "name_en": "Venezuela",
+      "name": "Venezuela",
+      "region": "Südamerika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "AE",
+      "iso3": "ARE",
+      "name_en": "United Arab Emirates",
+      "name": "Vereinigte Arabische Emirate",
+      "region": "Naher Osten",
+      "klimazone": "trocken",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "GB",
+      "iso3": "GBR",
+      "name_en": "United Kingdom",
+      "name": "Vereinigtes Königreich",
+      "region": "Europa",
+      "klimazone": "gemaessigt",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "VN",
+      "iso3": "VNM",
+      "name_en": "Vietnam",
+      "name": "Vietnam",
+      "region": "Asien",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "WF",
+      "iso3": "WLF",
+      "name_en": "Wallis and Futuna",
+      "name": "Wallis und Futuna",
+      "region": "Ozeanien",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "EH",
+      "iso3": "ESH",
+      "name_en": "Western Sahara",
+      "name": "Westsahara",
+      "region": "Nordafrika",
+      "klimazone": "trocken",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "CF",
+      "iso3": "CAF",
+      "name_en": "Central African Republic",
+      "name": "Zentralafrikanische Republik",
+      "region": "Afrika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "CY",
+      "iso3": "CYP",
+      "name_en": "Cyprus",
+      "name": "Zypern",
+      "region": "Europa",
+      "klimazone": "subtropisch",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "EG",
+      "iso3": "EGY",
+      "name_en": "Egypt",
+      "name": "Ägypten",
+      "region": "Nordafrika",
+      "klimazone": "trocken",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "GQ",
+      "iso3": "GNQ",
+      "name_en": "Equatorial Guinea",
+      "name": "Äquatorialguinea",
+      "region": "Afrika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "ET",
+      "iso3": "ETH",
+      "name_en": "Ethiopia",
+      "name": "Äthiopien",
+      "region": "Afrika",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "hoch"
+    },
+    {
+      "code": "AT",
+      "iso3": "AUT",
+      "name_en": "Austria",
+      "name": "Österreich",
+      "region": "Europa",
+      "klimazone": "gemaessigt",
+      "hygiene_risiko": "niedrig"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+model Article {
+    pzn          String        @id
+    name         String
+    active       Boolean
+    supplier     String
+    unit         String
+    purchaseUnit Int
+    priceCents   Int
+    shopArticles ShopArticle[]
+}
+
+model ShopArticle {
+    id      Int     @id @default(autoincrement())
+    pzn     String
+    article Article @relation(fields: [pzn], references: [pzn])
+}

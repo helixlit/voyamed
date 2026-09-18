@@ -33,6 +33,12 @@ yarn-error.log*
 # env files (can opt-in for committing if needed)
 .env*
 
+.agents
+.claude
+.cursor
+.devin
+.turbo
+
 # vercel
 .vercel
 
@@ -43,3 +49,9 @@ next-env.d.ts
 /app/generated/prisma
 
 /src/generated/prisma
+node_modules/
+dist/
+
+pnpm-lock.yaml
+package-lock.yaml
+.env

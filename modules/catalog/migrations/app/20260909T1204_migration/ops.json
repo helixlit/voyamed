@@ -1,0 +1,178 @@
+[
+  {
+    "id": "schema.public",
+    "label": "Create schema \"public\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres"
+    },
+    "precheck": [],
+    "execute": [
+      {
+        "description": "Create schema \"public\"",
+        "sql": "CREATE SCHEMA IF NOT EXISTS \"public\"",
+        "params": []
+      }
+    ],
+    "postcheck": []
+  },
+  {
+    "id": "table.article",
+    "label": "Create table \"article\"",
+    "summary": "Creates table \"article\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "article"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"article\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"article\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"article\"",
+        "sql": "CREATE TABLE \"public\".\"article\" (\n  \"active\" bool NOT NULL,\n  \"name\" text NOT NULL,\n  \"priceCents\" int4 NOT NULL,\n  \"purchaseUnit\" int4 NOT NULL,\n  \"pzn\" text NOT NULL,\n  \"supplier\" text NOT NULL,\n  \"unit\" text NOT NULL,\n  PRIMARY KEY (\"pzn\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"article\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"article\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "table.shopArticle",
+    "label": "Create table \"shopArticle\"",
+    "summary": "Creates table \"shopArticle\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "shopArticle"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"shopArticle\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"shopArticle\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"shopArticle\"",
+        "sql": "CREATE TABLE \"public\".\"shopArticle\" (\n  \"id\" SERIAL NOT NULL,\n  \"pzn\" text NOT NULL,\n  PRIMARY KEY (\"id\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"shopArticle\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"shopArticle\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.shopArticle.shopArticle_pzn_idx_6de239b7",
+    "label": "Create index \"shopArticle_pzn_idx_6de239b7\" on \"shopArticle\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "shopArticle_pzn_idx_6de239b7",
+        "table": "shopArticle"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"shopArticle_pzn_idx_6de239b7\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"shopArticle_pzn_idx_6de239b7\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"shopArticle_pzn_idx_6de239b7\"",
+        "sql": "CREATE INDEX \"shopArticle_pzn_idx_6de239b7\" ON \"public\".\"shopArticle\" (\"pzn\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"shopArticle_pzn_idx_6de239b7\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"shopArticle_pzn_idx_6de239b7\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.shopArticle.shopArticle_pzn_fkey",
+    "label": "Add foreign key \"shopArticle_pzn_fkey\" on \"shopArticle\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "shopArticle_pzn_fkey",
+        "table": "shopArticle"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"shopArticle_pzn_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "shopArticle_pzn_fkey",
+          "public",
+          "\"public\".\"shopArticle\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"shopArticle_pzn_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"shopArticle\"\nADD CONSTRAINT \"shopArticle_pzn_fkey\"\nFOREIGN KEY (\"pzn\")\nREFERENCES \"public\".\"article\" (\"pzn\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"shopArticle_pzn_fkey\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "shopArticle_pzn_fkey",
+          "public",
+          "\"public\".\"shopArticle\""
+        ]
+      }
+    ]
+  }
+]
