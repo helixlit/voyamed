@@ -1,5 +1,0 @@
-{
-  "moduleEntrypoint": "./main.mjs",
-  "appEntrypoint": "./bundle/modules/storefront/server.js",
-  "address": "storefront"
-}

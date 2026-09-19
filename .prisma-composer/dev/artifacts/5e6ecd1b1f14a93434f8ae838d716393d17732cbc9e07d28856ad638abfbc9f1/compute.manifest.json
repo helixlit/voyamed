@@ -1,5 +1,0 @@
-{
-  "manifestVersion": "1",
-  "entrypoint": "bootstrap.js",
-  "address": "catalog.service"
-}
