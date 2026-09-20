@@ -18,6 +18,8 @@ const antoniusClient = new AntoniusClient(
 );
 
 
+console.debug(`${port}`);
+
 
 console.debug(`Local postgresql database is at ${db.url}`);
 

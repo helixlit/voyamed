@@ -57,3 +57,5 @@ package-lock.yaml
 .env
 
 /modules/storefront/.next
+
+.*/

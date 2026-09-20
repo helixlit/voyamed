@@ -2,6 +2,7 @@
 
 import { useShoppingCartStore } from "../lib/state/shopping-cart-state";
 import ShoppingCartArticle from "./shopping-cart-article";
+import ShoppingCartBundleComponent from "./shopping-cart-bundle";
 
 export default function ShoppingCart() {
   const bundles = useShoppingCartStore((state) => state.bundles);
@@ -13,7 +14,7 @@ export default function ShoppingCart() {
             if (!(bundle.name == "default"))
               return (
                 <li key={bundle.name} className="pl-4">
-                  {bundle.name}:
+                  <ShoppingCartBundleComponent bundle={bundle} />
                   <ul>
                     {bundle.articles.map((article) => (
                       <li key={article.article.pzn} className="pl-4 border-l">

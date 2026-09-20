@@ -27,8 +27,9 @@ export class ShoppingCartBundle {
   }
 
   changeQuantity(quantityDelta: number = 1) {
-    if (this.quantity + quantityDelta < 0) return;
+    if (this.quantity + quantityDelta < 0) return -1;
     this.quantity += quantityDelta;
+    return this.quantity;
   }
 
   setQuantity(quantity: number) {
@@ -90,6 +91,14 @@ interface ShoppingCartState {
   bundles: Array<ShoppingCartBundle>;
   addBundle: (item: ShoppingCartBundle) => void;
   removeBundle: (name: string) => void;
+  changeBundleQuantity: (
+    bundleName: string,
+    quantityDelta: number,
+  ) => number;
+  setBundleQuantity: (
+    bundleName: string,
+    quantityDelta: number,
+  ) => void;
   addArticleToBundle: (
     bundleName: string,
     article: Article,
@@ -127,6 +136,30 @@ export const useShoppingCartStore = create<ShoppingCartState>()(
         );
         if (!bundel) return;
         bundel.addArticle(article, quantity);
+      }),
+    changeBundleQuantity: (bundleName, quantityDelta) => {
+      let newQuantity = -1;
+      set((state) => {
+        const bundle = state.bundles.find(
+          (bundle) => bundle.name === bundleName,
+        );
+        if (!bundle) return;
+        newQuantity = bundle.changeQuantity(quantityDelta);
+        if (newQuantity === 0) state.bundles
+          = state.bundles.filter(b => b.name !== bundle.name)
+      });
+      return newQuantity;
+    },
+    setBundleQuantity: (bundleName, quantityDelta) =>
+      set((state) => {
+        const bundle = state.bundles.find(
+          (bundle) => bundle.name === bundleName,
+        );
+        if (!bundle) return;
+        bundle.setQuantity(quantityDelta);
+
+        if (quantityDelta === 0) state.bundles
+          = state.bundles.filter(b => b.name !== bundle.name);
       }),
     changeArticleQuantity: (bundleName, articlePZN, quantityDelta) => {
       let newQuantity = -1;
