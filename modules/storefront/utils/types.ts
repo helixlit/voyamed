@@ -42,3 +42,6 @@ import kits from "@/data/konfigurator/kits.json";
 
 export type Activity = keyof typeof kits.activities;
 export type ClimateZone = keyof typeof kits.klimazonen;
+
+import { countries } from "@/data/konfigurator/countries.json"
+export type Country = (typeof countries)[0];

@@ -5,8 +5,8 @@ import { Activity, CountryKit } from "@/utils/types";
 import { useEffect, useState } from "react";
 
 import countries from "@/data/konfigurator/countries.json"
-import ActivitySelector from "./activity-selector";
-import BundleDisplay from "./bundle-display";
+import ActivitySelector from "@/components/activity-selector";
+import BundleDisplay from "@/components/bundle-display";
 
 
 
@@ -64,6 +64,7 @@ export default function BundleBrowser() {
       <BundleDisplay
         country={selectedCountry}
         activity={selectedActivity}
+        displayArticles={true}
       />
     </section>
   )

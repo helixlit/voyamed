@@ -1,7 +1,7 @@
-pnpm build
+pnpm build $1 $2
 
 set -a
 . $(pwd)/.env
 set +a
 
-pnpm exec prisma dev $1 module.ts
+pnpm exec prisma dev module.ts

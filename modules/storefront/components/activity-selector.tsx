@@ -10,7 +10,7 @@ export default function ActivitySelector(props: Props) {
   return (
     <section
       id="activity-selector"
-      className="bg-prim rounded-full p-1 w-fit flex text-nowrap items-center px-3 gap-2"
+      className="bg-prim rounded-full p-1 w-fit flex text-nowrap items-center px-3 gap-2 text-foreground"
     >
       <label htmlFor="activities">Wähle eine Aktivität:</label>
       <select

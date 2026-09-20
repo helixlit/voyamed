@@ -9,6 +9,7 @@ import { ShoppingCartBundle, useShoppingCartStore } from "@/lib/state/shopping-c
 interface Props {
   country: CountryKit | null,
   activity: Activity | "",
+  displayArticles: boolean,
 }
 export default function BundleDisplay(props: Props) {
   const [articles, setArticles] = useState<Array<T_Article>>([]);
@@ -72,7 +73,7 @@ export default function BundleDisplay(props: Props) {
       {props.country && props.activity ?
         <div>
           <h2> {props.country.name}-{kits.activities[props.activity].name}-Bundle</h2>
-          <div className="flex">
+          <div className="grid">
             <div>
               <p>
                 {props.country.name}: {kits.klimazonen[props.country.klimazone as ClimateZone].beschreibung}<br />
@@ -87,24 +88,26 @@ export default function BundleDisplay(props: Props) {
                 {kits.activities[props.activity].name}: {kits.activities[props.activity].beschreibung}
               </p>
             </div>
-            <div>
+            <div className="min-w-30 justify-self-center p-3">
               <button
                 onClick={addBundleToCart}
-                className=" cursor-pointer rounded-full bg-secondary"
+                className=" cursor-pointer rounded-full bg-secondary p-2"
               >
                 In den Warenkorb
               </button>
             </div>
           </div>
-          <ul
-            className="grid gap-2 grid-flow-row grid-cols-3"
-          >
-            {articles.map(a => (
-              <Article
-                article={a}
-              />
-            ))}
-          </ul>
+          {props.displayArticles &&
+            <ul
+              className="grid gap-2 grid-flow-row grid-cols-3"
+            >
+              {articles.map(a => (
+                <Article
+                  article={a}
+                />
+              ))}
+            </ul>
+          }
         </div>
         : <p className="text-foreground/70">
           Bitte wähle eine Land und Aktivität!
