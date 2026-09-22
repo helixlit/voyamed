@@ -14,28 +14,34 @@ export default function ArticleBrowser() {
     [],
   );
   const [queriedArticleCount, setQueriedArticleCount] = useState<number>(0);
+  const [isLoading, setIsLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
 
   const [currentPage, setCurrentPage] = useState<number>(1);
 
   const take = 10;
 
   async function queryPrisma() {
-    const [articleResponse, countResponse] = await Promise.all([
-      fetch(
-        `/api/shop-articles?query=${encodeURIComponent(query)}&take=${take}&skip=${take * (currentPage - 1)}`
-      ),
-      fetch(
-        `/api/shop-articles/count?query=${encodeURIComponent(query)}`
-      ),
-    ])
+    setIsLoading(true);
+    setLoadError(null);
+    try {
+      const [articleResponse, countResponse] = await Promise.all([
+        fetch(`/api/shop-articles?query=${encodeURIComponent(query)}&take=${take}&skip=${take * (currentPage - 1)}`),
+        fetch(`/api/shop-articles/count?query=${encodeURIComponent(query)}`),
+      ]);
+      if (!articleResponse.ok || !countResponse.ok) throw new Error();
 
-    const shopArticles: Array<ShopArticle> = await articleResponse.json();
-
-    setQueriedArticles(shopArticles.map((s) => ({ id: s.pzn, ...s.article })));
-
-    const count: number = (await countResponse.json()).count;
-
-    setQueriedArticleCount(count);
+      const shopArticles: Array<ShopArticle> = await articleResponse.json();
+      setQueriedArticles(shopArticles.map((s) => ({ id: s.pzn, ...s.article })));
+      const count: number = (await countResponse.json()).count;
+      setQueriedArticleCount(count);
+    } catch {
+      setLoadError("Artikel konnten gerade nicht geladen werden. Bitte erneut versuchen.");
+      setQueriedArticles([]);
+      setQueriedArticleCount(0);
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   useEffect(() => {
@@ -56,10 +62,11 @@ export default function ArticleBrowser() {
   }, [query]);
 
   return (
-    <div className="w-full rounded-2xl bg-secondary text-background flex flex-col">
-      <div className="flex items-stretch px-10 py-5 space-x-5">
-        <div className="flex items-center">
-          <h3 className="text-cm ">Artikelsuche</h3>
+    <section className="w-full overflow-hidden rounded-2xl bg-secondary text-background shadow-sm">
+      <div className="flex flex-col gap-3 px-4 py-5 sm:flex-row sm:items-center sm:gap-5 sm:px-6">
+        <div className="shrink-0">
+          <h2 className="text-xl font-semibold">Artikelsuche</h2>
+          <p className="text-sm text-background/70">Finde die passenden Reiseartikel.</p>
         </div>
         <div className=" relative w-full h-full min-w-0">
           <ArticleSearch
@@ -72,16 +79,22 @@ export default function ArticleBrowser() {
           />
         </div>
       </div>
-      <div className="p-5 bg-white/15 grow">
-        {queriedArticles && (
-          <ul className="grid gap-4">
+      <div className="min-h-72 bg-white/15 p-3 sm:p-5">
+        {isLoading ? (
+          <div className="grid min-h-60 place-items-center text-sm text-background/75">
+            <span className="animate-pulse">Artikel werden geladen …</span>
+          </div>
+        ) : loadError ? (
+          <div role="alert" className="rounded-xl bg-tertiary/25 p-4 text-sm">{loadError}</div>
+        ) : queriedArticles && (
+          <ul className="grid gap-3 sm:gap-4">
             {queriedArticles.length > 0 ? (
               queriedArticles.map((a) => {
                 const article = { pzn: a.id, ...a };
                 return <Article article={article} key={article.pzn} />;
               })
             ) : (
-              <li key="li-no-results">Keine Ergebnisse</li>
+              <li key="li-no-results" className="rounded-xl bg-background/10 p-5 text-center text-sm text-background/80">Keine passenden Artikel gefunden.</li>
             )}
           </ul>
         )}
@@ -91,6 +104,6 @@ export default function ArticleBrowser() {
         setCurrentPage={setCurrentPage}
         queriedArticleCount={queriedArticleCount}
       />
-    </div>
+    </section>
   );
 }

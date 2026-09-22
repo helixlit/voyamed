@@ -3,7 +3,7 @@ import Suitcase from "./suitcase";
 
 export default function page() {
   return (
-    <div className="flex flex-row max-[1000px]:flex-col w-full p-4 gap-4">
+    <div className="mx-auto flex w-full max-w-360 flex-col gap-4 p-3 sm:p-5 xl:flex-row">
       <Suitcase />
       <Browser />
     </div>

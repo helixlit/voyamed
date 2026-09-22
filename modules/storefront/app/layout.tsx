@@ -24,15 +24,15 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
-      className={`${outfit.variable} h-full overflow-hidden antialiased`}
+      lang="de"
+      className={`${outfit.variable} h-full antialiased`}
     >
-      <body className=" h-screen flex flex-col max-w-screen ">
+      <body className="min-h-[100dvh] flex flex-col max-w-screen overflow-x-hidden">
         <Header />
-        <div className="overflow-scroll">
+        <main className="min-h-0 flex-1 overflow-y-auto overscroll-contain">
           {children}
           <Footer />
-        </div>
+        </main>
         <Modals />
       </body>
     </html>

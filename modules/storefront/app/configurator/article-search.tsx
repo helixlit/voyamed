@@ -29,7 +29,7 @@ export default function ArticleSearch(props: Props) {
   }
 
   return (
-    <div className="w-full flex flex-row items-start justify-left text-foreground">
+    <div className="w-full text-foreground">
       <Search<ArticleWithId>
         filteredItems={props.articles}
         query={props.query}
@@ -37,9 +37,9 @@ export default function ArticleSearch(props: Props) {
         selectedItem={selectedArticle}
         setSelectedItem={setSelectedArticle}
         placeholder="Suche nach Artikel..."
-        divClassName="w-1/3 flex flex-col gap-2 pointer-events-auto w-full"
-        inputClassName="py-1.5 px-4 focus:outline-0 bg-background rounded-full"
-        ulClassName="absolute top-10 z-50 rounded-[20px] py-2 px-4 bg-background/80 text-foreground/90 w-fit"
+        divClassName="relative flex w-full flex-col gap-2"
+        inputClassName="min-h-11 w-full rounded-full bg-background px-4 py-2 text-sm shadow-sm outline-none transition-shadow placeholder:text-foreground/45 focus:ring-2 focus:ring-highlight"
+        ulClassName="absolute top-12 z-30 max-h-64 w-full overflow-y-auto rounded-2xl bg-background p-2 text-foreground shadow-xl"
         liClassName=""
         selectedLiClassName=""
         queryPrisma={queryPrisma}
