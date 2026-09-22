@@ -16,3 +16,16 @@ export async function getShopArticleByPZN(pzn: string) {
 
     return await result.json();
 }
+
+export async function catalogDatabaseFreshSeed() {
+    const result = await fetch(
+        `/api/catalog-database`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ operator: "freshSeed" })
+    });
+
+    return await result.json();
+}

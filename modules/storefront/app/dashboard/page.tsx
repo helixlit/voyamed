@@ -1,7 +1,7 @@
 "use client";
 
 import { createStripeProduct } from "@/lib/stripe/stripe";
-import { addShopArticles } from "@/utils/fetch-api";
+import { addShopArticles, catalogDatabaseFreshSeed } from "@/utils/fetch-api";
 
 
 export const dynamic = "force-dynamic";
@@ -92,6 +92,17 @@ export default function Page() {
           <p>
           </p>
         </div>
+      </div>
+
+      <div className="rounded-xl bg-tertiary justify-items-center p-2 *:w-full">
+        <button
+          className="rounded-xl cursor-pointer p-2 bg-highlight hover:bg-highlight/80 transition-colors"
+          onClick={() => {
+            catalogDatabaseFreshSeed()
+          }}
+        >
+          Reseed catalog database
+        </button>
       </div>
 
     </main >
