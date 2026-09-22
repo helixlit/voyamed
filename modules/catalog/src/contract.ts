@@ -38,5 +38,9 @@ export const catalogContract = contract({
     addShopArticles: rpc({
         input: type({ articlePZNs: 'string[]' }),
         output: type({ created: 'number' })
-    })
+    }),
+    freshSeed: rpc({
+        input: type({}),
+        output: type({ success: 'boolean' }),
+    }),
 });

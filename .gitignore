@@ -60,3 +60,5 @@ package-lock.yaml
 
 .*/.prisma-composer/
 .alchemy/
+
+.prisma-composer

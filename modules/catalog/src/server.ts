@@ -106,6 +106,9 @@ const handler = serve(service, {
                 created: count
             });
         },
+        freshSeed: async () => ({
+            success: await seed(),
+        }),
     }
 },
 );
@@ -115,13 +118,11 @@ Bun.serve({ port, hostname: '0.0.0.0', fetch: handler });
 console.debug(`Catalog server up!`);
 
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 async function seed() {
-
 
     await new Promise<void>((resolve) => setTimeout(resolve, 500));
 
-    let skip = 360000;
+    let skip = 0;
     const take = 10000;
     let localArticleTotal = 0;
     while (true) {
@@ -172,4 +173,6 @@ async function seed() {
         if (skip >= antoniusArticleTotal)
             break;
     }
+
+    return true;
 }
