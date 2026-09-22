@@ -50,7 +50,13 @@ export default function ShoppingCartModal() {
                 </p>
               </div>
               <button onClick={async () => {
-                const url = await createStripeCeckout(bundles[0].articles)
+                const checkoutItems = bundles.flatMap((bundle) =>
+                  bundle.articles.map((item) => ({
+                    ...item,
+                    quantity: item.quantity * bundle.quantity,
+                  })),
+                );
+                const url = await createStripeCeckout(checkoutItems)
                 console.debug(`Open url ${url}`);
                 window.open(url);
               }}
