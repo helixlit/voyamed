@@ -4,6 +4,10 @@ import { nodeBuild } from '@prisma/composer/node/control';
 import { prismaCloud, prismaState } from '@prisma/composer-prisma-cloud/control';
 
 export default defineConfig({
-    extensions: [prismaCloud(), nodeBuild(), nextjsBuild()],
+    extensions: [
+        prismaCloud({ region: 'eu-central-1' }),
+        nodeBuild(),
+        nextjsBuild()
+    ],
     state: prismaState(),
 });
