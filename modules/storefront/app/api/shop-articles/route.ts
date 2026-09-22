@@ -2,7 +2,6 @@ import service from "@/src/service";
 import { ShopArticle } from "@voyamed/catalog/contract";
 import { NextRequest, NextResponse } from "next/server";
 
-
 export async function GET(request: NextRequest) {
     const { catalog } = service.load();
 
@@ -11,10 +10,15 @@ export async function GET(request: NextRequest) {
 
     if (pzn) {
         console.debug(`api/shop-articles/GET: pzn: ${pzn}`);
-        const result: ShopArticle = (await catalog.getShopArticleByPZN({ pzn })).shopArticle;
-
-        return NextResponse.json(result);
+        try {
+            const result = await catalog.getShopArticleByPZN({ pzn });
+            if (!result.shopArticle) throw new Error(`catalog.getShopArticleByPZN returned no article!`);
+            return NextResponse.json(result.shopArticle);
+        } catch (e) {
+            console.error(`Could not get shop article with pzn ${pzn} because ${e}`)
+        };
     }
+
 
     const query = searchParams.get("query") ?? "";
 

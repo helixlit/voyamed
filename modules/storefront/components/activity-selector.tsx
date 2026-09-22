@@ -1,5 +1,5 @@
 import { Activity } from "@/utils/types"
-import kits from "@/data/konfigurator/kits.json";
+import kits from "../data/konfigurator/kits.json";
 import React from "react";
 
 interface Props {

@@ -106,6 +106,34 @@ const handler = serve(service, {
                 created: count
             });
         },
+        addArticles: async ({ articlePZNs }) => {
+            const shopArticlesToAdd =
+                articlePZNs.map((a) => ({
+                    pzn: a,
+                }));
+
+            let count = 0;
+            for (const s of shopArticlesToAdd) {
+                try {
+                    const articleReturn =
+                        await antoniusClient.getArticleReturn({ pzn: s.pzn });
+
+                    const article = mapArticles(articleReturn)[0];
+
+                    await db.client.orm.public.Article.create(article);
+
+                    await db.client.orm.public.ShopArticle
+                        .create(s);
+                    count++;
+                } catch (e) {
+                    console.log(`Could not create Article because of ${e}!`)
+                }
+            }
+
+            return ({
+                created: count
+            });
+        },
         freshSeed: async () => ({
             success: await seed(),
         }),
