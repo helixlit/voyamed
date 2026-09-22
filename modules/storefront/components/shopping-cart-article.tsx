@@ -26,10 +26,10 @@ export default function ShoppingCartArticle({ article, bundleName }: Props) {
   return (
     <div className="@container py-1 px-3">
       <div className="cursor-default flex @max-[500px]:flex-col h-full gap-4 justify-between py-1 items-center  w-full">
-        <div className="@max-[500px]:border-b @min-[500px]:w-2/3 w-full flex items-center justify-between @max-[500px]:justify-center pb-2">
+        <div className=" @min-[500px]:w-2/3 w-full flex items-center justify-between @max-[500px]:justify-left">
           {article.article.name}
         </div>
-        <div className="@min-[500px]:w-1/3 flex gap-4 items-center justify-between select-none h-fit @max-[500px]:w-full">
+        <div className="@max-[500px]:border-b @min-[500px]:w-1/3 flex gap-4 items-center justify-between select-none h-fit @max-[500px]:w-full pb-2">
           <span className="flex gap-3 justify-center items-center w-full">
             <span className="">UVP:</span>
             <span className="font-semibold flex justify-between w-full">

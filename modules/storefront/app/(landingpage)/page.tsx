@@ -1,4 +1,3 @@
-import Bundels from "./(bundles)/Bundels"
 import BundleBrowser from "./(bundles)/bundle-browser"
 import FQA from "./FQA"
 import Hero from "./hero"
@@ -9,7 +8,6 @@ function page() {
       <Hero />
       <FQA />
       <BundleBrowser />
-      <Bundels />
     </div >
   )
 }

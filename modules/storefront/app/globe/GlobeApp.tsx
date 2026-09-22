@@ -5,8 +5,7 @@ import Search from "./Search";
 import WorldGlobe from "./WorldGlobe";
 import { Feature, FeatureCollection } from "geojson";
 import { countries as CountriesDetails } from "@/data/konfigurator/countries.json";
-import kits from "@/data/konfigurator/kits.json";
-import { Activity, Country, CountryKit } from "@/utils/types";
+import { Activity, Country } from "@/utils/types";
 import ActivitySelector from "@/components/activity-selector";
 import BundleDisplay from "@/components/bundle-display";
 
@@ -19,7 +18,11 @@ export default function GlobeContext() {
     const [countryDetails, setCountryDetails] = useState<Country>();
 
     useEffect(() => {
-        setCountryDetails(CountriesDetails.find(c => c.iso3 === selectedCountry?.id));
+        const countryId = CountriesDetails.find(c => c.iso3 === selectedCountry?.id);
+        if (countryId)
+            setCountryDetails(CountriesDetails.find(c => c.iso3 === selectedCountry?.id));
+        else console
+            .debug(`Could not find Country with iso3 ${selectedCountry?.id}`)
     }, [selectedCountry]);
 
     return (
@@ -36,7 +39,7 @@ export default function GlobeContext() {
                 selectedCountry={selectedCountry}
                 setSelectedCountry={setSelectedCountry}
             />
-            {selectedCountry && countryDetails && (
+            {selectedCountry !== null && countryDetails && (
                 <div className="absolute right-0 m-3 p-2 rounded-xl bg-highlight text-background max-w-[31%]">
                     <div className="flex items-center gap-4">
                         Reiseziel: {countryDetails?.name}

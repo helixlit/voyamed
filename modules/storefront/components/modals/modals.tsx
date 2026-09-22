@@ -11,7 +11,7 @@ export default function Modals() {
     <div>
       <div
         className={`z-100 top-0 absolute w-screen h-screen 
-${isBlurred ? "bg-black/60" : "bg-black/0"} pointer-events-none transition-all duration-300 
+${isBlurred ? "bg-black/60" : "bg-black/0"} pointer-events-none transition-colors duration-300 
           `}
       ></div>
       {isBlurred && (

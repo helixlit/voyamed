@@ -14,17 +14,9 @@ export default function ShoppingCart() {
             if (!(bundle.name == "default"))
               return (
                 <li key={bundle.name} className="pl-4">
-                  <ShoppingCartBundleComponent bundle={bundle} />
-                  <ul>
-                    {bundle.articles.map((article) => (
-                      <li key={article.article.pzn} className="pl-4 border-l">
-                        <ShoppingCartArticle
-                          article={article}
-                          bundleName={bundle.name}
-                        />
-                      </li>
-                    ))}
-                  </ul>
+                  <ShoppingCartBundleComponent
+                    bundle={bundle}
+                  />
                 </li>
               );
             if (bundle.articles.length <= 0 && bundles.length <= 1)

@@ -51,8 +51,10 @@ export default function ShoppingCartModal() {
               </div>
               <button onClick={async () => {
                 const url = await createStripeCeckout(bundles[0].articles)
+                console.debug(`Open url ${url}`);
                 window.open(url);
-              }} className="bg-foreground rounded-full w-full text-background p-2">
+              }}
+                className="bg-foreground rounded-full w-full text-background p-2 cursor-pointer">
                 Zur Kasse
               </button>
             </div>
