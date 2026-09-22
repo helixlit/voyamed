@@ -27,9 +27,9 @@ export default function RootLayout({
       lang="de"
       className={`${outfit.variable} h-full antialiased`}
     >
-      <body className="min-h-[100dvh] flex flex-col max-w-screen overflow-x-hidden">
+      <body className="min-h-[100dvh] max-w-screen overflow-x-hidden">
         <Header />
-        <main className="min-h-0 flex-1 overflow-y-auto overscroll-contain">
+        <main>
           {children}
           <Footer />
         </main>

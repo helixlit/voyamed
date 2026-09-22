@@ -15,6 +15,7 @@ export default function Article({ article }: Props) {
   );
 
   const [justAdded, setJustAdded] = useState(false);
+  const [imageSrc, setImageSrc] = useState(`/articles/${article.pzn}.jpg`);
   const formattedPrice = new Intl.NumberFormat("de-DE", {
     style: "currency",
     currency: "EUR",
@@ -30,11 +31,12 @@ export default function Article({ article }: Props) {
     <article className="group flex gap-4 rounded-2xl bg-background p-3 text-foreground shadow-sm ring-1 ring-black/5 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md sm:p-4">
       <div className="relative h-28 w-28 shrink-0 overflow-hidden rounded-xl bg-white sm:h-32 sm:w-32">
         <Image
-          src={`/articles/${article.pzn}.jpg`}
+          src={imageSrc}
           alt={article.name}
           fill
           sizes="(max-width: 640px) 112px, 128px"
           className="object-contain p-2 transition-transform duration-500 group-hover:scale-105"
+          onError={() => setImageSrc("/articles/placeholder.svg")}
         />
       </div>
       <div className="min-w-0 flex-1">

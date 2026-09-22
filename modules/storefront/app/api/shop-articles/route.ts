@@ -1,35 +1,50 @@
 import service from "@/src/service";
+import {
+    canUseLocalCatalogPreview,
+    getLocalShopArticle,
+    getLocalShopArticles,
+} from "@/lib/local-catalog-preview";
 import { ShopArticle } from "@voyamed/catalog/contract";
 import { NextRequest, NextResponse } from "next/server";
 
 
 export async function GET(request: NextRequest) {
-    const { catalog } = service.load();
-
     const searchParams = request.nextUrl.searchParams;
     const pzn = searchParams.get("pzn") ?? "";
-
-    if (pzn) {
-        console.debug(`api/shop-articles/GET: pzn: ${pzn}`);
-        const result: ShopArticle = (await catalog.getShopArticleByPZN({ pzn })).shopArticle;
-
-        return NextResponse.json(result);
-    }
-
     const query = searchParams.get("query") ?? "";
-
-    console.debug(`api/shop-articles/GET: query: ${query}`);
-
     const take = Number(searchParams.get("take") ?? 20);
     const skip = Number(searchParams.get("skip") ?? 0);
 
-    const result: Array<ShopArticle> = (await catalog.getShopArticles({
-        query,
-        take,
-        skip,
-    })).shopArticles;
+    try {
+        const { catalog } = service.load();
 
-    return NextResponse.json(result);
+        if (pzn) {
+            const result: ShopArticle = (await catalog.getShopArticleByPZN({ pzn })).shopArticle;
+            return NextResponse.json(result);
+        }
+
+        const result: Array<ShopArticle> = (await catalog.getShopArticles({
+            query,
+            take,
+            skip,
+        })).shopArticles;
+
+        return NextResponse.json(result);
+    } catch (error) {
+        if (!canUseLocalCatalogPreview()) {
+            return NextResponse.json({ error: "Der Artikelkatalog ist derzeit nicht erreichbar." }, { status: 503 });
+        }
+
+        if (pzn) {
+            const article = getLocalShopArticle(pzn);
+            return article
+                ? NextResponse.json(article)
+                : NextResponse.json({ error: "Artikel nicht gefunden." }, { status: 404 });
+        }
+
+        console.warn("Lokale Katalogvorschau wird verwendet:", error);
+        return NextResponse.json(getLocalShopArticles(query, take, skip));
+    }
 }
 
 export async function POST(request: NextRequest) {
