@@ -106,6 +106,37 @@ const handler = serve(service, {
                 created: count
             });
         },
+        addArticles: async ({ articlePZNs }) => {
+            const shopArticlesToAdd =
+                articlePZNs.map((a) => ({
+                    pzn: a,
+                }));
+
+            let count = 0;
+            for (const s of shopArticlesToAdd) {
+                try {
+                    const articleReturn =
+                        await antoniusClient.getArticleReturn({ pzn: s.pzn });
+
+                    const article = mapArticles(articleReturn)[0];
+
+                    await db.client.orm.public.Article.create(article);
+
+                    await db.client.orm.public.ShopArticle
+                        .create(s);
+                    count++;
+                } catch (e) {
+                    console.log(`Could not create Article because of ${e}!`)
+                }
+            }
+
+            return ({
+                created: count
+            });
+        },
+        freshSeed: async () => ({
+            success: await seed(),
+        }),
     }
 },
 );
@@ -115,13 +146,11 @@ Bun.serve({ port, hostname: '0.0.0.0', fetch: handler });
 console.debug(`Catalog server up!`);
 
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 async function seed() {
-
 
     await new Promise<void>((resolve) => setTimeout(resolve, 500));
 
-    let skip = 360000;
+    let skip = 0;
     const take = 10000;
     let localArticleTotal = 0;
     while (true) {
@@ -172,4 +201,6 @@ async function seed() {
         if (skip >= antoniusArticleTotal)
             break;
     }
+
+    return true;
 }

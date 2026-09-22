@@ -1,7 +1,7 @@
 "use client";
 
 import { createStripeProduct } from "@/lib/stripe/stripe";
-import { addShopArticles } from "@/utils/fetch-api";
+import { addArticles, addShopArticles, catalogDatabaseFreshSeed } from "@/utils/fetch-api";
 
 
 export const dynamic = "force-dynamic";
@@ -40,6 +40,37 @@ export default function Page() {
   }
 
 
+  const handleSubmitAddArticles = async (event: React.ChangeEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const formData = new FormData(event.currentTarget);
+
+    console.debug(formData);
+
+    const file = formData.get('file2');
+
+    if (!(file instanceof File) || file.size === 0) {
+      console.error("Please select a JSON file!");
+      return;
+    }
+
+    try {
+      const text = await file.text();
+      const json = JSON.parse(text);
+
+      const addArticlesResult = await addArticles(json);
+
+      if (addArticlesResult.created >= 0) {
+        console.log(`Succesfully added ${addArticlesResult.created}!`);
+      }
+      else console.log(`Error while trying to call catalog!`);
+
+    } catch {
+      console.error("Invalid JSON file.")
+    }
+
+  }
+
   return (
     <main className="grid grid-cols-2 p-2 gap-2">
       <div className="grid p-2 rounded-xl bg-highlight gap-2">
@@ -76,25 +107,67 @@ export default function Page() {
           </button>
         </form>
       </div>
-      <div className="grid grid-cols-2 p-2 rounded-xl bg-secondary gap-2">
-        <p className="col-span-1">
+      <div className="grid p-2 rounded-xl bg-highlight gap-2">
+        <p className="">
+          Add Articles:
+        </p>
+
+        <form
+          onSubmit={handleSubmitAddArticles}
+          className="grid gap-2 justify-items-center *:w-full *:rounded-xl *:p-2"
+        >
+
+          <label
+            htmlFor="file2"
+            className="border-2 border-gray-500 hover:border-gray-100  border-dashed bg-background cursor-pointer text-center"
+          >
+            <p>
+              Select a json file with Article PZNs...
+            </p>
+            <input
+              id="file2"
+              type='file2'
+              name='file2'
+              accept='.json,application/json'
+              className="sr-only"
+            />
+          </label>
+
+          <button
+            type='submit'
+            className='cursor-pointer bg-secondary text-background'
+          >
+            Add PZNs to catalog database and shop!
+          </button>
+        </form>
+      </div>
+      <div className="grid grid-cols-2 grid-rows-3 p-2 rounded-xl bg-secondary gap-2">
+        <p className="col-span-1 text-background row-span-1">
           Manage Stripe products:
         </p>
-        <div className="grid p-2 gap-2 justify-items-center *:w-full col-span-2">
+        <div className="grid gap-2 justify-items-center *:w-full col-span-2 row-span-2 grow">
           <button
-            className="rounded-xl cursor-pointer p-2 bg-tertiary text-background"
+            className="rounded-xl cursor-pointer p-2 bg-tertiary text-background h-full"
             onClick={() => {
               createStripeProduct("Test", "Test", 1000);
             }}
           >
             Create Stripe Products
           </button>
-          <p>
-          </p>
         </div>
+      </div>
+
+      <div className="rounded-xl bg-tertiary justify-items-center p-2 *:w-full">
+        <button
+          className="rounded-xl cursor-pointer p-2 bg-highlight hover:bg-highlight/80 transition-colors"
+          onClick={() => {
+            catalogDatabaseFreshSeed()
+          }}
+        >
+          Reseed catalog database
+        </button>
       </div>
 
     </main >
   )
-
 }

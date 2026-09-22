@@ -1,5 +1,5 @@
 import { Activity, ClimateZone, CountryKit } from "@/utils/types";
-import kits from "@/data/konfigurator/kits.json"
+import kits from "../data/konfigurator/kits.json"
 import { useEffect, useState } from "react";
 import Article from "@/app/configurator/article";
 import { getShopArticleByPZN } from "@/utils/fetch-api";
@@ -16,7 +16,17 @@ export default function BundleDisplay(props: Props) {
   const { addBundle }
     = useShoppingCartStore((state) => state);
 
+  if (!kits) {
+    console.error(`Can not read /data/konfigurator/kits.json`)
+    return;
+  }
+
   useEffect(() => {
+    if (!kits) {
+      console.error(`Can not read /data/konfigurator/kits.json`)
+      return;
+    }
+
     const newPZNs: string[] = [];
 
     for (const pzn of kits.basis.produkte) {
@@ -46,7 +56,10 @@ export default function BundleDisplay(props: Props) {
     (async () => {
       const articles = [];
       for (const pzn of newPZNs) {
-        articles.push((await getShopArticleByPZN(pzn)).article)
+        const result = await getShopArticleByPZN(pzn);
+        if (result.article)
+          articles.push(result.article);
+        else console.error(`Could not find shop-article with pzn ${pzn}`);
       }
       setArticles(articles);
       console.debug(articles);
@@ -55,8 +68,6 @@ export default function BundleDisplay(props: Props) {
   }, [props.activity, props.country])
 
   const addBundleToCart = () => {
-
-
     if (!props.country || !kits.activities || !props.activity) return;
     const name
       = `${props.country.name}-${kits.activities[props.activity].name}-Bundle`;
@@ -70,12 +81,12 @@ export default function BundleDisplay(props: Props) {
 
   return (
     <section id="bundle-display">
-      {props.country && props.activity ?
+      {props.country && props.activity && kits ?
         <div>
           <h2> {props.country.name}-{kits.activities[props.activity].name}-Bundle</h2>
           <div className="grid">
             <div>
-              <p>
+              <section>
                 {props.country.name}: {kits.klimazonen[props.country.klimazone as ClimateZone].beschreibung}<br />
                 {props.country.hygiene_risiko === "hoch" ?
                   <p>
@@ -83,7 +94,7 @@ export default function BundleDisplay(props: Props) {
                     Hygiene-Kit wurde deshalb hinzugefügt.
                   </p> : <p></p>
                 }
-              </p>
+              </section>
               <p>
                 {kits.activities[props.activity].name}: {kits.activities[props.activity].beschreibung}
               </p>

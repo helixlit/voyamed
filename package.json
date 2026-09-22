@@ -18,11 +18,13 @@
   "dependencies": {
     "@effect/platform-bun": "4.0.0-rc.112",
     "@prisma/client": "^7.10.0",
+    "@prisma/composer": "0.20.0",
     "@prisma/composer-cli": "0.16.0",
+    "@prisma/composer-prisma-cloud": "0.20.0",
     "@prisma/orm-postgres": "8.0.0-rc.9",
     "@voyamed/catalog": "workspace:*",
     "@voyamed/storefront": "workspace:*",
-    "alchemy": "2.0.0-beta.77",
+    "alchemy": "2.0.0-beta.74",
     "arktype": "^2.2.3",
     "dotenv": "^17.4.2",
     "effect": "4.0.0-rc.112",
@@ -37,7 +39,7 @@
     "@types/bun": "^1.4.2",
     "@types/node": "^20.19.43",
     "eslint": "^10.10.0",
-    "prisma": "8.0.0-rc.13",
+    "prisma": "8.0.0-rc.15",
     "turbo": "^2.10.12",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.70.0"
