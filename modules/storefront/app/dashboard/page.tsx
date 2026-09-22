@@ -38,6 +38,8 @@ export default function Page() {
     }
 
   }
+
+
   const handleSubmitAddArticles = async (event: React.ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -45,7 +47,7 @@ export default function Page() {
 
     console.debug(formData);
 
-    const file = formData.get('file');
+    const file = formData.get('file2');
 
     if (!(file instanceof File) || file.size === 0) {
       console.error("Please select a JSON file!");
@@ -116,16 +118,16 @@ export default function Page() {
         >
 
           <label
-            htmlFor="file"
+            htmlFor="file2"
             className="border-2 border-gray-500 hover:border-gray-100  border-dashed bg-background cursor-pointer text-center"
           >
             <p>
               Select a json file with Article PZNs...
             </p>
             <input
-              id="file"
-              type='file'
-              name='file'
+              id="file2"
+              type='file2'
+              name='file2'
               accept='.json,application/json'
               className="sr-only"
             />
