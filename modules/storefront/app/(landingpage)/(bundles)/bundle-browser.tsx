@@ -50,6 +50,17 @@ export default function BundleBrowser() {
     console.debug(`Current Kit: ${selectedCountry?.name} -> ${selectedActivity}`)
   }, [selectedActivity, selectedCountry])
 
+  function selectQuickKit(countryCode: string, activity: Activity) {
+    const country = countries.countries.find((item) => item.code === countryCode);
+    if (!country) return;
+    setSelectedCountry({ id: country.code, ...country });
+    setSelectedActivity(activity);
+    setQuery(country.name);
+    window.setTimeout(() => {
+      document.getElementById("bundle-display")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 50);
+  }
+
   useEffect(() => {
     if (selectedActivity && !availableActivities.includes(selectedActivity)) {
       setSelectedActivity("");
@@ -58,10 +69,9 @@ export default function BundleBrowser() {
 
   return (
     <section className="grid w-full place-items-center gap-6 px-5 py-10">
-      <BundleCarousel />
       <div className="w-full max-w-6xl">
         <h1 className="text-2xl font-semibold sm:text-3xl">Stell dein Reisekit zusammen</h1>
-        <p className="mt-1 text-foreground/65">Wähle erst das Reiseziel und danach eine passende Aktivität.</p>
+        <p className="mt-1 text-foreground/65">Suche dein Reiseziel oder wähle direkt ein vorgeschlagenes Kit.</p>
       </div>
       <div className="flex w-full max-w-6xl flex-col gap-3 sm:flex-row sm:items-start">
         <Search<CountryKit>
@@ -84,6 +94,11 @@ export default function BundleBrowser() {
           availableActivities={availableActivities}
         />
       </div>
+      <BundleCarousel
+        onSelect={selectQuickKit}
+        selectedCountryCode={selectedCountry?.code}
+        selectedActivity={selectedActivity}
+      />
       <BundleDisplay
         country={selectedCountry}
         activity={selectedActivity}
