@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { bundles } from "@/utils/Bundles";
 import type { Activity } from "@/utils/types";
 
@@ -24,7 +24,25 @@ type Props = {
 
 export default function BundleCarousel({ onSelect, selectedCountryCode, selectedActivity }: Props) {
   const track = useRef<HTMLDivElement>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
   const scroll = (direction: 1 | -1) => track.current?.scrollBy({ left: direction * 360, behavior: "smooth" });
+
+  useEffect(() => {
+    if (isPaused || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    // Two seconds of rest on a card, followed by a short smooth transition.
+    const timer = window.setInterval(() => {
+      setActiveIndex((current) => {
+        const next = (current + 1) % bundles.length;
+        const nextCard = track.current?.children.item(next) as HTMLElement | null;
+        nextCard?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+        return next;
+      });
+    }, 3000);
+
+    return () => window.clearInterval(timer);
+  }, [isPaused]);
 
   return (
     <section aria-label="Beliebte Reisekits" className="w-full max-w-6xl">
@@ -38,17 +56,27 @@ export default function BundleCarousel({ onSelect, selectedCountryCode, selected
           <button type="button" aria-label="Nächste Kits" onClick={() => scroll(1)} className="grid h-10 w-10 place-items-center rounded-full border border-foreground/15 bg-background text-lg hover:bg-foreground/5">›</button>
         </div>
       </div>
-      <div ref={track} className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-3 [scrollbar-width:thin]">
-        {bundles.map((bundle) => {
+      <div
+        ref={track}
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
+        onTouchStart={() => setIsPaused(true)}
+        onTouchEnd={() => setIsPaused(false)}
+        className="flex snap-x snap-mandatory gap-4 overflow-x-auto px-2 pb-5 pt-2 [perspective:1200px] [scrollbar-width:thin]"
+      >
+        {bundles.map((bundle, index) => {
           const selection = quickSelections[bundle.name];
           const isSelected = selection?.countryCode === selectedCountryCode && selection.activity === selectedActivity;
           return (
           <button
             key={bundle.name}
             type="button"
-            onClick={() => selection && onSelect(selection.countryCode, selection.activity)}
+            onClick={() => {
+              setActiveIndex(index);
+              if (selection) onSelect(selection.countryCode, selection.activity);
+            }}
             aria-pressed={isSelected}
-            className={`group relative h-56 min-w-[17rem] snap-start overflow-hidden rounded-2xl bg-foreground text-left text-background shadow-sm transition duration-300 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-highlight sm:min-w-[20rem] ${isSelected ? "ring-4 ring-highlight" : "hover:-translate-y-1 hover:shadow-lg"}`}
+            className={`group relative h-56 min-w-[17rem] snap-center overflow-hidden rounded-2xl bg-foreground text-left text-background shadow-sm transition-[transform,opacity,box-shadow] duration-700 ease-out focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-highlight sm:min-w-[20rem] ${index === activeIndex ? "scale-100 opacity-100 [transform:rotateY(0deg)_translateZ(24px)] shadow-xl" : "scale-[0.96] opacity-85 [transform:rotateY(-8deg)_translateZ(0px)] hover:scale-[0.98] hover:opacity-100 hover:[transform:rotateY(0deg)_translateZ(12px)]"} ${isSelected ? "ring-4 ring-highlight" : ""}`}
           >
             <Image src={bundle.img} alt="" fill sizes="(max-width: 640px) 272px, 320px" className="object-cover opacity-75" />
             <div className="absolute inset-0 bg-gradient-to-t from-foreground via-foreground/35 to-transparent" />

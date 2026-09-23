@@ -24,5 +24,10 @@
   "sources": [
     { "label": "Auswärtiges Amt: Reise- und Sicherheitshinweise", "url": "https://www.auswaertiges-amt.de/de/reiseundsicherheit" },
     { "label": "CDC Travelers’ Health", "url": "https://wwwnc.cdc.gov/travel/destinations/list/" }
+  ],
+  "vaccineSources": [
+    { "label": "RKI/STIKO & DTG: Reiseimpfungen", "url": "https://edoc.rki.de/handle/176904/13778" },
+    { "label": "WHO: Vaccines and travel", "url": "https://www.who.int/travel-advice/vaccines" },
+    { "label": "Auswärtiges Amt: Reisetipps", "url": "https://www.auswaertiges-amt.de/de/reiseundsicherheit/reiseratgeber-256726" }
   ]
 }
