@@ -26,23 +26,37 @@ export default function BundleCarousel({ onSelect, selectedCountryCode, selected
   const track = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
-  const scroll = (direction: 1 | -1) => track.current?.scrollBy({ left: direction * 360, behavior: "smooth" });
+
+  function scrollToCard(index: number) {
+    const carousel = track.current;
+    const card = carousel?.children.item(index) as HTMLElement | null;
+    if (!carousel || !card) return;
+
+    // Deliberately move only the horizontal carousel. `scrollIntoView` also
+    // scrolls the document vertically, which caused the jump back to the top.
+    const carouselBounds = carousel.getBoundingClientRect();
+    const cardBounds = card.getBoundingClientRect();
+    const targetLeft = carousel.scrollLeft
+      + cardBounds.left
+      - carouselBounds.left
+      - (carousel.clientWidth - card.clientWidth) / 2;
+    carousel.scrollTo({ left: Math.max(0, targetLeft), behavior: "smooth" });
+  }
+
+  function moveCarousel(direction: 1 | -1) {
+    const next = (activeIndex + direction + bundles.length) % bundles.length;
+    setActiveIndex(next);
+    scrollToCard(next);
+  }
 
   useEffect(() => {
     if (isPaused || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     // Two seconds of rest on a card, followed by a short smooth transition.
-    const timer = window.setInterval(() => {
-      setActiveIndex((current) => {
-        const next = (current + 1) % bundles.length;
-        const nextCard = track.current?.children.item(next) as HTMLElement | null;
-        nextCard?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
-        return next;
-      });
-    }, 3000);
+    const timer = window.setInterval(() => moveCarousel(1), 3000);
 
     return () => window.clearInterval(timer);
-  }, [isPaused]);
+  }, [activeIndex, isPaused]);
 
   return (
     <section aria-label="Beliebte Reisekits" className="w-full max-w-6xl">
@@ -52,8 +66,8 @@ export default function BundleCarousel({ onSelect, selectedCountryCode, selected
           <p className="text-sm text-foreground/65">Wähle ein Kit – danach siehst du alle enthaltenen Arzneimittel und kannst es anpassen.</p>
         </div>
         <div className="hidden gap-2 sm:flex">
-          <button type="button" aria-label="Vorherige Kits" onClick={() => scroll(-1)} className="grid h-10 w-10 place-items-center rounded-full border border-foreground/15 bg-background text-lg hover:bg-foreground/5">‹</button>
-          <button type="button" aria-label="Nächste Kits" onClick={() => scroll(1)} className="grid h-10 w-10 place-items-center rounded-full border border-foreground/15 bg-background text-lg hover:bg-foreground/5">›</button>
+          <button type="button" aria-label="Vorherige Kits" onClick={() => moveCarousel(-1)} className="grid h-10 w-10 place-items-center rounded-full border border-foreground/15 bg-background text-lg hover:bg-foreground/5">‹</button>
+          <button type="button" aria-label="Nächste Kits" onClick={() => moveCarousel(1)} className="grid h-10 w-10 place-items-center rounded-full border border-foreground/15 bg-background text-lg hover:bg-foreground/5">›</button>
         </div>
       </div>
       <div
@@ -73,6 +87,7 @@ export default function BundleCarousel({ onSelect, selectedCountryCode, selected
             type="button"
             onClick={() => {
               setActiveIndex(index);
+              scrollToCard(index);
               if (selection) onSelect(selection.countryCode, selection.activity);
             }}
             aria-pressed={isSelected}
