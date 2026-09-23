@@ -20,10 +20,6 @@ const slides = [
 export default function Hero() {
   const [index, setIndex] = useState(0);
 
-  // useEffect(() => {
-  //   setIndex(0);
-  // }, [])
-
   useEffect(() => {
     const timeout = setTimeout(() => {
       setIndex((prev) => (prev + 1) % slides.length);
@@ -73,7 +69,7 @@ export default function Hero() {
             <h1>Hier bestellen</h1>
           </Link>
         </div>
-        <ul className="z-100 relative bottom-0 p-4 left-0 flex gap-10 w-screen justify-center align-middle">
+        <ul className="z-50 relative bottom-0 p-4 left-0 flex gap-10 w-screen justify-center align-middle">
           {slides.map((slide, i) => (
             <li
               key={slide.title1}
