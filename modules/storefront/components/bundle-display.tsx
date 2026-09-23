@@ -104,6 +104,7 @@ export default function BundleDisplay(props: Props) {
               {articles.map(a => (
                 <Article
                   article={a}
+                  key={a.pzn}
                 />
               ))}
             </ul>
