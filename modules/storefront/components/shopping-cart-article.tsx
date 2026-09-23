@@ -45,66 +45,66 @@ export default function ShoppingCartArticle({ article, bundleName }: Props) {
             </span>
           </span>
           <span className="flex items-center rounded-full border border-foreground/15 bg-background">
-              <button
-                type="button"
-                aria-label={`${article.article.name}: Menge verringern`}
-                onClick={() =>
-                  setQuantity(
-                    changeArticleQuantity(bundleName, article.article.pzn, -1),
+            <button
+              type="button"
+              aria-label={`${article.article.name}: Menge verringern`}
+              onClick={() =>
+                setQuantity(
+                  changeArticleQuantity(bundleName, article.article.pzn, -1),
+                )
+              }
+              className="grid min-h-10 min-w-10 place-items-center rounded-full text-lg transition-colors hover:bg-foreground/8 text-foreground"
+            >
+              <div className="flex items-center">-</div>
+            </button>
+            <form
+              className="w-11"
+              onSubmit={(e) => {
+                e.preventDefault();
+                setArticleQuantity(bundleName, article.article.pzn, quantity);
+              }}
+            >
+              <input
+                type="number"
+                inputMode="numeric"
+                min="0"
+                max="20"
+                aria-label={`${article.article.name}: Menge`}
+                className="min-h-10 w-11 rounded-full bg-highlight text-center text-sm font-medium outline-none"
+                name="quantity"
+                defaultValue={article.quantity}
+                value={quantity}
+                onChange={(e) => {
+                  if (e.target.value === "" || Number(e.target.value) === 0) {
+                    setQuantity(0);
+                    return;
+                  }
+                  const newQuantity = Number(e.target.value);
+                  if (!newQuantity) return;
+                  setQuantity(newQuantity);
+                }}
+                onBlur={() =>
+                  setArticleQuantity(
+                    bundleName,
+                    article.article.pzn,
+                    quantity,
                   )
                 }
-                className="grid min-h-10 min-w-10 place-items-center rounded-full text-lg transition-colors hover:bg-foreground/8"
-              >
-                <div className="flex items-center">-</div>
-              </button>
-              <form
-                className="w-11"
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  setArticleQuantity(bundleName, article.article.pzn, quantity);
-                }}
-              >
-                <input
-                  type="number"
-                  inputMode="numeric"
-                  min="1"
-                  max="20"
-                  aria-label={`${article.article.name}: Menge`}
-                  className="min-h-10 w-11 rounded-full bg-highlight text-center text-sm font-medium outline-none"
-                  name="quantity"
-                  defaultValue={article.quantity}
-                  value={quantity}
-                  onChange={(e) => {
-                    if (e.target.value === "" || Number(e.target.value) === 0) {
-                      setQuantity(0);
-                      return;
-                    }
-                    const newQuantity = Number(e.target.value);
-                    if (!newQuantity) return;
-                    setQuantity(newQuantity);
-                  }}
-                  onBlur={() =>
-                    setArticleQuantity(
-                      bundleName,
-                      article.article.pzn,
-                      quantity,
-                    )
-                  }
-                ></input>
-              </form>
-              <button
-                type="button"
-                aria-label={`${article.article.name}: Menge erhöhen`}
-                className="grid min-h-10 min-w-10 place-items-center rounded-full text-lg transition-colors hover:bg-foreground/8"
-                onClick={() => {
-                  setQuantity(
-                    changeArticleQuantity(bundleName, article.article.pzn, 1),
-                  );
-                }}
-              >
-                <div className="flex items-center">+</div>
-              </button>
-            </span>
+              ></input>
+            </form>
+            <button
+              type="button"
+              aria-label={`${article.article.name}: Menge erhöhen`}
+              className="grid min-h-10 min-w-10 place-items-center rounded-full text-lg transition-colors hover:bg-foreground/8 text-foreground"
+              onClick={() => {
+                setQuantity(
+                  changeArticleQuantity(bundleName, article.article.pzn, 1),
+                );
+              }}
+            >
+              <div className="flex items-center">+</div>
+            </button>
+          </span>
         </div>
       </div>
     </div>
