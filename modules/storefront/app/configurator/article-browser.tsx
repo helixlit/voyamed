@@ -35,26 +35,29 @@ export default function ArticleBrowser() {
   async function queryPrisma() {
     if (lastQuery === query && lastPage === currentPage && lastIndications === indications) return;
 
-    console.debug(`ArticleBrowser:40: queryArticles called`);
+    console.debug(`ArticleBrowser:38: queryArticles called`);
+    console.debug(`ArticleBrowser:39: indications: ${indications}`);
 
     lastQuery = query;
     lastPage = currentPage;
     lastIndications = indications;
 
-    const normilizedQuery = query.replace(/\s/g, "").replaceAll('-', '').toLocaleLowerCase("de-DE");
+    const normilizedQuery = query.replaceAll(" ", "").replaceAll('-', '').toLocaleLowerCase("de-DE");
 
     let currentArticles;
     if (indications.length > 0) {
-      currentArticles = articles.filter(a => ((indications.includes(a.kategorie as Indication)
-        && [a.name, a.name_original, a.pzn, a.hersteller, a.indikation, ...a.suchbegriffe].some((value) =>
-          value.toLocaleLowerCase("de-DE").replace(/\s/g, "").replaceAll('-', '').includes(normilizedQuery)))));
+      currentArticles = articles.filter((a) => ((indications.includes(a.kategorie as Indication)
+        && ([a.name, a.name_original, a.pzn, a.hersteller, a.indikation, ...a.suchbegriffe].some((value) =>
+          value.toLocaleLowerCase("de-DE").replace(" ", "").replaceAll('-', '').includes(normilizedQuery)) || !query))));
     } else {
       currentArticles = articles.filter(a => [a.name, a.name_original, a.pzn, a.hersteller, a.indikation, ...a.suchbegriffe].some((value) =>
-        value.toLocaleLowerCase("de-DE").replace(/\s/g, "").replaceAll('-', '').includes(normilizedQuery)));
+        value.toLocaleLowerCase("de-DE").replace(" ", "").replaceAll('-', '').includes(normilizedQuery)) || !query);
     }
 
 
-    const pzns = currentArticles.slice(take * currentPage, take * (currentPage + 1)).map(a => a.pzn);
+    console.debug(`ArticleBrowser:59: currentPage: ${currentPage}`);
+
+    const pzns = currentArticles.slice(take * (currentPage - 1), take * (currentPage)).map(a => a.pzn);
 
     console.debug(`ArticleBrowser:59: pznsCount: ${pzns.length}`);
 
@@ -64,7 +67,7 @@ export default function ArticleBrowser() {
       shopArticles.map(s => ({ id: s.pzn, ...s.article }))
     );
 
-    console.debug(`ArticleBrowser:67: queriedArticlesCount: ${queriedArticles.length}`);
+    console.debug(`ArticleBrowser:67: queriedArticlesCount: ${shopArticles.length}`);
 
     setQueriedArticleCount(currentArticles.length);
 
@@ -98,7 +101,7 @@ export default function ArticleBrowser() {
 
   useEffect(() => {
     queryPrisma();
-  }, [currentPage, indications]);
+  }, [currentPage]);
 
   useEffect(() => {
     const setAsyncCurrentPage = async () => {
@@ -112,7 +115,7 @@ export default function ArticleBrowser() {
 
     console.debug(`ArticleBrowser:103: query changed: ${query}`)
     return () => clearTimeout(timeout);
-  }, [query]);
+  }, [query, indications]);
 
 
   return (
