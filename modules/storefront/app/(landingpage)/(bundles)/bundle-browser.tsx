@@ -50,7 +50,6 @@ export default function BundleBrowser() {
             selectedItem={selectedCountry}
             setSelectedItem={setSelectedCountry}
             filteredItems={filteredCountries}
-            queryPrisma={queryPrisma}
             divClassName="flex flex-col gap-2 pointer-events-auto w-full items-start justify-left relative"
             inputClassName="py-1.5 px-4 focus:outline-0 bg-highlight rounded-full"
             ulClassName="absolute top-10 z-50 rounded-[20px] py-2 px-4 bg-highlight/90 text-foreground/90 w-fit text-nowrap min-w-full"

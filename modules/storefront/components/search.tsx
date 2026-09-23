@@ -16,8 +16,6 @@ type Props<T> = {
     selectedItem: T | null;
     setSelectedItem: (value: T | null) => void;
 
-    queryPrisma: (query: string) => Promise<Array<T>>;
-
     placeholder: string;
     divClassName: string;
     inputClassName: string;

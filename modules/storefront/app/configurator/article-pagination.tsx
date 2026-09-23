@@ -14,38 +14,40 @@ export default function ArticlePagination({ currentPage, setCurrentPage, queried
   const pageNumbers = Array.from({ length: Math.min(5, pages - start + 1) }, (_, index) => start + index);
 
   return (
-    <nav aria-label="Artikel-Seiten" className="flex items-center justify-center gap-1 px-3 py-3 text-sm">
-      <button
-        type="button"
-        onClick={() => setCurrentPage(currentPage - 1)}
-        disabled={currentPage === 1}
-        aria-label="Vorherige Seite"
-        className="grid min-h-10 min-w-10 place-items-center rounded-full transition-colors hover:bg-background/15 disabled:cursor-not-allowed disabled:opacity-35"
-      >
-        ←
-      </button>
-      {start > 1 && <span className="px-1 text-background/70">…</span>}
-      {pageNumbers.map((page) => (
+    <section id="article-pagination">
+      <nav aria-label="Artikel-Seiten" className="flex items-center justify-center gap-1 px-3 py-3 text-sm">
         <button
-          key={page}
           type="button"
-          onClick={() => setCurrentPage(page)}
-          aria-current={page === currentPage ? "page" : undefined}
-          className={`grid min-h-10 min-w-10 place-items-center rounded-full transition-all ${page === currentPage ? "bg-highlight font-semibold text-foreground shadow-sm" : "hover:bg-background/15"}`}
+          onClick={() => setCurrentPage(currentPage - 1)}
+          disabled={currentPage === 1}
+          aria-label="Vorherige Seite"
+          className="grid min-h-10 min-w-10 place-items-center rounded-full transition-colors hover:bg-background/15 disabled:cursor-not-allowed disabled:opacity-35"
         >
-          {page}
+          ←
         </button>
-      ))}
-      {pageNumbers.at(-1) !== pages && <span className="px-1 text-background/70">…</span>}
-      <button
-        type="button"
-        onClick={() => setCurrentPage(currentPage + 1)}
-        disabled={currentPage === pages}
-        aria-label="Nächste Seite"
-        className="grid min-h-10 min-w-10 place-items-center rounded-full transition-colors hover:bg-background/15 disabled:cursor-not-allowed disabled:opacity-35"
-      >
-        →
-      </button>
-    </nav>
+        {start > 1 && <span className="px-1 text-background/70">…</span>}
+        {pageNumbers.map((page) => (
+          <button
+            key={page}
+            type="button"
+            onClick={() => setCurrentPage(page)}
+            aria-current={page === currentPage ? "page" : undefined}
+            className={`grid min-h-10 min-w-10 place-items-center rounded-full transition-all ${page === currentPage ? "bg-highlight font-semibold text-foreground shadow-sm" : "hover:bg-background/15"}`}
+          >
+            {page}
+          </button>
+        ))}
+        {pageNumbers.at(-1) !== pages && <span className="px-1 text-background/70">…</span>}
+        <button
+          type="button"
+          onClick={() => setCurrentPage(currentPage + 1)}
+          disabled={currentPage === pages}
+          aria-label="Nächste Seite"
+          className="grid min-h-10 min-w-10 place-items-center rounded-full transition-colors hover:bg-background/15 disabled:cursor-not-allowed disabled:opacity-35"
+        >
+          →
+        </button>
+      </nav>
+    </section>
   );
 }

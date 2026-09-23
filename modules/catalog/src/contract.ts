@@ -27,9 +27,9 @@ export const catalogContract = contract({
         input: type({ query: 'string', take: 'number', skip: 'number' }),
         output: type({ shopArticles: shopArticle.array() })
     }),
-    getShopArticleByPZN: rpc({
-        input: type({ pzn: 'string' }),
-        output: type({ shopArticle })
+    getShopArticlesByPZNs: rpc({
+        input: type({ pzns: 'string[]' }),
+        output: type({ shopArticles: shopArticle.array() })
     }),
     getShopArticleCount: rpc({
         input: type({ query: 'string' }),

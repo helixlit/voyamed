@@ -67,12 +67,12 @@ const handler = serve(service, {
             }
 
         },
-        getShopArticleByPZN: async ({ pzn }) => {
+        getShopArticlesByPZNs: async ({ pzns }) => {
             const result = await db.client.orm.public.ShopArticle
-                .where((sa) => sa.pzn.eq(pzn))
+                .where((sa) => sa.pzn.in(pzns))
                 .include("article")
-                .first() as ShopArticle;
-            return { shopArticle: result };
+                .all() as Array<ShopArticle>;
+            return { shopArticles: result };
         },
         getShopArticleCount: async ({ query }) => {
             return (

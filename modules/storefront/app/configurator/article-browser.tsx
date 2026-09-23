@@ -4,10 +4,12 @@ import ArticleSearch from "./article-search";
 import { useEffect, useState } from "react";
 import ArticlePagination from "./article-pagination";
 import Article from "./article";
-import { ShopArticle } from "@voyamed/catalog/contract";
 import { ArticleWithId, Indication } from "@/utils/types";
 
+import { produkte as articles } from "@/data/konfigurator/produkte.json"
+
 import IndicationSelector from "./indication-selector";
+import { getShopArticlesByPZNs } from "@/utils/fetch-api";
 
 export default function ArticleBrowser() {
   const [query, setQuery] = useState<string>("");
@@ -18,6 +20,8 @@ export default function ArticleBrowser() {
     [],
   );
   const [queriedArticleCount, setQueriedArticleCount] = useState<number>(0);
+
+
   const [isLoading, setIsLoading] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
 
@@ -25,34 +29,76 @@ export default function ArticleBrowser() {
 
   const take = 10;
 
+  let lastQuery: string;
+  let lastPage: number;
+  let lastIndications: Array<Indication>;
   async function queryPrisma() {
-    setIsLoading(true);
-    setLoadError(null);
-    try {
-      const [articleResponse, countResponse] = await Promise.all([
-        fetch(`/api/shop-articles?query=${encodeURIComponent(query)}&take=${take}&skip=${take * (currentPage - 1)}`),
-        fetch(`/api/shop-articles/count?query=${encodeURIComponent(query)}`),
-      ]);
-      if (!articleResponse.ok || !countResponse.ok) throw new Error();
+    if (lastQuery === query && lastPage === currentPage && lastIndications === indications) return;
 
-      const shopArticles: Array<ShopArticle> = await articleResponse.json();
-      setQueriedArticles(
-        shopArticles.map((s) => ({ id: s.pzn, ...s.article }))
-      );
-      const count: number = (await countResponse.json()).count;
-      setQueriedArticleCount(count);
-    } catch {
-      setLoadError("Artikel konnten gerade nicht geladen werden. Bitte erneut versuchen.");
-      setQueriedArticles([]);
-      setQueriedArticleCount(0);
-    } finally {
-      setIsLoading(false);
+    console.debug(`ArticleBrowser:40: queryArticles called`);
+
+    lastQuery = query;
+    lastPage = currentPage;
+    lastIndications = indications;
+
+    const normilizedQuery = query.replace(/\s/g, "").replaceAll('-', '').toLocaleLowerCase("de-DE");
+
+    let currentArticles;
+    if (indications.length > 0) {
+      currentArticles = articles.filter(a => ((indications.includes(a.kategorie as Indication)
+        && [a.name, a.name_original, a.pzn, a.hersteller, a.indikation, ...a.suchbegriffe].some((value) =>
+          value.toLocaleLowerCase("de-DE").replace(/\s/g, "").replaceAll('-', '').includes(normilizedQuery)))));
+    } else {
+      currentArticles = articles.filter(a => [a.name, a.name_original, a.pzn, a.hersteller, a.indikation, ...a.suchbegriffe].some((value) =>
+        value.toLocaleLowerCase("de-DE").replace(/\s/g, "").replaceAll('-', '').includes(normilizedQuery)));
     }
+
+
+    const pzns = currentArticles.slice(take * currentPage, take * (currentPage + 1)).map(a => a.pzn);
+
+    console.debug(`ArticleBrowser:59: pznsCount: ${pzns.length}`);
+
+    const shopArticles = await getShopArticlesByPZNs(pzns);
+
+    setQueriedArticles(
+      shopArticles.map(s => ({ id: s.pzn, ...s.article }))
+    );
+
+    console.debug(`ArticleBrowser:67: queriedArticlesCount: ${queriedArticles.length}`);
+
+    setQueriedArticleCount(currentArticles.length);
+
+    setIsLoading(false);
   }
+
+  // async function queryPrisma() {
+  //   setIsLoading(true);
+  //   setLoadError(null);
+  //   try {
+  //     const [articleResponse, countResponse] = await Promise.all([
+  //       fetch(`/api/shop-articles?query=${encodeURIComponent(query)}&take=${take}&skip=${take * (currentPage - 1)}`),
+  //       fetch(`/api/shop-articles/count?query=${encodeURIComponent(query)}`),
+  //     ]);
+  //     if (!articleResponse.ok || !countResponse.ok) throw new Error();
+
+  //     const shopArticles: Array<ShopArticle> = await articleResponse.json();
+  //     setQueriedArticles(
+  //       shopArticles.map((s) => ({ id: s.pzn, ...s.article }))
+  //     );
+  //     const count: number = (await countResponse.json()).count;
+  //     setQueriedArticleCount(count);
+  //   } catch {
+  //     setLoadError("Artikel konnten gerade nicht geladen werden. Bitte erneut versuchen.");
+  //     setQueriedArticles([]);
+  //     setQueriedArticleCount(0);
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // }
 
   useEffect(() => {
     queryPrisma();
-  }, [currentPage]);
+  }, [currentPage, indications]);
 
   useEffect(() => {
     const setAsyncCurrentPage = async () => {
@@ -64,12 +110,13 @@ export default function ArticleBrowser() {
       queryPrisma();
     }, 500);
 
+    console.debug(`ArticleBrowser:103: query changed: ${query}`)
     return () => clearTimeout(timeout);
   }, [query]);
 
 
   return (
-    <section className="w-full overflow-hidden rounded-2xl bg-secondary text-background shadow-sm">
+    <section id="article-browser" className="w-full overflow-hidden rounded-2xl bg-secondary text-background shadow-sm">
       <div className="flex flex-col gap-3 px-4 py-5 sm:flex-row sm:items-center sm:gap-5 sm:px-6">
         <div className="shrink-0">
           <h2 className="text-xl font-semibold">Artikelsuche</h2>
@@ -79,8 +126,7 @@ export default function ArticleBrowser() {
           <ArticleSearch
             query={query}
             setQuery={setQuery}
-            articles={queriedArticles}
-            setArticles={setQueriedArticles}
+            articles={queriedArticles.slice(0, 5)}
             take={take}
             skip={take * (currentPage - 1)}
           />
@@ -110,6 +156,7 @@ export default function ArticleBrowser() {
           </ul>
         )}
       </div>
+
       <ArticlePagination
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
