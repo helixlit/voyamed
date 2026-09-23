@@ -44,7 +44,6 @@ export default function ShoppingCartBundleComponent({ bundle }: Props) {
               <input
                 className="select-auto border-background px-4 bg-highlight rounded-full field-sizing-content min-w-fit w-15 text-center"
                 name="quantity"
-                defaultValue={bundle.quantity}
                 value={quantity}
                 onChange={(e) => {
                   if (e.target.value === "" || Number(e.target.value) === 0) {
