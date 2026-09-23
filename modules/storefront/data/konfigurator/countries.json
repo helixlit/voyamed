@@ -2123,6 +2123,123 @@
       "region": "Europa",
       "klimazone": "gemaessigt",
       "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "AX",
+      "iso3": "ALA",
+      "name_en": "Åland Islands",
+      "name": "Ålandinseln",
+      "region": "Europa",
+      "klimazone": "gemaessigt",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "CC",
+      "iso3": "CCK",
+      "name_en": "Cocos (Keeling) Islands",
+      "name": "Kokosinseln",
+      "region": "Ozeanien",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "CX",
+      "iso3": "CXR",
+      "name_en": "Christmas Island",
+      "name": "Weihnachtsinsel",
+      "region": "Ozeanien",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "GG",
+      "iso3": "GGY",
+      "name_en": "Guernsey",
+      "name": "Guernsey",
+      "region": "Europa",
+      "klimazone": "gemaessigt",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "IM",
+      "iso3": "IMN",
+      "name_en": "Isle of Man",
+      "name": "Isle of Man",
+      "region": "Europa",
+      "klimazone": "gemaessigt",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "IO",
+      "iso3": "IOT",
+      "name_en": "British Indian Ocean Territory",
+      "name": "Britisches Territorium im Indischen Ozean",
+      "region": "Indischer Ozean",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "JE",
+      "iso3": "JEY",
+      "name_en": "Jersey",
+      "name": "Jersey",
+      "region": "Europa",
+      "klimazone": "gemaessigt",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "NF",
+      "iso3": "NFK",
+      "name_en": "Norfolk Island",
+      "name": "Norfolkinsel",
+      "region": "Ozeanien",
+      "klimazone": "subtropisch",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "PN",
+      "iso3": "PCN",
+      "name_en": "Pitcairn",
+      "name": "Pitcairninseln",
+      "region": "Ozeanien",
+      "klimazone": "subtropisch",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "TF",
+      "iso3": "ATF",
+      "name_en": "French Southern Territories",
+      "name": "Französische Süd- und Antarktisgebiete",
+      "region": "Antarktis",
+      "klimazone": "kalt",
+      "hygiene_risiko": "mittel"
+    },
+    {
+      "code": "BV",
+      "iso3": "BVT",
+      "name_en": "Bouvet Island",
+      "name": "Bouvetinsel",
+      "region": "Antarktis",
+      "klimazone": "kalt",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "HM",
+      "iso3": "HMD",
+      "name_en": "Heard Island and McDonald Islands",
+      "name": "Heard und McDonaldinseln",
+      "region": "Antarktis",
+      "klimazone": "kalt",
+      "hygiene_risiko": "niedrig"
+    },
+    {
+      "code": "UM",
+      "iso3": "UMI",
+      "name_en": "United States Minor Outlying Islands",
+      "name": "Kleinere amerikanische Überseeinseln",
+      "region": "Ozeanien",
+      "klimazone": "tropisch",
+      "hygiene_risiko": "niedrig"
     }
   ]
 }

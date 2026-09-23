@@ -61,11 +61,13 @@ export default function Search<T extends Item>(props: Props<T>) {
                     )
                 });
                 break;
-            case "Enter":
+            case "Enter": {
                 e.preventDefault();
                 if (!props.filteredItems) break;
-                props.setSelectedItem(props.filteredItems[selectedItemIndex]);
+                const item = props.filteredItems[selectedItemIndex];
+                if (item) props.setSelectedItem(item);
                 break;
+            }
         };
     };
 

@@ -3,6 +3,8 @@ import {
   useShoppingCartStore,
 } from "../lib/state/shopping-cart-state";
 import { useEffect, useState } from "react";
+import Image from "next/image";
+import { formatUnitPrice } from "@/lib/article-price";
 
 type Props = {
   article: ShoppingCartArticleType;
@@ -18,6 +20,11 @@ export default function ShoppingCartArticle({ article, bundleName }: Props) {
   );
 
   const [quantity, setQuantity] = useState(article.quantity);
+  const [imageSrc, setImageSrc] = useState(`/articles/${article.article.pzn}.jpg`);
+  const unitPrice = formatUnitPrice(article.article);
+  const total = new Intl.NumberFormat("de-DE", { style: "currency", currency: "EUR" }).format(
+    article.article.priceCents * article.quantity / 100,
+  );
 
   useEffect(() => {
     setQuantity(article.quantity);
@@ -25,24 +32,19 @@ export default function ShoppingCartArticle({ article, bundleName }: Props) {
 
   return (
     <div className="rounded-xl bg-foreground/5 px-3 py-3">
-      <div className="flex h-full flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <div className="min-w-0 sm:w-1/2">
+      <div className="flex h-full gap-3 sm:items-center">
+        <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-lg bg-white">
+          <Image src={imageSrc} alt="" fill sizes="64px" className="object-contain p-1" onError={() => setImageSrc("/articles/placeholder.svg")} />
+        </div>
+        <div className="min-w-0 flex-1">
           <p className="line-clamp-2 text-sm font-medium">{article.article.name}</p>
           <p className="mt-1 text-xs text-foreground/60">PZN {article.article.pzn}</p>
+          {unitPrice && <p className="mt-1 text-xs font-medium text-highlight">{unitPrice}</p>}
         </div>
-        <div className="flex items-center justify-between gap-3 sm:w-1/2">
+        <div className="flex min-w-[9.5rem] flex-col items-end gap-2">
           <span className="min-w-0 text-right text-sm">
             <span className="block text-xs text-foreground/60">Summe</span>
-            <span className="font-semibold">
-              {(article.article.priceCents * article.quantity / 100).toLocaleString(
-                "de-De",
-                {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2,
-                },
-              )}
-              €
-            </span>
+            <span className="font-semibold">{total}</span>
           </span>
           <span className="flex items-center rounded-full border border-foreground/15 bg-background">
             <button

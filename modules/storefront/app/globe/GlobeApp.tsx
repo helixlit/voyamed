@@ -8,6 +8,7 @@ import { countries as CountriesDetails } from "@/data/konfigurator/countries.jso
 import { Activity, Country } from "@/utils/types";
 import ActivitySelector from "@/components/activity-selector";
 import BundleDisplay from "@/components/bundle-display";
+import { getAvailableActivities } from "@/lib/travel-kit";
 
 export default function GlobeContext() {
     const [countries, setCountries] = useState<FeatureCollection | null>(null);
@@ -18,11 +19,9 @@ export default function GlobeContext() {
     const [countryDetails, setCountryDetails] = useState<Country>();
 
     useEffect(() => {
-        const countryId = CountriesDetails.find(c => c.iso3 === selectedCountry?.id);
-        if (countryId)
-            setCountryDetails(CountriesDetails.find(c => c.iso3 === selectedCountry?.id));
-        else console
-            .debug(`Could not find Country with iso3 ${selectedCountry?.id}`)
+        const country = CountriesDetails.find(c => c.iso3 === selectedCountry?.id);
+        setCountryDetails(country);
+        setSelectedActivity("");
     }, [selectedCountry]);
 
     return (
@@ -46,6 +45,7 @@ export default function GlobeContext() {
                         <ActivitySelector
                             selectedActivity={selectedActivity}
                             setSelectedActivity={setSelectedActivity}
+                            availableActivities={getAvailableActivities(countryDetails ? { id: countryDetails.code, ...countryDetails } : null)}
                         />
                     </div>
                     <BundleDisplay

@@ -1,0 +1,26 @@
+{
+  "climateDefaults": {
+    "tropisch": ["strand_badeurlaub", "backpacking_rundreise", "safari_dschungel", "staedtetrip", "kreuzfahrt_segeln"],
+    "subtropisch": ["strand_badeurlaub", "staedtetrip", "wandern_trekking", "backpacking_rundreise", "kreuzfahrt_segeln"],
+    "trocken": ["staedtetrip", "strand_badeurlaub", "backpacking_rundreise", "wuestenreise", "kreuzfahrt_segeln"],
+    "gemaessigt": ["staedtetrip", "wandern_trekking", "backpacking_rundreise", "geschaeftsreise", "kreuzfahrt_segeln"],
+    "kalt": ["wintersport", "wandern_trekking", "staedtetrip", "backpacking_rundreise"]
+  },
+  "countryOverrides": {
+    "EG": ["staedtetrip", "strand_badeurlaub", "backpacking_rundreise", "wuestenreise", "kreuzfahrt_segeln"],
+    "AE": ["staedtetrip", "strand_badeurlaub", "wuestenreise", "geschaeftsreise"],
+    "IS": ["wandern_trekking", "wintersport", "staedtetrip"],
+    "CH": ["wandern_trekking", "wintersport", "staedtetrip", "geschaeftsreise"],
+    "AT": ["wandern_trekking", "wintersport", "staedtetrip", "geschaeftsreise"],
+    "NO": ["wandern_trekking", "wintersport", "staedtetrip", "kreuzfahrt_segeln"],
+    "NZ": ["wandern_trekking", "backpacking_rundreise", "strand_badeurlaub", "staedtetrip"],
+    "ZA": ["staedtetrip", "wandern_trekking", "backpacking_rundreise", "safari_dschungel", "strand_badeurlaub"],
+    "JP": ["staedtetrip", "wandern_trekking", "backpacking_rundreise", "wintersport", "geschaeftsreise"],
+    "CA": ["staedtetrip", "wandern_trekking", "backpacking_rundreise", "wintersport", "geschaeftsreise"],
+    "US": ["staedtetrip", "wandern_trekking", "backpacking_rundreise", "strand_badeurlaub", "wintersport", "geschaeftsreise"],
+    "AU": ["staedtetrip", "wandern_trekking", "backpacking_rundreise", "strand_badeurlaub", "safari_dschungel"],
+    "BR": ["staedtetrip", "strand_badeurlaub", "backpacking_rundreise", "safari_dschungel"],
+    "TH": ["staedtetrip", "strand_badeurlaub", "backpacking_rundreise", "safari_dschungel", "kreuzfahrt_segeln"],
+    "ID": ["staedtetrip", "strand_badeurlaub", "backpacking_rundreise", "safari_dschungel", "kreuzfahrt_segeln"]
+  }
+}

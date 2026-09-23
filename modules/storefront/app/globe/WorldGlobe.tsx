@@ -5,7 +5,6 @@ import { useEffect, useState, useRef } from "react";
 import dynamic from "next/dynamic";
 import type { Feature, FeatureCollection } from "geojson";
 import { MeshBasicMaterial } from "three";
-import { FeatureSchema } from "../../schemas/Feature";
 import { area, centroid, polygon } from "@turf/turf";
 
 const Globe = dynamic(() => import("react-globe.gl"),
@@ -14,7 +13,8 @@ const Globe = dynamic(() => import("react-globe.gl"),
 
 
 function getCenter(feature: Feature) {
-    const geometry = feature.geometry
+    const geometry = feature.geometry;
+    if (!geometry) return null;
 
     if (geometry.type === 'Polygon') {
         return centroid(geometry).geometry.coordinates;
@@ -26,6 +26,10 @@ function getCenter(feature: Feature) {
     }
 
     return centroid(geometry).geometry.coordinates;
+}
+
+function isSelectableFeature(value: unknown): value is Feature {
+    return Boolean(value && typeof value === "object" && (value as Feature).type === "Feature" && (value as Feature).geometry && (value as Feature).id);
 }
 
 type Props = {
@@ -71,7 +75,9 @@ export default function WorldGlobe({
     useEffect(() => {
         if (!selectedCountry) return;
         const globe = globeRef.current;
-        const [lng, lat] = getCenter(selectedCountry);
+        const center = getCenter(selectedCountry);
+        if (!center) return;
+        const [lng, lat] = center;
 
         globe.pointOfView({
             lat, lng, altitude: 0.5
@@ -136,7 +142,8 @@ export default function WorldGlobe({
 
                 polygonsData={countries?.features}
                 polygonCapColor={(object) => {
-                    const country = FeatureSchema.parse(object);
+                    if (!isSelectableFeature(object)) return "rgba(37,99,235,1)";
+                    const country = object;
 
                     if (selectedCountry && selectedCountry.id == country.id) return "rgba(34,197,94,0.8)";
 
@@ -150,12 +157,13 @@ export default function WorldGlobe({
 
 
                 onPolygonClick={(object) => {
-                    const country = FeatureSchema.parse(object);
-                    setSelectedCountry(country);
+                    if (!isSelectableFeature(object)) return;
+                    setSelectedCountry(object);
                 }}
 
                 polygonAltitude={(object) => {
-                    const country = FeatureSchema.parse(object);
+                    if (!isSelectableFeature(object)) return 0.01;
+                    const country = object;
                     if (!selectedCountry) return 0.01;
                     return (
                         selectedCountry.id == country.id
@@ -166,7 +174,7 @@ export default function WorldGlobe({
                 }
 
                 onPolygonHover={(country) => {
-                    setHoveredCountry(country);
+                    setHoveredCountry(isSelectableFeature(country) ? country : null);
                 }}
 
                 polygonsTransitionDuration={200}

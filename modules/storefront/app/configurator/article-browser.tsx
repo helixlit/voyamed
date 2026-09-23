@@ -20,6 +20,7 @@ export default function ArticleBrowser() {
   const [currentPage, setCurrentPage] = useState<number>(1);
 
   const take = 10;
+  const quickSearches = ["Sonnenschutz", "Mückenschutz", "Durchfall", "Wunde", "Husten", "Schmerz"];
 
   async function queryPrisma() {
     setIsLoading(true);
@@ -65,8 +66,8 @@ export default function ArticleBrowser() {
     <section className="w-full overflow-hidden rounded-2xl bg-secondary text-background shadow-sm">
       <div className="flex flex-col gap-3 px-4 py-5 sm:flex-row sm:items-center sm:gap-5 sm:px-6">
         <div className="shrink-0">
-          <h2 className="text-xl font-semibold">Artikelsuche</h2>
-          <p className="text-sm text-background/70">Finde die passenden Reiseartikel.</p>
+          <h2 className="text-xl font-semibold">Einzelprodukte mit Bild</h2>
+          <p className="text-sm text-background/70">Suche nach Produkt, Kategorie, Hersteller oder PZN.</p>
         </div>
         <div className=" relative w-full h-full min-w-0">
           <ArticleSearch
@@ -78,6 +79,12 @@ export default function ArticleBrowser() {
             skip={take * (currentPage - 1)}
           />
         </div>
+      </div>
+      <div className="flex gap-2 overflow-x-auto px-4 pb-4 sm:px-6">
+        <button type="button" onClick={() => setQuery("")} className={`min-h-9 shrink-0 rounded-full px-3 text-sm transition ${query === "" ? "bg-highlight text-foreground" : "bg-background/15 hover:bg-background/25"}`}>Alle</button>
+        {quickSearches.map((term) => (
+          <button key={term} type="button" onClick={() => setQuery(term)} className={`min-h-9 shrink-0 rounded-full px-3 text-sm transition ${query === term ? "bg-highlight text-foreground" : "bg-background/15 hover:bg-background/25"}`}>{term}</button>
+        ))}
       </div>
       <div className="min-h-72 bg-white/15 p-3 sm:p-5">
         {isLoading ? (

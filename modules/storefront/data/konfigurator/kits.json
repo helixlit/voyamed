@@ -169,6 +169,24 @@
         "18379483"
       ]
     },
+    "wuestenreise": {
+      "name": "Wüstenreise & Wüstentour",
+      "beschreibung": "Hitze, trockene Luft, Staub und lange Tage außerhalb von Städten.",
+      "hinzufuegen": [
+        "18320165",
+        "00989376",
+        "02506258",
+        "01578681",
+        "03194795",
+        "04796852",
+        "10796980",
+        "03949265",
+        "04010136"
+      ],
+      "entfernen": [
+        "00325707"
+      ]
+    },
     "wintersport": {
       "name": "Wintersport",
       "beschreibung": "Ski, Snowboard, Kälte, Sturzverletzungen, Schnee-UV.",

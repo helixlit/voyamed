@@ -7,6 +7,8 @@ import { useEffect, useState } from "react";
 import countries from "@/data/konfigurator/countries.json"
 import ActivitySelector from "@/components/activity-selector";
 import BundleDisplay from "@/components/bundle-display";
+import BundleCarousel from "@/components/bundle-carousel";
+import { getAvailableActivities } from "@/lib/travel-kit";
 
 
 
@@ -22,9 +24,18 @@ export default function BundleBrowser() {
 
   const [selectedActivity, setSelectedActivity] = useState<Activity | "">("");
 
+  const availableActivities = getAvailableActivities(selectedCountry);
+
   const queryPrisma = async (query: string) => {
     const filter =
-      countries.countries.filter(c => c.name.toLowerCase().includes(query.toLowerCase())).slice(0, 5);
+      countries.countries.filter(c => {
+        const normalize = (value: string) => value
+          .toLocaleLowerCase("de-DE")
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "");
+        const normalizedQuery = normalize(query);
+        return [c.name, c.name_en, c.code, c.iso3].some((value) => normalize(value).includes(normalizedQuery));
+      }).slice(0, 8);
     return filter.map(c => ({ id: c.code, ...c }));
   };
 
@@ -38,10 +49,21 @@ export default function BundleBrowser() {
   useEffect(() => {
     console.debug(`Current Kit: ${selectedCountry?.name} -> ${selectedActivity}`)
   }, [selectedActivity, selectedCountry])
+
+  useEffect(() => {
+    if (selectedActivity && !availableActivities.includes(selectedActivity)) {
+      setSelectedActivity("");
+    }
+  }, [selectedActivity, selectedCountry?.code]);
+
   return (
-    <section className="grid  w-full place-items-center py-10 px-5">
-      <h1>Gib dein Reisziel + Aktivität an!</h1>
-      <div className="flex gap-2">
+    <section className="grid w-full place-items-center gap-6 px-5 py-10">
+      <BundleCarousel />
+      <div className="w-full max-w-6xl">
+        <h1 className="text-2xl font-semibold sm:text-3xl">Stell dein Reisekit zusammen</h1>
+        <p className="mt-1 text-foreground/65">Wähle erst das Reiseziel und danach eine passende Aktivität.</p>
+      </div>
+      <div className="flex w-full max-w-6xl flex-col gap-3 sm:flex-row sm:items-start">
         <Search<CountryKit>
           placeholder="Suche nach Reiseziel..."
           query={query}
@@ -50,15 +72,16 @@ export default function BundleBrowser() {
           setSelectedItem={setSelectedCountry}
           filteredItems={filteredCountries}
           queryPrisma={queryPrisma}
-          divClassName="w-1/3 flex flex-col gap-2 pointer-events-auto w-full items-start justify-left relative"
-          inputClassName="py-1.5 px-4 focus:outline-0 bg-highlight rounded-full"
-          ulClassName="absolute top-10 z-50 rounded-[20px] py-2 px-4 bg-highlight/90 text-foreground/90 w-fit text-nowrap min-w-full"
-          liClassName=""
-          selectedLiClassName=""
+          divClassName="relative flex min-w-0 flex-1 flex-col gap-2"
+          inputClassName="min-h-12 w-full rounded-full bg-highlight px-5 text-foreground outline-none ring-1 ring-black/5 focus:ring-2 focus:ring-foreground/30"
+          ulClassName="absolute top-14 z-50 max-h-72 w-full overflow-y-auto rounded-2xl bg-background p-2 text-foreground shadow-xl ring-1 ring-black/10"
+          liClassName="rounded-xl px-3 py-2 hover:bg-foreground/5"
+          selectedLiClassName="rounded-xl px-3 py-2 font-medium hover:bg-foreground/5"
         />
         <ActivitySelector
           selectedActivity={selectedActivity}
           setSelectedActivity={setSelectedActivity}
+          availableActivities={availableActivities}
         />
       </div>
       <BundleDisplay

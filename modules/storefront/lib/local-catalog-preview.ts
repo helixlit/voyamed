@@ -1,17 +1,19 @@
 import type { Article, ShopArticle } from "@voyamed/catalog/contract";
 
 import productData from "@/data/konfigurator/produkte.json";
+import { parsePackageSize } from "@/lib/article-price";
 
 type LocalProduct = (typeof productData.produkte)[number];
 
 function toArticle(product: LocalProduct): Article {
+  const packageSize = parsePackageSize(product.name_original);
   return {
     active: true,
     name: product.name,
     pzn: product.pzn,
     supplier: product.hersteller,
-    purchaseUnit: 1,
-    unit: "Packung",
+    purchaseUnit: packageSize?.quantity ?? 1,
+    unit: packageSize?.unit ?? "Packung",
     priceCents: Math.round(product.preis_brutto * 100),
   };
 }

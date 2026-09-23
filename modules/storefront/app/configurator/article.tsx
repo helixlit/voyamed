@@ -4,6 +4,7 @@ import { useShoppingCartStore } from "../../lib/state/shopping-cart-state";
 import { Article as ArticleClient } from "../../../catalog/src/contract";
 import Image from "next/image";
 import { useState } from "react";
+import { formatPackageLabel, formatUnitPrice } from "@/lib/article-price";
 
 type Props = {
   article: ArticleClient;
@@ -20,6 +21,7 @@ export default function Article({ article }: Props) {
     style: "currency",
     currency: "EUR",
   }).format(article.priceCents / 100);
+  const unitPrice = formatUnitPrice(article);
 
   function addToCart() {
     addArticleToBundel("default", article, 1);
@@ -45,7 +47,8 @@ export default function Article({ article }: Props) {
         <div className="mt-3 flex flex-wrap items-end justify-between gap-3">
           <div>
             <p className="text-lg font-semibold">{formattedPrice}</p>
-            <p className="text-xs text-foreground/60">{article.purchaseUnit} {article.unit}</p>
+            <p className="text-xs text-foreground/60">{formatPackageLabel(article)}</p>
+            {unitPrice && <p className="mt-0.5 text-xs font-medium text-highlight">{unitPrice}</p>}
           </div>
           <div className="flex items-center gap-2">
             <button

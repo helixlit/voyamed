@@ -1,0 +1,28 @@
+{
+  "disclaimer": "Diese Auswahl ist ein unverbindlicher Reisehinweis und ersetzt keine individuelle Beratung durch Arzt oder Apotheke. Packungsbeilage beachten. Bei Kindern, Schwangerschaft, Vorerkrankungen, Dauermedikation oder akuten Beschwerden bitte persönlich beraten lassen.",
+  "climateHints": {
+    "tropisch": "Für warme, feuchte Reiseziele zeigen wir Kategorien für Sonnenschutz, Insektenschutz, Hygiene und kleine Verletzungen.",
+    "subtropisch": "Für sonnige Reiseziele zeigen wir Kategorien für UV-Schutz, Flüssigkeitsversorgung und kleine Verletzungen unterwegs.",
+    "trocken": "Für trockene und heiße Reiseziele zeigen wir Kategorien für Sonnenschutz, Haut- und Schleimhautpflege sowie Flüssigkeitsversorgung.",
+    "gemaessigt": "Für gemäßigte Reiseziele zeigen wir eine allgemeine Reiseapotheke für Alltag, unterwegs und kleinere Verletzungen.",
+    "kalt": "Für kalte oder hoch gelegene Reiseziele zeigen wir Kategorien für UV-Schutz, Hautpflege, Blasen und kleinere Verletzungen."
+  },
+  "activityHints": {
+    "staedtetrip": "Ein kompakter Fokus für viel zu Fuß, Restaurantbesuche und typische Alltagssituationen.",
+    "strand_badeurlaub": "Ein Fokus auf Sonne, Hautschutz, kleinere Verletzungen und Situationen am Wasser.",
+    "wandern_trekking": "Ein Fokus auf Blasen, Sonnenschutz, Insekten und kleine Verletzungen unterwegs.",
+    "backpacking_rundreise": "Ein Fokus auf wechselnde Unterkünfte, Hygiene und unkomplizierte Versorgung unterwegs.",
+    "wintersport": "Ein Fokus auf Kälte, Schnee-UV, Hautschutz und typische kleine Sportverletzungen.",
+    "kreuzfahrt_segeln": "Ein Fokus auf Sonne, Bewegung auf dem Wasser und allgemeine Hygiene an Bord.",
+    "safari_dschungel": "Ein Fokus auf Insektenschutz, Sonne, Hygiene und kleine Verletzungen in der Natur.",
+    "geschaeftsreise": "Eine kompakte Auswahl für Flug, Hotel und Termine.",
+    "wuestenreise": "Ein Fokus auf Hitze, Sonne, Staub und ausreichende Flüssigkeitsversorgung."
+  },
+  "countryHints": {
+    "EG": "Für Ägypten zeigen wir keine Wintersport-Auswahl. Bei Sonne, Hitze und Outdoor-Aktivitäten stehen Sonnenschutz, Flüssigkeit und Insektenschutz im Vordergrund."
+  },
+  "sources": [
+    { "label": "Auswärtiges Amt: Reise- und Sicherheitshinweise", "url": "https://www.auswaertiges-amt.de/de/reiseundsicherheit" },
+    { "label": "CDC Travelers’ Health", "url": "https://wwwnc.cdc.gov/travel/destinations/list/" }
+  ]
+}
