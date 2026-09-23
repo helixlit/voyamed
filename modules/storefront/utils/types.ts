@@ -45,3 +45,6 @@ export type ClimateZone = keyof typeof kits.klimazonen;
 
 import { countries } from "@/data/konfigurator/countries.json"
 export type Country = (typeof countries)[0];
+
+import { kategorien } from "@/data/konfigurator/produkte.json"
+export type Indication = keyof typeof kategorien;

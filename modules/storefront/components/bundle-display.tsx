@@ -69,12 +69,12 @@ export default function BundleDisplay(props: Props) {
   };
 
   return (
-    <section id="bundle-display">
+    <section id="bundle-display" className="@container min-w-dvw  px-10">
       {props.country && props.activity ?
-        <div>
-          <h2> {props.country.name}-{kits.activities[props.activity].name}-Bundle</h2>
+        <div className="grid content-center-safe">
+          <h2 className="text-center"> {props.country.name}-{kits.activities[props.activity].name}-Bundle</h2>
           <div className="grid">
-            <div>
+            <div className="text-center">
               <section>
                 {props.country.name}: {kits.klimazonen[props.country.klimazone as ClimateZone].beschreibung}<br />
                 {props.country.hygiene_risiko === "hoch" ?
@@ -99,7 +99,7 @@ export default function BundleDisplay(props: Props) {
           </div>
           {props.displayArticles &&
             <ul
-              className="grid gap-2 grid-flow-row grid-cols-3"
+              className="grid gap-2 grid-flow-row grid-cols-1 @min-[650px]:grid-cols-2 @min-[1000px]:grid-cols-3 @min-[1500px]:grid-cols-4"
             >
               {articles.map(a => (
                 <Article
@@ -110,7 +110,7 @@ export default function BundleDisplay(props: Props) {
             </ul>
           }
         </div>
-        : <p className="text-foreground/70">
+        : <p className="text-foreground/70 text-center">
           Bitte wähle eine Land und Aktivität!
         </p>
       }

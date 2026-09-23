@@ -5,10 +5,14 @@ import { useEffect, useState } from "react";
 import ArticlePagination from "./article-pagination";
 import Article from "./article";
 import { ShopArticle } from "@voyamed/catalog/contract";
-import { ArticleWithId } from "@/utils/types";
+import { ArticleWithId, Indication } from "@/utils/types";
+
+import IndicationSelector from "./indication-selector";
 
 export default function ArticleBrowser() {
   const [query, setQuery] = useState<string>("");
+
+  const [indications, setIndications] = useState<Array<Indication>>([]);
 
   const [queriedArticles, setQueriedArticles] = useState<Array<ArticleWithId>>(
     [],
@@ -32,7 +36,9 @@ export default function ArticleBrowser() {
       if (!articleResponse.ok || !countResponse.ok) throw new Error();
 
       const shopArticles: Array<ShopArticle> = await articleResponse.json();
-      setQueriedArticles(shopArticles.map((s) => ({ id: s.pzn, ...s.article })));
+      setQueriedArticles(
+        shopArticles.map((s) => ({ id: s.pzn, ...s.article }))
+      );
       const count: number = (await countResponse.json()).count;
       setQueriedArticleCount(count);
     } catch {
@@ -61,6 +67,7 @@ export default function ArticleBrowser() {
     return () => clearTimeout(timeout);
   }, [query]);
 
+
   return (
     <section className="w-full overflow-hidden rounded-2xl bg-secondary text-background shadow-sm">
       <div className="flex flex-col gap-3 px-4 py-5 sm:flex-row sm:items-center sm:gap-5 sm:px-6">
@@ -79,7 +86,11 @@ export default function ArticleBrowser() {
           />
         </div>
       </div>
-      <div className="min-h-72 bg-white/15 p-3 sm:p-5">
+      <div className="min-h-72 bg-white/15 p-3 sm:p-5 grid gap-4">
+        <IndicationSelector
+          indications={indications}
+          setIndications={setIndications}
+        />
         {isLoading ? (
           <div className="grid min-h-60 place-items-center text-sm text-background/75">
             <span className="animate-pulse">Artikel werden geladen …</span>
