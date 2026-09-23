@@ -105,5 +105,30 @@ export default function GlobeCanvas({ countries, selectedCountry, setSelectedCou
     if (center) globeRef.current?.pointOfView({ lng: center[0], lat: center[1], altitude: 0.9 }, 750);
   }, [selectedCountry]);
 
-  return <div ref={mountRef} className="h-full min-h-[28rem] w-full">{loadFailed && <p className="grid h-full place-items-center text-sm text-foreground/60">Der 3D-Globus konnte nicht geladen werden. Nutze bitte die Länder-Suche.</p>}</div>;
+  return (
+    <div className="relative h-full min-h-[28rem] w-full overflow-hidden">
+      {/* This stays visible before the interactive canvas has finished loading. */}
+      <div aria-hidden="true" className="absolute inset-0 grid place-items-center overflow-hidden bg-[radial-gradient(circle_at_50%_38%,#f8fbff_0%,#edf4ff_42%,#dce9fb_100%)]">
+        <div className="absolute h-[min(72vw,38rem)] w-[min(72vw,38rem)] rounded-full bg-[radial-gradient(circle_at_31%_25%,#b8deff_0%,#6098f4_22%,#2f67d6_55%,#12367e_100%)] shadow-[0_0_0_1px_rgba(255,255,255,0.5),0_28px_70px_rgba(21,69,164,0.30)]">
+          <div className="absolute inset-[7%] rounded-full border border-white/30" />
+          <div className="absolute left-1/2 top-[4%] h-[92%] w-[32%] -translate-x-1/2 rounded-full border border-white/25" />
+          <div className="absolute left-[6%] top-1/2 h-[28%] w-[88%] -translate-y-1/2 rounded-full border border-white/25" />
+          <div className="absolute inset-0 rounded-full bg-[linear-gradient(90deg,transparent_22%,rgba(255,255,255,0.24)_50%,transparent_78%)] animate-[pulse_4s_ease-in-out_infinite]" />
+          <div className="absolute -left-[15%] top-[48%] h-[16%] w-[130%] -translate-y-1/2 rounded-[50%] border-y border-white/25 animate-[spin_20s_linear_infinite]" />
+          <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_32%_24%,rgba(255,255,255,0.45),transparent_18%),radial-gradient(circle_at_67%_78%,rgba(4,24,82,0.50),transparent_42%)]" />
+        </div>
+        <p className="absolute bottom-5 rounded-full bg-white/80 px-4 py-2 text-center text-xs font-medium text-[#163266] shadow-sm backdrop-blur-sm">
+          Interaktiver Globus wird geladen …
+        </p>
+      </div>
+
+      <div ref={mountRef} className="relative z-10 h-full min-h-[28rem] w-full" />
+
+      {loadFailed && (
+        <p className="absolute bottom-16 left-1/2 z-20 -translate-x-1/2 rounded-full bg-white/90 px-4 py-2 text-center text-sm text-foreground/70 shadow-sm">
+          Die Länder-Suche funktioniert weiterhin, auch wenn der 3D-Globus nicht geladen wird.
+        </p>
+      )}
+    </div>
+  );
 }
