@@ -16,6 +16,11 @@ const quickSelections: Record<string, { countryCode: string; activity: Activity;
   "Welten Kit": { countryCode: "DE", activity: "backpacking_rundreise", label: "Deutschland · Rundreise" },
 };
 
+const featuredKitNames = ["Welten Kit", "Tropen Kit", "Städte Reisen Kit", "Wander Kit", "Kaltklima Kit"];
+const featuredBundles = featuredKitNames
+  .map((name) => bundles.find((bundle) => bundle.name === name))
+  .filter((bundle): bundle is (typeof bundles)[number] => Boolean(bundle));
+
 type Props = {
   onSelect: (countryCode: string, activity: Activity) => void;
   selectedCountryCode?: string;
@@ -44,7 +49,7 @@ export default function BundleCarousel({ onSelect, selectedCountryCode, selected
   }
 
   function moveCarousel(direction: 1 | -1) {
-    const next = (activeIndex + direction + bundles.length) % bundles.length;
+    const next = (activeIndex + direction + featuredBundles.length) % featuredBundles.length;
     setActiveIndex(next);
     scrollToCard(next);
   }
@@ -62,8 +67,8 @@ export default function BundleCarousel({ onSelect, selectedCountryCode, selected
     <section aria-label="Beliebte Reisekits" className="w-full max-w-6xl">
       <div className="mb-3 flex items-end justify-between gap-4">
         <div>
-          <h2 className="text-xl font-semibold">Reisekit direkt auswählen</h2>
-          <p className="text-sm text-foreground/65">Wähle ein Kit – danach siehst du alle enthaltenen Arzneimittel und kannst es anpassen.</p>
+          <h2 className="text-xl font-semibold">Fünf Reisewelten entdecken</h2>
+          <p className="text-sm text-foreground/65">Weltweit, Tropen, Städte, Wandern und Winter – mit Bildern und einem kurzen Überblick.</p>
         </div>
         <div className="hidden gap-2 sm:flex">
           <button type="button" aria-label="Vorherige Kits" onClick={() => moveCarousel(-1)} className="grid h-10 w-10 place-items-center rounded-full border border-foreground/15 bg-background text-lg hover:bg-foreground/5">‹</button>
@@ -78,7 +83,7 @@ export default function BundleCarousel({ onSelect, selectedCountryCode, selected
         onTouchEnd={() => setIsPaused(false)}
         className="flex snap-x snap-mandatory gap-4 overflow-x-auto px-2 pb-5 pt-2 [perspective:1200px] [scrollbar-width:thin]"
       >
-        {bundles.map((bundle, index) => {
+        {featuredBundles.map((bundle, index) => {
           const selection = quickSelections[bundle.name];
           const isSelected = selection?.countryCode === selectedCountryCode && selection.activity === selectedActivity;
           return (

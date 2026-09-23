@@ -69,9 +69,14 @@ export default function BundleBrowser() {
 
   return (
     <section className="grid w-full place-items-center gap-6 px-5 py-10">
+      <BundleCarousel
+        onSelect={selectQuickKit}
+        selectedCountryCode={selectedCountry?.code}
+        selectedActivity={selectedActivity}
+      />
       <div className="w-full max-w-6xl">
-        <h1 className="text-2xl font-semibold sm:text-3xl">Stell dein Reisekit zusammen</h1>
-        <p className="mt-1 text-foreground/65">Suche dein Reiseziel oder wähle direkt ein vorgeschlagenes Kit.</p>
+        <h1 className="text-2xl font-semibold sm:text-3xl">Gib dein Reiseziel &amp; deine Aktivität an</h1>
+        <p className="mt-1 text-foreground/65">Oder wähle oben ein Reisekit als schnellen Einstieg.</p>
       </div>
       <div className="flex w-full max-w-6xl flex-col gap-3 sm:flex-row sm:items-start">
         <Search<CountryKit>
@@ -94,11 +99,6 @@ export default function BundleBrowser() {
           availableActivities={availableActivities}
         />
       </div>
-      <BundleCarousel
-        onSelect={selectQuickKit}
-        selectedCountryCode={selectedCountry?.code}
-        selectedActivity={selectedActivity}
-      />
       <BundleDisplay
         country={selectedCountry}
         activity={selectedActivity}

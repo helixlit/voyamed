@@ -22,7 +22,7 @@ export class ShoppingCartBundle {
     this.complete = true;
     this.quantity = quantity;
     this.name = name;
-    this.priceCents = 0;
+    this.priceCents = articles.reduce((sum, item) => sum + item.article.priceCents * item.quantity, 0);
     this.articles = articles;
   }
 

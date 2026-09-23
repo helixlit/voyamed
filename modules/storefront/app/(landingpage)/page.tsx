@@ -6,8 +6,8 @@ function page() {
   return (
     <div className="overflow-x-hidden min-h-screen min-w-screen">
       <Hero />
-      <FQA />
       <BundleBrowser />
+      <FQA />
     </div >
   )
 }

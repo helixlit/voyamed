@@ -1,7 +1,7 @@
 //@ts-nocheck
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import type { Feature, FeatureCollection } from "geojson";
 import { MeshBasicMaterial } from "three";
@@ -44,8 +44,9 @@ export default function WorldGlobe({
     countries, setCountries, selectedCountry, setSelectedCountry
 }: Props) {
 
-    const globeRef = useRef(Globe);
+    const globeRef = useRef<any>(null);
     const containerRef = useRef<HTMLDivElement>(null);
+    const hoveredCountryId = useRef<string | number | null>(null);
 
     const [size, setSize] = useState({ width: 0, height: 0 });
 
@@ -55,21 +56,23 @@ export default function WorldGlobe({
     const [animateLoad, setAnimateLoad] = useState(false);
 
     useEffect(() => {
+        const controller = new AbortController();
         fetch(
             'https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson'
+            , { signal: controller.signal }
         )
             .then((res) => res.json())
-            .then((data) => setCountries(data));
+            .then((data) => setCountries(data))
+            .catch((error) => { if (error.name !== "AbortError") console.error("Globus konnte nicht geladen werden", error); });
 
-
-        setTimeout(() => {
+        const showAnimation = window.setTimeout(() => {
             setAnimateLoad(true);
         }, 250);
 
-        setTimeout(() => {
+        const hideLoader = window.setTimeout(() => {
             setLoading(false);
         }, 750);
-
+        return () => { controller.abort(); window.clearTimeout(showAnimation); window.clearTimeout(hideLoader); };
     }, []);
 
     useEffect(() => {
@@ -80,18 +83,16 @@ export default function WorldGlobe({
         const [lng, lat] = center;
 
         globe.pointOfView({
-            lat, lng, altitude: 0.5
-        }, 1000);
+            lat, lng, altitude: 0.9
+        }, 750);
     }, [selectedCountry]);
 
     useEffect(() => {
         if (!containerRef.current) return;
 
         const observer = new ResizeObserver(([entry]) => {
-            setSize({
-                width: entry.contentRect.width,
-                height: entry.contentRect.height
-            });
+            const next = { width: Math.round(entry.contentRect.width), height: Math.round(entry.contentRect.height) };
+            setSize((current) => current.width === next.width && current.height === next.height ? current : next);
         });
 
         observer.observe(containerRef.current);
@@ -110,6 +111,7 @@ export default function WorldGlobe({
 
         controls.enableRotate = true;
         controls.enableZoom = true;
+        controls.enableDamping = true;
 
 
         controls.minPolarAngle = 0.35;
@@ -118,12 +120,21 @@ export default function WorldGlobe({
         controls.minDistance = 150;
         controls.maxDistance = 300;
 
-        controls.dampingFactor = 0.01;
-        controls.zoomSpeed = 0.5;
+        controls.dampingFactor = 0.08;
+        controls.zoomSpeed = 0.65;
 
         return;
 
-    }, [globeRef.current]);
+    }, []);
+
+    const globeMaterial = useMemo(() => new MeshBasicMaterial({ color: "#5896fc" }), []);
+    const handlePolygonHover = useCallback((country: unknown) => {
+        const nextCountry = isSelectableFeature(country) ? country : null;
+        const nextId = nextCountry?.id ?? null;
+        if (hoveredCountryId.current === nextId) return;
+        hoveredCountryId.current = nextId;
+        setHoveredCountry(nextCountry);
+    }, []);
 
     return (
         <div ref={containerRef} className=" relative min-h-0 bg-background pointer-events-auto">
@@ -132,11 +143,12 @@ export default function WorldGlobe({
 
                 width={size.width}
                 height={size.height}
+                onGlobeReady={() => globeRef.current?.pointOfView({ altitude: 1.65 }, 0)}
 
                 enablePointerInteraction={true}
 
                 rendererConfig={{
-                    antialias: true,
+                    antialias: false,
                     alpha: true,
                 }}
 
@@ -173,18 +185,15 @@ export default function WorldGlobe({
                 }
                 }
 
-                onPolygonHover={(country) => {
-                    setHoveredCountry(isSelectableFeature(country) ? country : null);
-                }}
+                onPolygonHover={handlePolygonHover}
 
-                polygonsTransitionDuration={200}
+                polygonsTransitionDuration={0}
+                polygonCapCurvatureResolution={3}
 
                 backgroundColor="rgba(0,0,0,0)"
 
                 globeImageUrl={null}
-                globeMaterial={new MeshBasicMaterial({
-                    color: "#5896fc",
-                })}
+                globeMaterial={globeMaterial}
 
                 showAtmosphere={false}
 
