@@ -75,7 +75,7 @@ export default function BundleDisplay(props: Props) {
           <h2> {props.country.name}-{kits.activities[props.activity].name}-Bundle</h2>
           <div className="grid">
             <div>
-              <p>
+              <section>
                 {props.country.name}: {kits.klimazonen[props.country.klimazone as ClimateZone].beschreibung}<br />
                 {props.country.hygiene_risiko === "hoch" ?
                   <p>
@@ -83,7 +83,7 @@ export default function BundleDisplay(props: Props) {
                     Hygiene-Kit wurde deshalb hinzugefügt.
                   </p> : <p></p>
                 }
-              </p>
+              </section>
               <p>
                 {kits.activities[props.activity].name}: {kits.activities[props.activity].beschreibung}
               </p>
