@@ -85,3 +85,13 @@ h1 {
     transition-duration: 0.01ms !important;
   }
 }
+
+input[type='number'] {
+  appearance: textfield;
+}
+
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  appearance: none;
+  margin: 0;
+}
