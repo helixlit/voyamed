@@ -46,7 +46,7 @@ export default function ShoppingCartModal() {
   return (
     <aside
       aria-label="Warenkorb"
-      className={`fixed inset-y-0 right-0 z-60 flex h-[100dvh] w-full max-w-md flex-col border-l border-foreground/15 bg-background shadow-2xl ${beginClose ? "translate-x-full" : "animated-fade-in"}`}
+      className={`fixed inset-y-0 right-0 z-100 flex h-dvh w-full max-w-md flex-col border-l border-foreground/15 bg-background shadow-2xl ${beginClose ? "translate-x-full" : "animated-fade-in"}`}
     >
       <header className="flex items-center justify-between border-b border-foreground/15 px-5 py-4 sm:px-6">
         <div>
