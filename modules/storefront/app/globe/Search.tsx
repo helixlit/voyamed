@@ -23,7 +23,13 @@ export default function Search({
   const [selectedCountryIndex, setSelectedCountryIndex] = useState(0);
   const filteredCountries = useMemo(() => {
     const normalizedQuery = query.toLowerCase().replace(/\s/g, "");
-    return (countries?.features ?? []).filter((country) => {
+    const selectableCountries = countries?.features ?? countryDetails.map((country) => ({
+      type: "Feature" as const,
+      id: country.iso3,
+      properties: { name: country.name_en },
+      geometry: null,
+    } as unknown as Feature));
+    return selectableCountries.filter((country) => {
       const name = country.properties?.name;
       const detail = countryDetails.find((item) => item.iso3 === country.id);
       const searchableName = [name, detail?.name, detail?.name_en].filter(Boolean).join(" ").toLowerCase().replace(/\s/g, "");
@@ -67,9 +73,6 @@ export default function Search({
     if (!selectedCountry || !selectedCountry.properties) return;
     setQuery(countryDetails.find((item) => item.iso3 === selectedCountry.id)?.name ?? selectedCountry.properties.name);
   }, [selectedCountry]);
-
-  if (!countries?.features) return null;
-
 
   const handleSelect = (country: Feature) => {
     setSelectedCountry(country);
