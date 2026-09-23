@@ -5,15 +5,18 @@ import { Article as ArticleClient } from "../../../catalog/src/contract";
 import Image from "next/image";
 import { useState } from "react";
 import { formatPackageLabel, formatUnitPrice } from "@/lib/article-price";
+import { triggerCartFly } from "@/components/cart-fly-animation";
 
 type Props = {
   article: ArticleClient;
+  mode?: "catalog" | "included";
 };
 
-export default function Article({ article }: Props) {
+export default function Article({ article, mode = "catalog" }: Props) {
   const addArticleToBundel = useShoppingCartStore(
     (state) => state.addArticleToBundle,
   );
+  const selectedBundleName = useShoppingCartStore((state) => state.selectedBundleName);
 
   const [justAdded, setJustAdded] = useState(false);
   const [imageSrc, setImageSrc] = useState(`/articles/${article.pzn}.jpg`);
@@ -23,8 +26,10 @@ export default function Article({ article }: Props) {
   }).format(article.priceCents / 100);
   const unitPrice = formatUnitPrice(article);
 
-  function addToCart() {
-    addArticleToBundel("default", article, 1);
+  function addToKit(event: React.MouseEvent<HTMLButtonElement>) {
+    if (!selectedBundleName) return;
+    addArticleToBundel(selectedBundleName, article, 1);
+    triggerCartFly(event.currentTarget, imageSrc);
     setJustAdded(true);
     window.setTimeout(() => setJustAdded(false), 1400);
   }
@@ -50,17 +55,23 @@ export default function Article({ article }: Props) {
             <p className="text-xs text-foreground/60">{formatPackageLabel(article)}</p>
             {unitPrice && <p className="mt-0.5 text-xs font-medium text-highlight">{unitPrice}</p>}
           </div>
-          <div className="flex items-center gap-2">
-            <button
-              type="button"
-              aria-label={`${article.name} in den Warenkorb`}
-              onClick={addToCart}
-              className={`flex min-h-11 items-center gap-2 rounded-full px-4 text-sm font-medium transition-all active:scale-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-highlight ${justAdded ? "bg-prim text-foreground" : "bg-foreground text-background hover:-translate-y-0.5 hover:shadow-lg"}`}
-            >
-              <span aria-hidden="true">{justAdded ? "✓" : "+"}</span>
-              {justAdded ? "Hinzugefügt" : "In den Warenkorb"}
-            </button>
-          </div>
+          {mode === "included" ? (
+            <span className="rounded-full bg-prim/40 px-3 py-2 text-xs font-medium">Im Reisekit enthalten</span>
+          ) : (
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                aria-label={selectedBundleName ? `${article.name} zum ausgewählten Reisekit hinzufügen` : "Wähle zuerst ein Reisekit aus"}
+                title={selectedBundleName ? `Zu ${selectedBundleName} hinzufügen` : "Wähle zuerst ein Reisekit aus"}
+                disabled={!selectedBundleName}
+                onClick={addToKit}
+                className={`flex min-h-11 items-center gap-2 rounded-full px-4 text-sm font-medium transition-all focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-highlight disabled:cursor-not-allowed disabled:bg-foreground/15 disabled:text-foreground/55 ${justAdded ? "bg-prim text-foreground" : "bg-foreground text-background enabled:hover:-translate-y-0.5 enabled:hover:shadow-lg enabled:active:scale-95"}`}
+              >
+                <span aria-hidden="true">{justAdded ? "✓" : "+"}</span>
+                {justAdded ? "Hinzugefügt" : selectedBundleName ? "Zum Kit" : "Kit wählen"}
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </article>

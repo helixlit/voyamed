@@ -6,6 +6,7 @@ import "./globals.css";
 import Modals from "../components/modals/modals";
 import Header from "../components/header";
 import Footer from "../components/footer";
+import CartFlyAnimation from "../components/cart-fly-animation";
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -34,6 +35,7 @@ export default function RootLayout({
           <Footer />
         </main>
         <Modals />
+        <CartFlyAnimation />
       </body>
     </html>
   );

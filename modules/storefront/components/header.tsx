@@ -41,6 +41,7 @@ export default function Header() {
         </div>
         <div className="flex items-center">
           <button
+            id="shopping-cart-button"
             type="button"
             onClick={() => open("shoppingCart")}
             aria-label={`Warenkorb öffnen${cartCount ? `, ${cartCount} Artikel` : ""}`}

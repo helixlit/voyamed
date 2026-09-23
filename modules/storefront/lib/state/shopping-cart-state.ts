@@ -89,7 +89,9 @@ export class ShoppingCartBundle {
 
 interface ShoppingCartState {
   bundles: Array<ShoppingCartBundle>;
+  selectedBundleName: string | null;
   addBundle: (item: ShoppingCartBundle) => void;
+  selectBundle: (name: string | null) => void;
   removeBundle: (name: string) => void;
   changeBundleQuantity: (
     bundleName: string,
@@ -121,14 +123,26 @@ const defaultBundle = new ShoppingCartBundle("default");
 export const useShoppingCartStore = create<ShoppingCartState>()(
   immer((set) => ({
     bundles: [defaultBundle],
+    selectedBundleName: null,
     addBundle: (item) =>
+      set((state) => {
+        // A kit is identified by its destination and activity. Re-selecting it
+        // must not add the base products a second time.
+        if (!state.bundles.some((bundle) => bundle.name === item.name)) {
+          state.bundles.push(item);
+        }
+      }),
+    selectBundle: (name) =>
       set((state) => ({
-        bundles: [...state.bundles, item],
+        selectedBundleName: name && state.bundles.some((bundle) => bundle.name === name)
+          ? name
+          : null,
       })),
     removeBundle: (name) =>
-      set((state) => ({
-        bundles: state.bundles.filter((bundle) => bundle.name !== name),
-      })),
+      set((state) => {
+        state.bundles = state.bundles.filter((bundle) => bundle.name !== name);
+        if (state.selectedBundleName === name) state.selectedBundleName = null;
+      }),
     addArticleToBundle: (bundleName, article, quantity = 1) =>
       set((state) => {
         const bundel = state.bundles.find(
@@ -145,8 +159,10 @@ export const useShoppingCartStore = create<ShoppingCartState>()(
         );
         if (!bundle) return;
         newQuantity = bundle.changeQuantity(quantityDelta);
-        if (newQuantity === 0) state.bundles
-          = state.bundles.filter(b => b.name !== bundle.name)
+        if (newQuantity === 0) {
+          state.bundles = state.bundles.filter(b => b.name !== bundle.name);
+          if (state.selectedBundleName === bundle.name) state.selectedBundleName = null;
+        }
       });
       return newQuantity;
     },
@@ -158,8 +174,10 @@ export const useShoppingCartStore = create<ShoppingCartState>()(
         if (!bundle) return;
         bundle.setQuantity(quantityDelta);
 
-        if (quantityDelta === 0) state.bundles
-          = state.bundles.filter(b => b.name !== bundle.name);
+        if (quantityDelta === 0) {
+          state.bundles = state.bundles.filter(b => b.name !== bundle.name);
+          if (state.selectedBundleName === bundle.name) state.selectedBundleName = null;
+        }
       }),
     changeArticleQuantity: (bundleName, articlePZN, quantityDelta) => {
       let newQuantity = -1;

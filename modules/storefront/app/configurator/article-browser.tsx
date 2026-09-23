@@ -1,11 +1,11 @@
 "use client";
 
-import ArticleSearch from "./article-search";
 import { useEffect, useState } from "react";
-import ArticlePagination from "./article-pagination";
 import Article from "./article";
 import { ShopArticle } from "@voyamed/catalog/contract";
 import { ArticleWithId } from "@/utils/types";
+import Link from "next/link";
+import { useShoppingCartStore } from "@/lib/state/shopping-cart-state";
 
 export default function ArticleBrowser() {
   const [query, setQuery] = useState<string>("");
@@ -13,72 +13,57 @@ export default function ArticleBrowser() {
   const [queriedArticles, setQueriedArticles] = useState<Array<ArticleWithId>>(
     [],
   );
-  const [queriedArticleCount, setQueriedArticleCount] = useState<number>(0);
   const [isLoading, setIsLoading] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
+  const selectedBundleName = useShoppingCartStore((state) => state.selectedBundleName);
 
-  const [currentPage, setCurrentPage] = useState<number>(1);
-
-  const take = 10;
+  const take = 100;
   const quickSearches = ["Sonnenschutz", "Mückenschutz", "Durchfall", "Wunde", "Husten", "Schmerz"];
 
-  async function queryPrisma() {
-    setIsLoading(true);
-    setLoadError(null);
-    try {
-      const [articleResponse, countResponse] = await Promise.all([
-        fetch(`/api/shop-articles?query=${encodeURIComponent(query)}&take=${take}&skip=${take * (currentPage - 1)}`),
-        fetch(`/api/shop-articles/count?query=${encodeURIComponent(query)}`),
-      ]);
-      if (!articleResponse.ok || !countResponse.ok) throw new Error();
-
-      const shopArticles: Array<ShopArticle> = await articleResponse.json();
-      setQueriedArticles(shopArticles.map((s) => ({ id: s.pzn, ...s.article })));
-      const count: number = (await countResponse.json()).count;
-      setQueriedArticleCount(count);
-    } catch {
-      setLoadError("Artikel konnten gerade nicht geladen werden. Bitte erneut versuchen.");
-      setQueriedArticles([]);
-      setQueriedArticleCount(0);
-    } finally {
-      setIsLoading(false);
-    }
-  }
-
   useEffect(() => {
-    queryPrisma();
-  }, [currentPage]);
+    const controller = new AbortController();
+    const timeout = window.setTimeout(async () => {
+      setIsLoading(true);
+      setLoadError(null);
+      try {
+        const response = await fetch(`/api/shop-articles?query=${encodeURIComponent(query)}&take=${take}&skip=0`, { signal: controller.signal });
+        if (!response.ok) throw new Error();
+        const shopArticles: Array<ShopArticle> = await response.json();
+        setQueriedArticles(shopArticles.map((s) => ({ id: s.pzn, ...s.article })));
+      } catch (error) {
+        if ((error as Error).name !== "AbortError") {
+          setLoadError("Artikel konnten gerade nicht geladen werden. Bitte erneut versuchen.");
+          setQueriedArticles([]);
+        }
+      } finally {
+        if (!controller.signal.aborted) setIsLoading(false);
+      }
+    }, query ? 250 : 0);
 
-  useEffect(() => {
-    const setAsyncCurrentPage = async () => {
-      setCurrentPage(1);
-    }
-    if (currentPage != 1) setAsyncCurrentPage();
-
-    const timeout = setTimeout(async () => {
-      queryPrisma();
-    }, 500);
-
-    return () => clearTimeout(timeout);
+    return () => {
+      controller.abort();
+      window.clearTimeout(timeout);
+    };
   }, [query]);
 
   return (
-    <section className="w-full overflow-hidden rounded-2xl bg-secondary text-background shadow-sm">
-      <div className="flex flex-col gap-3 px-4 py-5 sm:flex-row sm:items-center sm:gap-5 sm:px-6">
-        <div className="shrink-0">
-          <h2 className="text-xl font-semibold">Einzelprodukte mit Bild</h2>
-          <p className="text-sm text-background/70">Suche nach Produkt, Kategorie, Hersteller oder PZN.</p>
+    <section className="w-full overflow-hidden rounded-3xl bg-secondary text-background shadow-sm">
+      <div className="border-b border-background/15 px-4 py-5 sm:px-6">
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+          <div>
+            <p className="text-sm font-medium text-highlight">Arzneimittel individuell ergänzen</p>
+            <h2 className="mt-1 text-2xl font-semibold">Deine Reiseapotheke</h2>
+            <p className="mt-1 text-sm text-background/75">Durchsuche alle Produkte, vergleiche Packungs- und Grundpreise und ergänze sie gezielt zu deinem Kit.</p>
+          </div>
+          <div className={`rounded-2xl px-4 py-3 text-sm ${selectedBundleName ? "bg-prim text-foreground" : "bg-background/10 text-background"}`}>
+            {selectedBundleName ? <><span className="block text-xs font-medium opacity-70">Aktives Reisekit</span><span className="font-semibold">{selectedBundleName}</span></> : <><span className="font-semibold">Zuerst ein Reisekit auswählen.</span><Link href="/" className="ml-2 underline underline-offset-2">Kit zusammenstellen</Link></>}
+          </div>
         </div>
-        <div className=" relative w-full h-full min-w-0">
-          <ArticleSearch
-            query={query}
-            setQuery={setQuery}
-            articles={queriedArticles}
-            setArticles={setQueriedArticles}
-            take={take}
-            skip={take * (currentPage - 1)}
-          />
-        </div>
+        <label className="relative mt-5 block">
+          <span className="sr-only">Arzneimittel suchen</span>
+          <span aria-hidden="true" className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-background/45">⌕</span>
+          <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Produkt, Kategorie, Hersteller oder PZN suchen" className="min-h-12 w-full rounded-2xl bg-background px-11 py-3 text-sm text-foreground shadow-sm outline-none transition-shadow placeholder:text-foreground/45 focus:ring-2 focus:ring-highlight" />
+        </label>
       </div>
       <div className="flex gap-2 overflow-x-auto px-4 pb-4 sm:px-6">
         <button type="button" onClick={() => setQuery("")} className={`min-h-9 shrink-0 rounded-full px-3 text-sm transition ${query === "" ? "bg-highlight text-foreground" : "bg-background/15 hover:bg-background/25"}`}>Alle</button>
@@ -94,7 +79,7 @@ export default function ArticleBrowser() {
         ) : loadError ? (
           <div role="alert" className="rounded-xl bg-tertiary/25 p-4 text-sm">{loadError}</div>
         ) : queriedArticles && (
-          <ul className="grid gap-3 sm:gap-4">
+          <ul className="grid max-h-[min(65dvh,46rem)] gap-3 overflow-y-auto pr-1 sm:gap-4 sm:pr-2 [scrollbar-width:thin]">
             {queriedArticles.length > 0 ? (
               queriedArticles.map((a) => {
                 const article = { pzn: a.id, ...a };
@@ -106,11 +91,6 @@ export default function ArticleBrowser() {
           </ul>
         )}
       </div>
-      <ArticlePagination
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-        queriedArticleCount={queriedArticleCount}
-      />
     </section>
   );
 }

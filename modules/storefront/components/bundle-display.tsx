@@ -5,6 +5,7 @@ import Article from "@/app/configurator/article";
 import TravelAdvice from "@/components/travel-advice";
 import { buildKitPzns, getActivity, getClimate } from "@/lib/travel-kit";
 import { ShoppingCartBundle, useShoppingCartStore } from "@/lib/state/shopping-cart-state";
+import { triggerCartFly } from "@/components/cart-fly-animation";
 import { getShopArticleByPZN } from "@/utils/fetch-api";
 import type { Activity, CountryKit } from "@/utils/types";
 import { useEffect, useMemo, useState } from "react";
@@ -19,6 +20,7 @@ export default function BundleDisplay({ country, activity, displayArticles }: Pr
   const [articles, setArticles] = useState<TArticle[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const addBundle = useShoppingCartStore((state) => state.addBundle);
+  const selectBundle = useShoppingCartStore((state) => state.selectBundle);
   const selectedActivity = getActivity(activity);
   const climate = getClimate(country);
 
@@ -52,10 +54,12 @@ export default function BundleDisplay({ country, activity, displayArticles }: Pr
     return () => { cancelled = true; };
   }, [country, activity, selectedActivity, climate, kitPzns]);
 
-  function addBundleToCart() {
+  function addBundleToCart(event: React.MouseEvent<HTMLButtonElement>) {
     if (!country || !activity || !selectedActivity || articles.length === 0) return;
     const name = `${country.name} · ${selectedActivity.name}`;
     addBundle(new ShoppingCartBundle(name, 1, articles.map((article) => ({ article, quantity: 1 }))));
+    selectBundle(name);
+    triggerCartFly(event.currentTarget, `/articles/${articles[0].pzn}.jpg`);
   }
 
   if (!country || !activity || !selectedActivity || !climate) {
@@ -76,7 +80,7 @@ export default function BundleDisplay({ country, activity, displayArticles }: Pr
           disabled={articles.length === 0 || isLoading}
           className="min-h-12 shrink-0 rounded-full bg-foreground px-5 font-medium text-background transition hover:-translate-y-0.5 hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-45"
         >
-          {isLoading ? "Kit wird geladen …" : "Ganzes Kit in den Warenkorb"}
+          {isLoading ? "Kit wird geladen …" : "Kit auswählen & bearbeiten"}
         </button>
       </div>
       <TravelAdvice country={country} activity={activity} />
@@ -85,7 +89,7 @@ export default function BundleDisplay({ country, activity, displayArticles }: Pr
           <h3 className="text-lg font-semibold">Produkte im Kit</h3>
           {isLoading ? <p className="mt-3 text-sm text-foreground/65">Produkte werden geladen …</p> : (
             <ul className="mt-3 grid gap-3 lg:grid-cols-2">
-              {articles.map((article) => <li key={article.pzn}><Article article={article} /></li>)}
+              {articles.map((article) => <li key={article.pzn}><Article article={article} mode="included" /></li>)}
             </ul>
           )}
           {!isLoading && articles.length === 0 && <p className="mt-3 text-sm text-foreground/65">Für diese Auswahl sind im aktuellen Katalog noch keine Artikel hinterlegt.</p>}
