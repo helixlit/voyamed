@@ -1,42 +1,57 @@
 import { contract, rpc } from '@prisma/composer/service-rpc';
 import { type } from 'arktype';
 
-export const article = type({
-    pzn: 'string',
-    name: 'string',
-    active: 'boolean',
-    supplier: 'string',
-    unit: 'string',
-    purchaseUnit: 'number',
-    priceCents: 'number',
+
+const definitions = type.scope({
+    category: {
+        id: "string",
+        name: "string",
+        active: "boolean",
+        modificationDate: "string",
+        "parentId?": "string",
+        categories: "category[]",
+    },
+
+    articleCategory: {
+        articlePzn: "string",
+        categoryId: "string",
+    },
+
+    article: {
+        pzn: "string",
+        name: "string",
+        active: "boolean",
+        supplier: "string",
+        unit: "string",
+        purchaseUnit: "number",
+        priceCents: "number",
+        purchasePrice: "number",
+        dosageForm: "string",
+        articleCategories: "articleCategory[]",
+    },
 });
 
+
+export const { category, articleCategory, article } =
+    definitions.export();
+
+export type Category = typeof category.infer;
+export type ArticleCategory = typeof articleCategory.infer;
 export type Article = typeof article.infer;
 
-export const shopArticle = type({
-    id: 'number',
-    pzn: 'string',
-    article: article,
-})
-
-export type ShopArticle = typeof shopArticle.infer;
 
 
 export const catalogContract = contract({
-    getShopArticles: rpc({
+    getArticlesByQuery: rpc({
         input: type({ query: 'string', take: 'number', skip: 'number' }),
-        output: type({ shopArticles: shopArticle.array() })
+        output: type({ articles: article.array() })
     }),
-    getShopArticlesByPZNs: rpc({
+    getArticlesByPZNs: rpc({
         input: type({ pzns: 'string[]' }),
-        output: type({ shopArticles: shopArticle.array() })
+        output: type({ articles: article.array() })
     }),
-    getShopArticleCount: rpc({
+    getArticleCountByQuery: rpc({
         input: type({ query: 'string' }),
         output: type({ count: 'number' })
     }),
-    addShopArticles: rpc({
-        input: type({ articlePZNs: 'string[]' }),
-        output: type({ created: 'number' })
-    })
 });

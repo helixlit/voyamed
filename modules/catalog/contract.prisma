@@ -1,16 +1,61 @@
 model Article {
-    pzn          String        @id
-    name         String
-    active       Boolean
-    supplier     String
-    unit         String
-    purchaseUnit Int
-    priceCents   Int
-    shopArticles ShopArticle[]
+    pzn           String  @id
+    name          String
+    active        Boolean
+    supplier      String
+    unit          String
+    purchaseUnit  Int
+    priceCents    Int
+    purchasePrice Int
+    dosageForm    String
+
+    simpleName  String?
+    description String?
+    searchTerms String?
+
+    articleCategories  ArticleCategory[]
+    articleIndications ArticleIndication[]
 }
 
-model ShopArticle {
-    id      Int     @id @default(autoincrement())
-    pzn     String
-    article Article @relation(fields: [pzn], references: [pzn])
+model Category {
+    id               String  @id
+    name             String
+    active           Boolean
+    modificationDate String
+
+    // Parent category — optional for root categories
+    parentId String?
+    parent   Category? @relation("CategoryHierarchy", fields: [parentId], references: [id])
+
+    // Child categories
+    categories Category[] @relation("CategoryHierarchy")
+
+    // Articles belonging to this category
+    articleCategories ArticleCategory[]
+}
+
+model Indications {
+    name               String              @id
+    searchTerms        String
+    articleIndications ArticleIndication[]
+}
+
+model ArticleCategory {
+    articlePzn String
+    categoryId String
+
+    article  Article  @relation(fields: [articlePzn], references: [pzn])
+    category Category @relation(fields: [categoryId], references: [id])
+
+    @@id([articlePzn, categoryId])
+}
+
+model ArticleIndication {
+    articlePzn     String
+    indicationName String
+
+    article    Article     @relation(fields: [articlePzn], references: [pzn])
+    indication Indications @relation(fields: [indicationName], references: [name])
+
+    @@id([articlePzn, indicationName])
 }

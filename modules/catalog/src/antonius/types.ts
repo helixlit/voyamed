@@ -1,3 +1,8 @@
+export interface ArticleReturn {
+  meta: MetaReturn;
+  articles: AntoniusArticle[];
+}
+
 export interface AntoniusArticle {
   name: string;
   active: boolean;
@@ -9,11 +14,6 @@ export interface AntoniusArticle {
   propertyValues: PropertyValue[];
   procurable: boolean;
   modificationDate: string;
-}
-
-export interface ArticleReturn {
-  meta: MetaReturn;
-  articles: AntoniusArticle[];
 }
 
 export interface Attribute {

@@ -1,8 +1,8 @@
 import { serve } from "@prisma/composer/service-rpc";
-import type { ShopArticle } from "./contract";
+import type { Article } from "./contract";
 import service from "./service";
 import { AntoniusClient } from "./antonius/client";
-import { mapArticles } from "./antonius/mapper";
+import pzns from '../data/articles.json'
 
 
 console.debug(`Starting server!`);
@@ -30,146 +30,90 @@ const localArticleTotal = await db.client.orm.public.Article
     .aggregate((a) => ({ total: a.count() }))
 console.debug(`Postgres database has a total of ${localArticleTotal.total} artricles!`);
 
-// console.debug(`Deleting all articles...`);
-// const BATCH_SIZE = 500;
-// let deletedArticles = 0;
-// for (let i = 0; i <= antoniusArticleTotal; i += deletedArticles) {
-//     deletedArticles += await db.client.orm.public.Article
-//         .where({})
-//         .limit(BATCH_SIZE)
-//         .deleteAndCount();
-//     console.debug(`Deleted ${deletedArticles} articles!`);
-// }
 
-// localArticleTotal = await db.client.orm.public.Article
-//     .aggregate((a) => ({ total: a.count() }))
-// console.debug(`Postgres database has a total of ${localArticleTotal.total} artricles!`);
-
-
-
-//if (localArticleTotal.total < antoniusArticleTotal) await seed();
-
-
+seed();
 
 const handler = serve(service, {
     rpc: {
-        getShopArticles: async (params) => {
-            const result = await db.client.orm.public.ShopArticle
-                .where((sa) =>
-                    sa.article.some((a) => a.name.ilike(`%${params.query}%`)))
-                .limit(params.take)
-                .offset(params.skip)
-                .include('article')
-                .all() as Array<ShopArticle>;
+        getArticlesByQuery: async ({ query }) => {
+            const result = await db.client.orm.public.Article
+                .where((a) => a.name.ilike(`%${query}%`))
+                .include("articleCategories")
+                .all()
 
             return {
-                shopArticles: result
+                articles: result.map((article) => ({
+                    ...article,
+                    articleCategories: article.articleCategories.map((category) => ({
+                        articlePzn: String(category.articlePzn),
+                        categoryId: String(category.categoryId),
+                    })),
+                }))
             }
 
         },
-        getShopArticlesByPZNs: async ({ pzns }) => {
-            const result = await db.client.orm.public.ShopArticle
-                .where((sa) => sa.pzn.in(pzns))
-                .include("article")
-                .all() as Array<ShopArticle>;
-            return { shopArticles: result };
+        getArticlesByPZNs: async ({ pzns }) => {
+            const result = await db.client.orm.public.Article
+                .where(a => a.pzn.in(pzns))
+                .include("articleCategories")
+                .all()
+            return {
+                articles: result.map((article) => ({
+                    ...article,
+                    articleCategories: article.articleCategories.map((category) => ({
+                        articlePzn: String(category.articlePzn),
+                        categoryId: String(category.categoryId),
+                    })),
+                }))
+            };
         },
-        getShopArticleCount: async ({ query }) => {
+        getArticleCountByQuery: async ({ query }) => {
             return (
-                await db.client.orm.public.ShopArticle
-                    .where((sa) =>
-                        sa.article.some((a) =>
-                            a.name.ilike(`%${query}%`)))
-
-                    .aggregate((sa) => ({ count: sa.count() }))
+                await db.client.orm.public.Article
+                    .where(a => a.name.ilike(`%${query}%`))
+                    .aggregate((a) => ({ count: a.count() }))
             );
         },
-        addShopArticles: async ({ articlePZNs }) => {
-            const shopArticlesToAdd =
-                articlePZNs.map((a) => ({
-                    pzn: a,
-                }));
+    },
 
-            let count = 0;
-            for (const s of shopArticlesToAdd) {
-                try {
-                    await db.client.orm.public.ShopArticle
-                        .create(s);
-                    count++;
-
-                } catch (e) {
-                    console.log(`Could not create ShopArticle because of ${e}!`)
-                }
-            }
-
-            return ({
-                created: count
-            });
-        },
-    }
-},
-);
+});
 export default handler;
 
 Bun.serve({ port, hostname: '0.0.0.0', fetch: handler });
 console.debug(`Catalog server up!`);
 
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 async function seed() {
 
+    const newArticles: Article[] = [];
 
-    await new Promise<void>((resolve) => setTimeout(resolve, 500));
+    for (const pzn of pzns) {
+        const a = (await antoniusClient.getArticleReturn({ pzn })).articles[0];
 
-    let skip = 360000;
-    const take = 10000;
-    let localArticleTotal = 0;
-    while (true) {
-        const articleReturn = await antoniusClient.getArticleReturn({ skip, take });
-
-        const articles = mapArticles(articleReturn);
-        console.debug(`Got ${articles.length} articles from antonius database!`)
-
-        const filteredArticles = articles.filter((a) => a.active);
-        console.debug(`Filtered ${filteredArticles.length} articles`);
-
-        const BATCH_SIZE = 500;
-        let addedArticles = 0;
-        for (let i = 0; i < filteredArticles.length; i += BATCH_SIZE) {
-            const batch = filteredArticles
-                .slice(i, Math.min((i + BATCH_SIZE), filteredArticles.length));
-
-            try {
-                addedArticles += await db.client.orm.public.Article
-                    .createAndCount(batch);
-                await new Promise<void>((resolve) => setTimeout(resolve, 500));
-            } catch {
-                console.debug(`Duplicate found! Adding each article individually...`)
-                for (const article of batch) {
-                    await db.client.orm.public.Article
-                        .upsert({
-                            create: article,
-                            update: article,
-                        });
-                    addedArticles += 1;
-                    console.debug(`Added ${addedArticles} of ${filteredArticles.length} articles!`);
-                }
-            }
-        }
-
-        localArticleTotal += addedArticles;
-        console.debug(`Created ${addedArticles} articles in local database`);
-        console.debug(`Created a total of ${localArticleTotal}/${antoniusArticleTotal} articles in local database`);
-
-        if (addedArticles > filteredArticles.length) {
-            console.debug(`Batch is incomplete! Retrying batch!`);
-        }
-        else {
-            skip += take;
-            console.debug(`Batch is complete! Skip is now ${skip}.`);
-        }
-
-        if (skip >= antoniusArticleTotal)
-            break;
+        newArticles.push({
+            pzn: a.mainDetail.number,
+            active: a.active,
+            articleCategories: [],
+            dosageForm: a.propertyValues.find(
+                p => p.option === 'Darreichungsform'
+            )!.value,
+            name: a.name,
+            priceCents: a.mainDetail.prices.find(p => (
+                p.groupKey === 'EK'
+            ))!.price,
+            purchasePrice: a.mainDetail.prices.find(p => (
+                p.groupKey === 'Apo_Ek'
+            ))!.price,
+            purchaseUnit: Number(a.mainDetail.purchaseUnit),
+            unit: a.mainDetail.unit,
+            supplier: a.supplier.Firmenname,
+        })
     }
+
+    const createdCount = db.client.orm.public.Article
+        .createAndCount(newArticles
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            .map(({ articleCategories, ...article }) => article));
+
+    console.info(`Created ${createdCount}/${newArticles.length}`)
 }
