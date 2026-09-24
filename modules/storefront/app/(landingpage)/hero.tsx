@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 const slides = [
   {
     image: "/hero1.jpg",
-    title1: "Für die ganze Famile.",
+    title1: "Für die ganze Familie.",
     title2: "Sorglos verreisen.",
   },
   {

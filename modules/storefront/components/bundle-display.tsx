@@ -9,6 +9,7 @@ import { triggerCartFly } from "@/components/cart-fly-animation";
 import { getShopArticleByPZN } from "@/utils/fetch-api";
 import type { Activity, CountryKit } from "@/utils/types";
 import { useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
 
 interface Props {
   country: CountryKit | null;
@@ -21,6 +22,7 @@ export default function BundleDisplay({ country, activity, displayArticles }: Pr
   const [isLoading, setIsLoading] = useState(false);
   const addBundle = useShoppingCartStore((state) => state.addBundle);
   const selectBundle = useShoppingCartStore((state) => state.selectBundle);
+  const router = useRouter();
   const selectedActivity = getActivity(activity);
   const climate = getClimate(country);
 
@@ -60,6 +62,7 @@ export default function BundleDisplay({ country, activity, displayArticles }: Pr
     addBundle(new ShoppingCartBundle(name, 1, articles.map((article) => ({ article, quantity: 1 }))));
     selectBundle(name);
     triggerCartFly(event.currentTarget, `/articles/${articles[0].pzn}.jpg`);
+    router.push("/configurator");
   }
 
   if (!country || !activity || !selectedActivity || !climate) {
