@@ -16,6 +16,10 @@ export default function ShoppingCartModal() {
   const [isCheckingOut, setIsCheckingOut] = useState(false);
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
 
+
+  const { open, setStripeSrc } = useModalStore(state => state);
+  const { src } = useModalStore(state => state.modals.stripe);
+
   const { total, itemCount, checkoutItems } = useMemo(() => {
     const items = bundles.flatMap((bundle) => bundle.articles.map((item) => ({
       ...item,
@@ -35,6 +39,7 @@ export default function ShoppingCartModal() {
     try {
       const url = await createStripeCeckout(checkoutItems);
       window.location.assign(url);
+
     } catch (error) {
       setCheckoutError(error instanceof Error ? error.message : "Der Checkout konnte nicht gestartet werden.");
       setIsCheckingOut(false);

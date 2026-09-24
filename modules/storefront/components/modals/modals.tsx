@@ -3,6 +3,7 @@
 import { useIsAnyModalOpen, useModalStore } from "@/utils/ModalState";
 import ShoppingCartModal from "@/components/modals/shopping-cart-modal";
 import { useEffect } from "react";
+import StripeModal from "./stripe-modal";
 
 export default function Modals() {
   const isBlurred = useIsAnyModalOpen();

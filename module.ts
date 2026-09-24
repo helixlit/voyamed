@@ -2,6 +2,7 @@ import { module } from '@prisma/composer';
 import { envSecret } from '@prisma/composer-prisma-cloud'
 import catalogModule from '@voyamed/catalog';
 import storefrontService from '@voyamed/storefront';
+import ordersService from '@voyamed/orders';
 
 export default module('voyamed', ({ provision }) => {
     const catalog = provision(catalogModule, {
@@ -20,6 +21,14 @@ export default module('voyamed', ({ provision }) => {
             resendApiKey: envSecret('RESEND_API_KEY'),
             orderNotificationEmail: envSecret('ORDER_NOTIFICATION_EMAIL'),
             orderNotificationFrom: envSecret('ORDER_NOTIFICATION_FROM'),
+        }
+    })
+
+    provision(ordersService, {
+        deps: {},
+        input: {
+            stripeSecretKey: envSecret('STRIPE_SECRET_KEY'),
+            stripeWebhookSecret: envSecret('STRIPE_WEBHOOK_SECRET'),
         }
     })
 });

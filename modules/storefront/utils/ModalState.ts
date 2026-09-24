@@ -1,17 +1,19 @@
 import { create } from "zustand";
 
-type ModalName = "shoppingCart" | "settings";
+type ModalName = "shoppingCart" | "settings" | "stripe";
 
 interface ModalState {
-    modals: Record<ModalName, { open: boolean, beginClose: boolean }>;
+    modals: Record<ModalName, { open: boolean, beginClose: boolean, src?: string }>;
     open: (name: ModalName) => void;
     close: (name: ModalName) => void;
     closeAll: () => void;
+    setStripeSrc: (src: string) => void;
 };
 
 export const useModalStore = create<ModalState>((set) => ({
     modals: {
         shoppingCart: { open: false, beginClose: false },
+        stripe: { open: false, beginClose: false, src: "" },
         settings: { open: false, beginClose: false },
     },
 
@@ -33,9 +35,16 @@ export const useModalStore = create<ModalState>((set) => ({
     closeAll: () => set({
         modals: {
             shoppingCart: { open: false, beginClose: false },
+            stripe: { open: false, beginClose: false },
             settings: { open: false, beginClose: false },
         },
     }),
+
+    setStripeSrc: (src: string) => set((state) => ({
+        modals: {
+            ...state.modals, stripe: { open: true, beginClose: false, src: src }
+        }
+    }))
 }));
 
 export const useIsAnyModalOpen = () =>

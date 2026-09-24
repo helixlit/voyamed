@@ -22,6 +22,7 @@
     "@prisma/orm-postgres": "8.0.0-rc.9",
     "@voyamed/catalog": "workspace:*",
     "@voyamed/storefront": "workspace:*",
+    "@voyamed/orders": "workspace:*",
     "alchemy": "2.0.0-beta.77",
     "arktype": "^2.2.3",
     "dotenv": "^17.4.2",

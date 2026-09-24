@@ -18,7 +18,6 @@ export async function POST(request: NextRequest) {
     }
 
     try {
-        // Prices and product information must come from the catalog, not from the browser.
         const itemsByPzn = new Map<string, { quantity: number }>();
         for (const item of body.items) {
             const pzn = typeof item.article?.pzn === "string" ? item.article.pzn : "";
@@ -50,6 +49,11 @@ export async function POST(request: NextRequest) {
 
         const session = await stripe.checkout.sessions.create({
             mode: "payment",
+
+            metadata: {
+                orderId: 'test'
+            },
+
             line_items: items.map((item) => ({
                 price_data: {
                     currency: "eur",
@@ -65,11 +69,11 @@ export async function POST(request: NextRequest) {
                 },
                 quantity: item.quantity,
             })),
-            success_url: `${request.nextUrl.origin}/?checkout=success`,
-            cancel_url: `${request.nextUrl.origin}/?checkout=cancelled`,
+            success_url: `${request.nextUrl.origin}/checkout/success`,
+            cancel_url: `${request.nextUrl.origin}/checkout/cancel`,
             shipping_address_collection: { allowed_countries: ["DE"] },
-            phone_number_collection: { enabled: true },
         });
+
 
         return Response.json({ url: session.url });
     } catch (error) {

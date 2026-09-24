@@ -8,7 +8,7 @@ export const runtime = "nodejs";
 export async function POST(request: NextRequest) {
     const signature = request.headers.get("stripe-signature");
     if (!signature) {
-        return NextResponse.json({ error: "Stripe-Signatur fehlt." }, { status: 400 });
+        return NextResponse.json({ error: "Missing stripe signature" }, { status: 400 });
     }
 
     const input = service.input();
@@ -22,8 +22,8 @@ export async function POST(request: NextRequest) {
             input.stripeWebhookSecret.expose(),
         );
     } catch (error) {
-        console.error("Invalid Stripe webhook signature", error);
-        return NextResponse.json({ error: "Ungültige Stripe-Signatur." }, { status: 400 });
+        console.error("Invalid stripe webhook signature", error);
+        return NextResponse.json({ error: "Invalid stripe webhook signature" }, { status: 400 });
     }
 
     if (event.type !== "checkout.session.completed") {
@@ -36,7 +36,6 @@ export async function POST(request: NextRequest) {
     }
 
     try {
-        // Retrieve the current session so retrying a Stripe webhook does not send another email.
         const session = await stripe.checkout.sessions.retrieve(completedSession.id);
         if (session.metadata?.orderNotificationSentAt) {
             return NextResponse.json({ received: true, alreadyNotified: true });
