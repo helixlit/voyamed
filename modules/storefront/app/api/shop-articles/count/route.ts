@@ -1,6 +1,6 @@
 import service from "@/src/service";
 import {
-    canUseLocalCatalogPreview,
+    canUseLocalCatalogFallback,
     getLocalShopArticleCount,
 } from "@/lib/local-catalog-preview";
 import { NextRequest, NextResponse } from "next/server";
@@ -12,7 +12,7 @@ export async function GET(request: NextRequest) {
         const result = await catalog.getShopArticleCount({ query });
         return NextResponse.json(result);
     } catch (error) {
-        if (!canUseLocalCatalogPreview()) {
+        if (!canUseLocalCatalogFallback()) {
             return NextResponse.json({ error: "Der Artikelkatalog ist derzeit nicht erreichbar." }, { status: 503 });
         }
 

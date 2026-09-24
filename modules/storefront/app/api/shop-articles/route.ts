@@ -1,6 +1,6 @@
 import service from "@/src/service";
 import {
-    canUseLocalCatalogPreview,
+    canUseLocalCatalogFallback,
     getLocalShopArticle,
     getLocalShopArticles,
 } from "@/lib/local-catalog-preview";
@@ -31,7 +31,7 @@ export async function GET(request: NextRequest) {
 
         return NextResponse.json(result);
     } catch (error) {
-        if (!canUseLocalCatalogPreview()) {
+        if (!canUseLocalCatalogFallback()) {
             return NextResponse.json({ error: "Der Artikelkatalog ist derzeit nicht erreichbar." }, { status: 503 });
         }
 

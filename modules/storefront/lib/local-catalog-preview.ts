@@ -52,6 +52,11 @@ export function getLocalShopArticleCount(query: string) {
   return productData.produkte.filter((product) => matchesQuery(product, query)).length;
 }
 
-export function canUseLocalCatalogPreview() {
-  return process.env.NODE_ENV !== "production";
+/**
+ * Keeps the storefront usable when the shop catalog is temporarily unavailable.
+ * The bundled catalog is deliberately a read-only fallback; live availability is
+ * still confirmed by the pharmacy before an order is accepted.
+ */
+export function canUseLocalCatalogFallback() {
+  return process.env.VOYAMED_DISABLE_LOCAL_CATALOG_FALLBACK !== "true";
 }
