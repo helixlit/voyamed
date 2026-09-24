@@ -68,6 +68,7 @@ export default function Article({ article }: Props) {
               type="button"
               aria-label={`${article.name} in den Warenkorb`}
               onClick={(e) => {
+                e.preventDefault()
                 e.stopPropagation()
                 addToCart()
               }}
