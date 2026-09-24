@@ -37,19 +37,17 @@ export default function WorldGlobe({ countries, setCountries, selectedCountry, s
   const hoveredCountryId = useRef<string | number | null>(null);
   const [size, setSize] = useState({ width: 0, height: 0 });
   const [hoveredCountry, setHoveredCountry] = useState<Feature | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [animateLoad, setAnimateLoad] = useState(false);
 
   useEffect(() => {
     const controller = new AbortController();
     fetch("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson", { signal: controller.signal })
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) throw new Error(`Länderdaten konnten nicht geladen werden (${res.status})`);
+        return res.json();
+      })
       .then((data) => setCountries(data))
       .catch((error) => { if (error.name !== "AbortError") console.error("Globus konnte nicht geladen werden", error); });
-
-    const showAnimation = window.setTimeout(() => setAnimateLoad(true), 250);
-    const hideLoader = window.setTimeout(() => setLoading(false), 750);
-    return () => { controller.abort(); window.clearTimeout(showAnimation); window.clearTimeout(hideLoader); };
+    return () => controller.abort();
   }, [setCountries]);
 
   useEffect(() => {
@@ -70,9 +68,9 @@ export default function WorldGlobe({ countries, setCountries, selectedCountry, s
     return () => observer.disconnect();
   }, []);
 
-  useEffect(() => {
-    if (!globeRef.current?.controls) return;
-    const controls = globeRef.current.controls();
+  const configureControls = useCallback(() => {
+    const controls = globeRef.current?.controls?.();
+    if (!controls) return;
     controls.enableRotate = true;
     controls.enableZoom = true;
     controls.enableDamping = true;
@@ -99,7 +97,10 @@ export default function WorldGlobe({ countries, setCountries, selectedCountry, s
         ref={globeRef}
         width={size.width}
         height={size.height}
-        onGlobeReady={() => globeRef.current?.pointOfView({ altitude: 1.65 }, 0)}
+        onGlobeReady={() => {
+          configureControls();
+          globeRef.current?.pointOfView({ altitude: 1.65 }, 0);
+        }}
         enablePointerInteraction
         rendererConfig={{ antialias: false, alpha: true }}
         polygonsData={countries?.features}
@@ -121,14 +122,6 @@ export default function WorldGlobe({ countries, setCountries, selectedCountry, s
         showAtmosphere={false}
         animateIn={false}
       />
-      {loading && (
-        <div className={`absolute inset-0 z-50 flex items-center justify-center bg-background transition-opacity duration-500 ${animateLoad ? "opacity-0" : "opacity-100"}`}>
-          <div className="relative">
-            <div className="h-40 w-40 animate-pulse rounded-full bg-foreground opacity-30 blur-2xl" />
-            <div className="absolute inset-0 flex items-center justify-center text-center text-white/80">Globus wird geladen …</div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

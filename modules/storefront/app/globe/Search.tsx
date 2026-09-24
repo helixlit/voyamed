@@ -2,7 +2,9 @@
 
 import { Feature, FeatureCollection } from "geojson";
 import React, { useEffect, useMemo, useState } from "react";
-import { countries as countryDetails } from "@/data/konfigurator/countries.json";
+import countriesData from "@/data/konfigurator/countries.json";
+
+const countryDetails = countriesData.countries;
 
 
 type Props = {

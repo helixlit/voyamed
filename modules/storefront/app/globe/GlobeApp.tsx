@@ -4,12 +4,14 @@ import { useEffect, useState } from "react";
 import Search from "./Search";
 import WorldGlobe from "./WorldGlobe";
 import { Feature, FeatureCollection } from "geojson";
-import { countries as CountriesDetails } from "@/data/konfigurator/countries.json";
+import countriesData from "@/data/konfigurator/countries.json";
 import { Activity, Country } from "@/utils/types";
 import ActivitySelector from "@/components/activity-selector";
 import BundleDisplay from "@/components/bundle-display";
 import { getAvailableActivities } from "@/lib/travel-kit";
 import { getClimate } from "@/lib/travel-kit";
+
+const CountriesDetails = countriesData.countries;
 
 export default function GlobeContext() {
     const [countries, setCountries] = useState<FeatureCollection | null>(null);
