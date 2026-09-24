@@ -12,11 +12,11 @@ export async function addShopArticles(articlePZNs: Array<string>) {
 }
 
 export async function getShopArticleByPZN(pzn: string) {
+    console.debug(`Fetching ${`/api/shop-articles?pzn=${encodeURIComponent(pzn)}`}`);
+
     const result = await fetch(
         `/api/shop-articles?pzn=${encodeURIComponent(pzn)}`
     );
-
-    console.debug(`Fetching ${`/api/shop-articles?pzn=${encodeURIComponent(pzn)}`}`);
 
     return await result.json() as ShopArticle;
 }

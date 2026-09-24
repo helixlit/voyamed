@@ -11,26 +11,22 @@ export async function GET(request: NextRequest) {
     const take = Number(searchParams.get("take") ?? 20);
     const skip = Number(searchParams.get("skip") ?? 0);
 
-    try {
-        const { catalog } = service.load();
+    const { catalog } = service.load();
 
-        if (pzns.length > 0) {
-            console.debug(`/api/shop-articles/GET: getting articles for pzns ${JSON.stringify(pzns)}`);
-            const result: Array<ShopArticle> = (await catalog.getShopArticlesByPZNs({ pzns })).shopArticles;
-            console.debug(`/api/shop-article/GET: returned ${JSON.stringify(result)}`);
-            return NextResponse.json(result);
-        }
-
-        const result: Array<ShopArticle> = (await catalog.getShopArticles({
-            query,
-            take,
-            skip,
-        })).shopArticles;
-
+    if (pzns.length > 0) {
+        console.debug(`/api/shop-articles/GET: getting articles for pzns ${JSON.stringify(pzns)}`);
+        const result: Array<ShopArticle> = (await catalog.getShopArticlesByPZNs({ pzns })).shopArticles;
+        console.debug(`/api/shop-article/GET: returned ${JSON.stringify(result)}`);
         return NextResponse.json(result);
-    } catch (error) {
-        console.error(`Cloud not load get shop articles beacause ${error}`);
     }
+
+    const result: Array<ShopArticle> = (await catalog.getShopArticles({
+        query,
+        take,
+        skip,
+    })).shopArticles;
+
+    return NextResponse.json(result);
 }
 
 export async function POST(request: NextRequest) {
