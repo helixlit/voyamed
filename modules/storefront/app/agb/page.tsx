@@ -5,7 +5,7 @@ export const metadata: Metadata = { title: "AGB" };
 
 export default function AgbPage() {
   return (
-    <main className="mx-auto w-full max-w-3xl px-5 py-12 sm:py-16">
+    <div className="mx-auto w-full max-w-3xl px-5 py-12 sm:py-16">
       <p className="text-sm font-medium text-highlight">Rechtliches</p>
       <h1 className="mt-2 text-3xl font-semibold sm:text-4xl">Allgemeine Geschäftsbedingungen</h1>
       <div className="mt-8 rounded-3xl bg-foreground/[0.045] p-5 text-foreground/80 sm:p-8">
@@ -16,6 +16,6 @@ export default function AgbPage() {
         <Link href="https://www.impfstoffversand.de/agb" target="_blank" rel="noreferrer" className="mt-5 inline-flex min-h-11 items-center rounded-full bg-foreground px-5 text-sm font-medium text-background transition hover:-translate-y-0.5 hover:shadow-lg">AGB der Antonius-Apotheke öffnen</Link>
         <p className="mt-5 text-sm leading-6 text-foreground/65">Hinweis: Die verlinkten AGB richten sich laut Antonius-Shop an medizinische Fachkreise und Unternehmer. Für einen Endkunden-Shop müssten eigene, rechtlich geprüfte Verbraucher-AGB ergänzt werden.</p>
       </div>
-    </main>
+    </div>
   )
 }

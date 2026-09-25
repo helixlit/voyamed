@@ -5,7 +5,7 @@ export const metadata: Metadata = { title: "Impressum" };
 
 export default function ImpressumPage() {
   return (
-    <main className="mx-auto w-full max-w-3xl px-5 py-12 sm:py-16">
+    <div className="mx-auto w-full max-w-3xl px-5 py-12 sm:py-16">
       <p className="text-sm font-medium text-highlight">Rechtliches</p>
       <h1 className="mt-2 text-3xl font-semibold sm:text-4xl">Impressum</h1>
       <div className="mt-8 grid gap-6 rounded-3xl bg-foreground/[0.045] p-5 text-foreground/80 sm:p-8">
@@ -32,6 +32,6 @@ export default function ImpressumPage() {
         </section>
       </div>
       <p className="mt-6 text-sm text-foreground/65">Quelle und vollständige Angaben: <Link className="underline underline-offset-2" href="https://www.antoniusapotheke.de/impressum" target="_blank" rel="noreferrer">Impressum der Antonius-Apotheke</Link>.</p>
-    </main>
+    </div>
   )
 }
