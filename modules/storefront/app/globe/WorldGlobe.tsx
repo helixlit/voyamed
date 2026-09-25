@@ -83,7 +83,8 @@ export default function WorldGlobe({ countries, setCountries, selectedCountry, s
     controls.zoomSpeed = 0.65;
   }, []);
 
-  const globeMaterial = useMemo(() => new MeshBasicMaterial({ color: "#5896fc" }), []);
+  // White water, dark blue land; the atmosphere gives the white sphere an edge against the page.
+  const globeMaterial = useMemo(() => new MeshBasicMaterial({ color: "#ffffff" }), []);
   const handlePolygonHover = useCallback((country: unknown) => {
     const nextCountry = isSelectableFeature(country) ? country : null;
     const nextId = nextCountry?.id ?? null;
@@ -106,11 +107,12 @@ export default function WorldGlobe({ countries, setCountries, selectedCountry, s
         rendererConfig={{ antialias: false, alpha: true }}
         polygonsData={countries?.features}
         polygonCapColor={(object) => {
-          if (!isSelectableFeature(object)) return "rgba(37,99,235,1)";
+          if (!isSelectableFeature(object)) return "#1e3a8a";
           if (selectedCountry?.id === object.id) return "rgba(34,197,94,0.8)";
           if (hoveredCountry?.id === object.id) return "rgba(255,215,0,0.9)";
-          return "rgba(37,99,235,1)";
+          return "#1e3a8a";
         }}
+        polygonSideColor={() => "#172554"}
         polygonStrokeColor={() => "#ffffff"}
         onPolygonClick={(object) => { if (isSelectableFeature(object)) setSelectedCountry(object); }}
         polygonAltitude={(object) => isSelectableFeature(object) && selectedCountry?.id === object.id ? 0.03 : 0.01}
@@ -120,7 +122,9 @@ export default function WorldGlobe({ countries, setCountries, selectedCountry, s
         backgroundColor="rgba(0,0,0,0)"
         globeImageUrl={null}
         globeMaterial={globeMaterial}
-        showAtmosphere={false}
+        showAtmosphere
+        atmosphereColor="#93c5fd"
+        atmosphereAltitude={0.12}
         animateIn={false}
       />
     </div>
