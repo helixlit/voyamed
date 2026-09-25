@@ -61,64 +61,62 @@ export class AntoniusClient {
       take: options.take ?? 100,
       since: options.since ?? "1970-01-02 00:00:00",
 
-      ...(options.pzn && {
-        pzn: options.pzn,
-      }),
+      ...(options.pzn !== undefined && { pzn: options.pzn }),
     });
   }
-
-  // async getCategories(
-  //   options: {
-  //     skip?: number;
-  //     take?: number;
-  //     since?: Date;
-  //   } = {},
-  // ) {
-  //   return this.request<CategoryResponse>("/abdarest/categories", {
-  //     skip: options.skip ?? 0,
-  //     take: options.take ?? 100,
-  //     since:
-  //       options.since?.toISOString().replace("T", " ").substring(0, 19) ??
-  //       "1970-01-02 00:00:00",
-  //   });
-  // }
-
-  // async getImageList(
-  //   options: {
-  //     since?: Date;
-  //     skip?: number;
-  //     take?: number;
-  //   } = {},
-  // ) {
-  //   return this.request<ImageListResponse>(
-  //     "/abdarest/articleZippedImagesList",
-  //     {
-  //       skip: options.skip ?? 0,
-  //       take: options.take ?? 100,
-  //       since:
-  //         options.since?.toISOString().replace("T", " ").substring(0, 19) ??
-  //         "1970-01-02 00:00:00",
-  //     },
-  //   );
-  // }
-
-  // async downloadImages(since?: Date) {
-  //   const url = new URL("/abdarest/articleZippedImages", this.baseUrl);
-
-  //   if (since) {
-  //     url.searchParams.set("since", since.toISOString());
-  //   }
-
-  //   const response = await fetch(url, {
-  //     headers: {
-  //       Authorization:
-  //         "Basic " +
-  //         Buffer.from(`${this.username}:${this.password}`).toString("base64"),
-  //     },
-  //   });
-
-  //   if (!response.ok) throw new Error("Image download failed");
-
-  //   return response.arrayBuffer();
-  // }
 }
+
+// async getCategories(
+//   options: {
+//     skip?: number;
+//     take?: number;
+//     since?: Date;
+//   } = {},
+// ) {
+//   return this.request<CategoryResponse>("/abdarest/categories", {
+//     skip: options.skip ?? 0,
+//     take: options.take ?? 100,
+//     since:
+//       options.since?.toISOString().replace("T", " ").substring(0, 19) ??
+//       "1970-01-02 00:00:00",
+//   });
+// }
+
+// async getImageList(
+//   options: {
+//     since?: Date;
+//     skip?: number;
+//     take?: number;
+//   } = {},
+// ) {
+//   return this.request<ImageListResponse>(
+//     "/abdarest/articleZippedImagesList",
+//     {
+//       skip: options.skip ?? 0,
+//       take: options.take ?? 100,
+//       since:
+//         options.since?.toISOString().replace("T", " ").substring(0, 19) ??
+//         "1970-01-02 00:00:00",
+//     },
+//   );
+// }
+
+// async downloadImages(since?: Date) {
+//   const url = new URL("/abdarest/articleZippedImages", this.baseUrl);
+
+//   if (since) {
+//     url.searchParams.set("since", since.toISOString());
+//   }
+
+//   const response = await fetch(url, {
+//     headers: {
+//       Authorization:
+//         "Basic " +
+//         Buffer.from(`${this.username}:${this.password}`).toString("base64"),
+//     },
+//   });
+
+//   if (!response.ok) throw new Error("Image download failed");
+
+//   return response.arrayBuffer();
+// }

@@ -90,6 +90,37 @@ async function seed() {
     for (const pzn of pzns) {
         const a = (await antoniusClient.getArticleReturn({ pzn })).articles[0];
 
+        if (!a) {
+            console.error(`Could not get article with ${pzn}!`);
+            continue;
+        }
+
+        const existingArticle = await db.client.orm.public.Article
+            .where(a => a.pzn.eq(pzn))
+            .update({
+                active: a.active,
+                dosageForm: a.propertyValues.find(
+                    p => p.option === 'Darreichungsform'
+                )!.value,
+                name: a.name,
+                priceCents: Math.ceil(a.mainDetail.prices.find(p => (
+                    p.groupKey === 'EK'
+                ))!.price * 100),
+                purchasePrice: Math.ceil(a.mainDetail.prices.find(p => (
+                    p.groupKey === 'Apo_Ek'
+                ))!.price * 100),
+                purchaseUnit: Number(a.mainDetail.purchaseUnit),
+                unit: a.mainDetail.unit,
+                supplier: a.supplier.Firmenname,
+            });
+
+        if (existingArticle) {
+            console.info(`Updated article ${pzn}!`)
+            continue;
+        }
+
+
+
         newArticles.push({
             pzn: a.mainDetail.number,
             active: a.active,
@@ -98,19 +129,23 @@ async function seed() {
                 p => p.option === 'Darreichungsform'
             )!.value,
             name: a.name,
-            priceCents: a.mainDetail.prices.find(p => (
+            priceCents: Math.ceil(a.mainDetail.prices.find(p => (
                 p.groupKey === 'EK'
-            ))!.price,
-            purchasePrice: a.mainDetail.prices.find(p => (
+            ))!.price * 100),
+            purchasePrice: Math.ceil(a.mainDetail.prices.find(p => (
                 p.groupKey === 'Apo_Ek'
-            ))!.price,
+            ))!.price * 100),
             purchaseUnit: Number(a.mainDetail.purchaseUnit),
             unit: a.mainDetail.unit,
             supplier: a.supplier.Firmenname,
+            description: '',
+            articleIndication: [],
+            searchTerms: '',
+            simpleName: '',
         })
     }
 
-    const createdCount = db.client.orm.public.Article
+    const createdCount = await db.client.orm.public.Article
         .createAndCount(newArticles
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
             .map(({ articleCategories, ...article }) => article));

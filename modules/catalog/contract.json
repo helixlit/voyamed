@@ -20,8 +20,8 @@
       "model": "Category",
       "namespace": "public"
     },
-    "indications": {
-      "model": "Indications",
+    "indication": {
+      "model": "Indication",
       "namespace": "public"
     }
   },
@@ -297,7 +297,7 @@
                   ]
                 },
                 "to": {
-                  "model": "Indications",
+                  "model": "Indication",
                   "namespace": "public"
                 }
               }
@@ -422,7 +422,7 @@
               "table": "category"
             }
           },
-          "Indications": {
+          "Indication": {
             "fields": {
               "name": {
                 "nullable": false,
@@ -466,7 +466,7 @@
                 }
               },
               "namespaceId": "public",
-              "table": "indications"
+              "table": "indication"
             }
           }
         }
@@ -666,7 +666,7 @@
                       "name"
                     ],
                     "namespaceId": "public",
-                    "tableName": "indications"
+                    "tableName": "indication"
                   }
                 }
               ],
@@ -759,7 +759,7 @@
               },
               "uniques": []
             },
-            "indications": {
+            "indication": {
               "columns": {
                 "name": {
                   "codecId": "pg/text@1",
@@ -787,7 +787,7 @@
         "kind": "postgres-schema"
       }
     },
-    "storageHash": "734b7f1183c5f4e551da8022a39843d19ca5c641d614c80c8308e71987a357a3"
+    "storageHash": "9e193d197b4f4277f11f99924cfcc2d015920b7da7a161a5de563ea1bad61bc6"
   },
   "capabilities": {
     "postgres": {

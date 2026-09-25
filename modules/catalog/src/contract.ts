@@ -12,9 +12,19 @@ const definitions = type.scope({
         categories: "category[]",
     },
 
+    indication: {
+        name: "string",
+        searchTerms: "string",
+    },
+
     articleCategory: {
         articlePzn: "string",
         categoryId: "string",
+    },
+
+    articleIndication: {
+        articlePzn: "string",
+        indicatinName: "string",
     },
 
     article: {
@@ -27,7 +37,11 @@ const definitions = type.scope({
         priceCents: "number",
         purchasePrice: "number",
         dosageForm: "string",
+        description: "string",
+        searchTerms: "string",
+        simpleName: "string",
         articleCategories: "articleCategory[]",
+        articleIndications: "articleIndication[]",
     },
 });
 

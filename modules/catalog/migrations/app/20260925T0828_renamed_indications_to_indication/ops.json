@@ -1,0 +1,162 @@
+[
+  {
+    "id": "dropConstraint.articleIndication.articleIndication_indicationName_fkey",
+    "label": "Drop constraint \"articleIndication_indicationName_fkey\" on \"articleIndication\"",
+    "operationClass": "destructive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "articleIndication_indicationName_fkey",
+        "table": "articleIndication"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure constraint \"articleIndication_indicationName_fkey\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "articleIndication_indicationName_fkey",
+          "public",
+          "\"public\".\"articleIndication\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "drop constraint \"articleIndication_indicationName_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"articleIndication\" DROP CONSTRAINT \"articleIndication_indicationName_fkey\""
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify constraint \"articleIndication_indicationName_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "articleIndication_indicationName_fkey",
+          "public",
+          "\"public\".\"articleIndication\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "dropTable.indications",
+    "label": "Drop table \"indications\"",
+    "operationClass": "destructive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "indications"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"indications\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"indications\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "drop table \"indications\"",
+        "sql": "DROP TABLE \"public\".\"indications\""
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"indications\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"indications\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "table.indication",
+    "label": "Create table \"indication\"",
+    "summary": "Creates table \"indication\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "indication"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"indication\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"indication\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"indication\"",
+        "sql": "CREATE TABLE \"public\".\"indication\" (\n  \"name\" text NOT NULL,\n  \"searchTerms\" text NOT NULL,\n  PRIMARY KEY (\"name\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"indication\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"indication\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.articleIndication.articleIndication_indicationName_fkey",
+    "label": "Add foreign key \"articleIndication_indicationName_fkey\" on \"articleIndication\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "articleIndication_indicationName_fkey",
+        "table": "articleIndication"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"articleIndication_indicationName_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "articleIndication_indicationName_fkey",
+          "public",
+          "\"public\".\"articleIndication\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"articleIndication_indicationName_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"articleIndication\"\nADD CONSTRAINT \"articleIndication_indicationName_fkey\"\nFOREIGN KEY (\"indicationName\")\nREFERENCES \"public\".\"indication\" (\"name\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"articleIndication_indicationName_fkey\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "articleIndication_indicationName_fkey",
+          "public",
+          "\"public\".\"articleIndication\""
+        ]
+      }
+    ]
+  }
+]
