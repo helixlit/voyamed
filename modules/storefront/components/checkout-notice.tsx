@@ -8,12 +8,15 @@ type CheckoutStatus = "success" | "cancelled";
 /** Confirms the result of a Stripe checkout (`?checkout=success|cancelled` on return). */
 export default function CheckoutNotice() {
   const [status, setStatus] = useState<CheckoutStatus | null>(null);
+  const [orderNumber, setOrderNumber] = useState<string | null>(null);
 
   useEffect(() => {
-    const checkout = new URLSearchParams(window.location.search).get("checkout");
+    const params = new URLSearchParams(window.location.search);
+    const checkout = params.get("checkout");
     if (checkout !== "success" && checkout !== "cancelled") return;
 
     setStatus(checkout);
+    setOrderNumber(params.get("order"));
     // Drop the parameter so a reload doesn't show the notice again.
     window.history.replaceState(null, "", window.location.pathname);
     if (checkout !== "success") return;
@@ -41,7 +44,7 @@ export default function CheckoutNotice() {
           </p>
           <p className="mt-1 text-foreground/75">
             {status === "success"
-              ? "Deine Zahlung ist eingegangen. Die Antonius-Apotheke prüft deine Bestellung jetzt und meldet sich bei Rückfragen."
+              ? `${orderNumber ? `Bestellnummer ${orderNumber}. ` : ""}Deine Zahlung ist eingegangen und eine Bestätigung ist per E-Mail unterwegs. Die Antonius-Apotheke prüft deine Bestellung jetzt und meldet sich bei Rückfragen.`
               : "Dein Warenkorb ist noch da – du kannst jederzeit zur Kasse zurückkehren."}
           </p>
         </div>

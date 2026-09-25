@@ -2,6 +2,12 @@ import service from "@/src/service";
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 
+/** Short, human-readable order number for emails and support, e.g. `VM-260925-3F9A1C`. */
+function createOrderNumber() {
+    const date = new Date().toLocaleDateString("sv-SE", { timeZone: "Europe/Berlin" }).slice(2).replaceAll("-", "");
+    return `VM-${date}-${crypto.randomUUID().slice(0, 6).toUpperCase()}`;
+}
+
 type RequestedItem = {
     article?: { pzn?: unknown };
     quantity?: unknown;
@@ -46,8 +52,15 @@ export async function POST(request: NextRequest) {
             }),
         );
 
+        const orderNumber = createOrderNumber();
         const session = await stripe.checkout.sessions.create({
             mode: "payment",
+            locale: "de",
+            metadata: { orderNumber },
+            payment_intent_data: {
+                description: `Voyamed-Bestellung ${orderNumber}`,
+                metadata: { orderNumber },
+            },
             line_items: items.map((item) => ({
                 price_data: {
                     currency: "eur",
@@ -63,7 +76,7 @@ export async function POST(request: NextRequest) {
                 },
                 quantity: item.quantity,
             })),
-            success_url: `${request.nextUrl.origin}/?checkout=success`,
+            success_url: `${request.nextUrl.origin}/?checkout=success&order=${orderNumber}`,
             cancel_url: `${request.nextUrl.origin}/?checkout=cancelled`,
             shipping_address_collection: { allowed_countries: ["DE"] },
             phone_number_collection: { enabled: true },
