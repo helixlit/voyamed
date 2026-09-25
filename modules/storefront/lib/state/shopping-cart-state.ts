@@ -1,5 +1,6 @@
 import { Article } from "../../../catalog/src/contract";
 import { create } from "zustand";
+import { createJSONStorage, persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 import { immerable } from "immer";
 
@@ -116,14 +117,22 @@ interface ShoppingCartState {
     articlePZN: string,
     quantityDelta: number,
   ) => void;
+  clearCart: () => void;
 }
 
-const defaultBundle = new ShoppingCartBundle("default");
+type PersistedBundle = Pick<ShoppingCartBundle, "name" | "quantity" | "articles">;
+type PersistedCart = { bundles: Array<PersistedBundle>; selectedBundleName: string | null };
 
 export const useShoppingCartStore = create<ShoppingCartState>()(
+  persist(
   immer((set) => ({
-    bundles: [defaultBundle],
+    bundles: [new ShoppingCartBundle("default")],
     selectedBundleName: null,
+    clearCart: () =>
+      set((state) => {
+        state.bundles = [new ShoppingCartBundle("default")];
+        state.selectedBundleName = null;
+      }),
     addBundle: (item) =>
       set((state) => {
         // A kit is identified by its destination and activity. Re-selecting it
@@ -199,4 +208,26 @@ export const useShoppingCartStore = create<ShoppingCartState>()(
         bundle.setArticleQuantity(articlePZN, quantityDelta);
       }),
   })),
+  {
+    name: "voyamed-cart",
+    version: 1,
+    storage: createJSONStorage(() => localStorage),
+    // Hydrated from <CartHydration /> after mount, so server and first client render match.
+    skipHydration: true,
+    // Only plain data is stored; the bundle instances (with their methods) are rebuilt on load.
+    partialize: (state): PersistedCart => ({
+      bundles: state.bundles.map(({ name, quantity, articles }) => ({ name, quantity, articles })),
+      selectedBundleName: state.selectedBundleName,
+    }),
+    merge: (persisted, current) => {
+      const saved = persisted as PersistedCart | undefined;
+      if (!saved?.bundles?.length) return current;
+      const bundles = saved.bundles.map((bundle) => new ShoppingCartBundle(bundle.name, bundle.quantity, bundle.articles));
+      if (!bundles.some((bundle) => bundle.name === "default")) bundles.unshift(new ShoppingCartBundle("default"));
+      const selectedBundleName = bundles.some((bundle) => bundle.name === saved.selectedBundleName)
+        ? saved.selectedBundleName
+        : null;
+      return { ...current, bundles, selectedBundleName };
+    },
+  }),
 );

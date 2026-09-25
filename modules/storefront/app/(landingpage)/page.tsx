@@ -1,10 +1,12 @@
 import BundleBrowser from "./(bundles)/bundle-browser"
+import CheckoutNotice from "@/components/checkout-notice"
 import FQA from "./FQA"
 import Hero from "./hero"
 
 function page() {
   return (
     <div className="overflow-x-hidden min-h-screen min-w-screen">
+      <CheckoutNotice />
       <Hero />
       <BundleBrowser />
       <FQA />
