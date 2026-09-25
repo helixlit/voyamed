@@ -37,13 +37,13 @@ export async function POST(request: NextRequest) {
 
         const items = await Promise.all(
             [...itemsByPzn.entries()].map(async ([pzn, { quantity }]) => {
-                const { shopArticles } = await catalog.getShopArticlesByPZNs({
+                const { articles } = await catalog.getArticlesByPZNs({
                     pzns: [pzn]
                 });
-                if (!shopArticles[0].article.active) {
+                if (!articles[0].active) {
                     throw new Error(`Artikel ${pzn} ist nicht verfügbar.`);
                 }
-                return { article: shopArticles[0].article, quantity };
+                return { article: articles[0], quantity };
             }),
         );
 

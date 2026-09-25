@@ -1,5 +1,5 @@
 import service from "@/src/service";
-import { ShopArticle } from "@voyamed/catalog/contract";
+import { Article } from "@voyamed/catalog/contract";
 import { NextRequest, NextResponse } from "next/server";
 
 
@@ -15,28 +15,30 @@ export async function GET(request: NextRequest) {
 
     if (pzns.length > 0) {
         console.debug(`/api/shop-articles/GET: getting articles for pzns ${JSON.stringify(pzns)}`);
-        const result: Array<ShopArticle> = (await catalog.getShopArticlesByPZNs({ pzns })).shopArticles;
+        const result: Array<Article> = (await catalog.getArticlesByPZNs({ pzns })).articles;
         console.debug(`/api/shop-article/GET: returned ${JSON.stringify(result)}`);
         return NextResponse.json(result);
     }
 
-    const result: Array<ShopArticle> = (await catalog.getShopArticles({
+    const result: Array<Article> = (await catalog.getArticlesByQuery({
         query,
         take,
         skip,
-    })).shopArticles;
+    })).articles;
 
     return NextResponse.json(result);
 }
 
-export async function POST(request: NextRequest) {
-    const { catalog } = service.load();
 
-    const pzns = await request.json();
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export async function POST(request: NextRequest) {
+    // const { catalog } = service.load();
+
+    // const pzns = await request.json();
 
     let result;
     try {
-        result = (await catalog.addShopArticles(pzns));
+        console.debug('Adding articles via dashboard is deprecated')
     }
     catch (e) {
         console.error(`Could not add articles to catalog shop-articles because of ${e}`);

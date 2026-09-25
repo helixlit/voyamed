@@ -12,8 +12,16 @@
       "model": "ArticleCategory",
       "namespace": "public"
     },
+    "articleIndication": {
+      "model": "ArticleIndication",
+      "namespace": "public"
+    },
     "category": {
       "model": "Category",
+      "namespace": "public"
+    },
+    "indications": {
+      "model": "Indications",
       "namespace": "public"
     }
   },
@@ -27,6 +35,13 @@
                 "nullable": false,
                 "type": {
                   "codecId": "pg/bool@1",
+                  "kind": "scalar"
+                }
+              },
+              "description": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/text@1",
                   "kind": "scalar"
                 }
               },
@@ -72,6 +87,20 @@
                   "kind": "scalar"
                 }
               },
+              "searchTerms": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "simpleName": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
               "supplier": {
                 "nullable": false,
                 "type": {
@@ -102,12 +131,30 @@
                   "model": "ArticleCategory",
                   "namespace": "public"
                 }
+              },
+              "articleIndications": {
+                "cardinality": "1:N",
+                "on": {
+                  "localFields": [
+                    "pzn"
+                  ],
+                  "targetFields": [
+                    "articlePzn"
+                  ]
+                },
+                "to": {
+                  "model": "ArticleIndication",
+                  "namespace": "public"
+                }
               }
             },
             "storage": {
               "fields": {
                 "active": {
                   "column": "active"
+                },
+                "description": {
+                  "column": "description"
                 },
                 "dosageForm": {
                   "column": "dosageForm"
@@ -126,6 +173,12 @@
                 },
                 "pzn": {
                   "column": "pzn"
+                },
+                "searchTerms": {
+                  "column": "searchTerms"
+                },
+                "simpleName": {
+                  "column": "simpleName"
                 },
                 "supplier": {
                   "column": "supplier"
@@ -198,6 +251,68 @@
               },
               "namespaceId": "public",
               "table": "articleCategory"
+            }
+          },
+          "ArticleIndication": {
+            "fields": {
+              "articlePzn": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "indicationName": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              }
+            },
+            "relations": {
+              "article": {
+                "cardinality": "N:1",
+                "on": {
+                  "localFields": [
+                    "articlePzn"
+                  ],
+                  "targetFields": [
+                    "pzn"
+                  ]
+                },
+                "to": {
+                  "model": "Article",
+                  "namespace": "public"
+                }
+              },
+              "indication": {
+                "cardinality": "N:1",
+                "on": {
+                  "localFields": [
+                    "indicationName"
+                  ],
+                  "targetFields": [
+                    "name"
+                  ]
+                },
+                "to": {
+                  "model": "Indications",
+                  "namespace": "public"
+                }
+              }
+            },
+            "storage": {
+              "fields": {
+                "articlePzn": {
+                  "column": "articlePzn"
+                },
+                "indicationName": {
+                  "column": "indicationName"
+                }
+              },
+              "namespaceId": "public",
+              "table": "articleIndication"
             }
           },
           "Category": {
@@ -306,6 +421,53 @@
               "namespaceId": "public",
               "table": "category"
             }
+          },
+          "Indications": {
+            "fields": {
+              "name": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "searchTerms": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              }
+            },
+            "relations": {
+              "articleIndications": {
+                "cardinality": "1:N",
+                "on": {
+                  "localFields": [
+                    "name"
+                  ],
+                  "targetFields": [
+                    "indicationName"
+                  ]
+                },
+                "to": {
+                  "model": "ArticleIndication",
+                  "namespace": "public"
+                }
+              }
+            },
+            "storage": {
+              "fields": {
+                "name": {
+                  "column": "name"
+                },
+                "searchTerms": {
+                  "column": "searchTerms"
+                }
+              },
+              "namespaceId": "public",
+              "table": "indications"
+            }
           }
         }
       }
@@ -322,6 +484,11 @@
                   "codecId": "pg/bool@1",
                   "nativeType": "bool",
                   "nullable": false
+                },
+                "description": {
+                  "codecId": "pg/text@1",
+                  "nativeType": "text",
+                  "nullable": true
                 },
                 "dosageForm": {
                   "codecId": "pg/text@1",
@@ -352,6 +519,16 @@
                   "codecId": "pg/text@1",
                   "nativeType": "text",
                   "nullable": false
+                },
+                "searchTerms": {
+                  "codecId": "pg/text@1",
+                  "nativeType": "text",
+                  "nullable": true
+                },
+                "simpleName": {
+                  "codecId": "pg/text@1",
+                  "nativeType": "text",
+                  "nullable": true
                 },
                 "supplier": {
                   "codecId": "pg/text@1",
@@ -446,6 +623,79 @@
               },
               "uniques": []
             },
+            "articleIndication": {
+              "columns": {
+                "articlePzn": {
+                  "codecId": "pg/text@1",
+                  "nativeType": "text",
+                  "nullable": false
+                },
+                "indicationName": {
+                  "codecId": "pg/text@1",
+                  "nativeType": "text",
+                  "nullable": false
+                }
+              },
+              "foreignKeys": [
+                {
+                  "source": {
+                    "columns": [
+                      "articlePzn"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "articleIndication"
+                  },
+                  "target": {
+                    "columns": [
+                      "pzn"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "article"
+                  }
+                },
+                {
+                  "source": {
+                    "columns": [
+                      "indicationName"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "articleIndication"
+                  },
+                  "target": {
+                    "columns": [
+                      "name"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "indications"
+                  }
+                }
+              ],
+              "indexes": [
+                {
+                  "columns": [
+                    "articlePzn"
+                  ],
+                  "name": "articleIndication_articlePzn_idx_6862e36c",
+                  "prefix": "articleIndication_articlePzn_idx",
+                  "unique": false
+                },
+                {
+                  "columns": [
+                    "indicationName"
+                  ],
+                  "name": "articleIndication_indicationName_idx_1c5c28b5",
+                  "prefix": "articleIndication_indicationName_idx",
+                  "unique": false
+                }
+              ],
+              "primaryKey": {
+                "columns": [
+                  "articlePzn",
+                  "indicationName"
+                ]
+              },
+              "uniques": []
+            },
             "category": {
               "columns": {
                 "active": {
@@ -508,6 +758,28 @@
                 ]
               },
               "uniques": []
+            },
+            "indications": {
+              "columns": {
+                "name": {
+                  "codecId": "pg/text@1",
+                  "nativeType": "text",
+                  "nullable": false
+                },
+                "searchTerms": {
+                  "codecId": "pg/text@1",
+                  "nativeType": "text",
+                  "nullable": false
+                }
+              },
+              "foreignKeys": [],
+              "indexes": [],
+              "primaryKey": {
+                "columns": [
+                  "name"
+                ]
+              },
+              "uniques": []
             }
           }
         },
@@ -515,7 +787,7 @@
         "kind": "postgres-schema"
       }
     },
-    "storageHash": "4d682e2ee62df9b402211a5b6439993ae577cf4cf1c708b2027820a82ad187f8"
+    "storageHash": "734b7f1183c5f4e551da8022a39843d19ca5c641d614c80c8308e71987a357a3"
   },
   "capabilities": {
     "postgres": {

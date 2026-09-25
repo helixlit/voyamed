@@ -1,22 +1,13 @@
 import service from "@/src/service";
-import {
-    canUseLocalCatalogPreview,
-    getLocalShopArticleCount,
-} from "@/lib/local-catalog-preview";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
     const query = request.nextUrl.searchParams.get("query") ?? "";
     try {
         const { catalog } = service.load();
-        const result = await catalog.getShopArticleCount({ query });
+        const result = await catalog.getArticleCountByQuery({ query });
         return NextResponse.json(result);
     } catch (error) {
-        if (!canUseLocalCatalogPreview()) {
-            return NextResponse.json({ error: "Der Artikelkatalog ist derzeit nicht erreichbar." }, { status: 503 });
-        }
-
-        console.warn("Lokale Katalogvorschau wird verwendet:", error);
-        return NextResponse.json({ count: getLocalShopArticleCount(query) });
+        console.error(`Can not reach catalog database beacause ${error}`);
     }
 }

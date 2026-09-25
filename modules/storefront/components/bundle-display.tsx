@@ -46,7 +46,7 @@ export default function BundleDisplay(props: Props) {
     (async () => {
       const articles = [];
       for (const pzn of newPZNs) {
-        articles.push((await getShopArticleByPZN(pzn)).article)
+        articles.push((await getShopArticleByPZN(pzn)))
       }
       setArticles(articles);
       console.debug(articles);

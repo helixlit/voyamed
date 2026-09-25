@@ -1,4 +1,4 @@
-import { ShopArticle } from "@voyamed/catalog/contract";
+import { Article } from "@voyamed/catalog/contract";
 
 export async function addShopArticles(articlePZNs: Array<string>) {
     const result = await fetch("/api/shop-articles", {
@@ -18,7 +18,7 @@ export async function getShopArticleByPZN(pzn: string) {
         `/api/shop-articles?pzn=${encodeURIComponent(pzn)}`
     );
 
-    return await result.json() as ShopArticle;
+    return await result.json() as Article;
 }
 
 export async function getShopArticlesByPZNs(pzns: Array<string>) {
@@ -34,5 +34,5 @@ export async function getShopArticlesByPZNs(pzns: Array<string>) {
         `/api/shop-articles?${params.toString()}`
     );
 
-    return await result.json() as Array<ShopArticle>;
+    return await result.json() as Array<Article>;
 }

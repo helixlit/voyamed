@@ -23,6 +23,7 @@ export default function ArticleBrowser() {
 
 
   const [isLoading, setIsLoading] = useState(true);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [loadError, setLoadError] = useState<string | null>(null);
 
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -64,7 +65,7 @@ export default function ArticleBrowser() {
     const shopArticles = await getShopArticlesByPZNs(pzns);
 
     setQueriedArticles(
-      shopArticles.map(s => ({ id: s.pzn, ...s.article }))
+      shopArticles.map(s => ({ id: s.pzn, ...s }))
     );
 
     console.debug(`ArticleBrowser:67: queriedArticlesCount: ${shopArticles.length}`);
