@@ -46,11 +46,13 @@ export default function Hero() {
           `}
         />
       ))}
+      {/* Keeps the headline readable on bright parts of the photos. */}
+      <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/35 to-black/50" />
 
       <div className="relative flex flex-col w-full h-full">
-        <div className="h-[clamp(20rem,40vw,50rem)] relative text-background gap-5 z-10 flex flex-col items-center justify-center w-fit m-auto text-[clamp(1rem,8vw,5rem)] pb-10">
-          <div className="w-full text-center [text-shadow:0_1px_10px_rgba(0,0,0,0.3)] overflow-visible">
-            <h1 aria-live="polite">
+        <div className="min-h-[clamp(24rem,42vw,50rem)] relative text-background gap-6 z-10 flex flex-col items-center justify-center w-full max-w-3xl m-auto px-5 py-12 pb-6">
+          <div className="w-full text-center [text-shadow:0_1px_12px_rgba(0,0,0,0.45)] overflow-visible">
+            <h1 aria-live="polite" className="text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl">
               <span
                 key={slides[index].title1}
                 className="block text-fade-in text-background"
@@ -64,13 +66,25 @@ export default function Hero() {
                 {slides[index].title2}
               </span>
             </h1>
+            {/* Say what the product is right away — the first glance decides whether visitors stay. */}
+            <p className="mx-auto mt-4 max-w-xl text-base text-background/90 sm:text-lg">
+              Deine Reiseapotheke passend zu Reiseziel und Aktivität – in wenigen Schritten zusammengestellt, geprüft von der Antonius-Apotheke.
+            </p>
           </div>
-          <Link
-            href="/globe"
-            className="text-background/90 shadow-[0_0_20px_5px_rgba(0,0,0,0.6)] border-3 border-background/10 text-center bg-highlight/30 rounded-4xl p-3 backdrop-blur-[3px] transition-all duration-400 hover:bg-highlight/80 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-background"
-          >
-            <span className="block text-[2rem] font-medium">Hier bestellen</span>
-          </Link>
+          <div className="flex flex-col items-center gap-3 sm:flex-row">
+            <Link
+              href="/globe"
+              className="rounded-full bg-highlight px-7 py-4 text-lg font-semibold text-foreground shadow-lg transition-all hover:-translate-y-0.5 hover:shadow-xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-background"
+            >
+              Reiseapotheke zusammenstellen
+            </Link>
+            <Link
+              href="#so-funktionierts"
+              className="rounded-full px-5 py-3 text-base font-medium text-background underline-offset-4 transition-colors hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-background"
+            >
+              So funktioniert&apos;s
+            </Link>
+          </div>
         </div>
         <div className="z-10 relative bottom-0 p-4 left-0 flex gap-10 w-full justify-center">
           {slides.map((slide, i) => (

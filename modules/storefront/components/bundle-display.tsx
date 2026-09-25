@@ -3,6 +3,7 @@
 import type { Article as TArticle } from "@voyamed/catalog/contract";
 import Article from "@/app/configurator/article";
 import TravelAdvice from "@/components/travel-advice";
+import MedicineNotice from "@/components/medicine-notice";
 import { buildKitPzns, getActivity, getClimate } from "@/lib/travel-kit";
 import { ShoppingCartBundle, useShoppingCartStore } from "@/lib/state/shopping-cart-state";
 import { triggerCartFly } from "@/components/cart-fly-animation";
@@ -10,6 +11,8 @@ import { getShopArticleByPZN } from "@/utils/fetch-api";
 import type { Activity, CountryKit } from "@/utils/types";
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
+
+const euro = new Intl.NumberFormat("de-DE", { style: "currency", currency: "EUR" });
 
 interface Props {
   country: CountryKit | null;
@@ -25,6 +28,8 @@ export default function BundleDisplay({ country, activity, displayArticles }: Pr
   const router = useRouter();
   const selectedActivity = getActivity(activity);
   const climate = getClimate(country);
+
+  const kitPriceCents = articles.reduce((sum, article) => sum + article.priceCents, 0);
 
   const kitPzns = useMemo(
     () => country && activity ? buildKitPzns(country, activity) : [],
@@ -77,14 +82,25 @@ export default function BundleDisplay({ country, activity, displayArticles }: Pr
           <h2 className="mt-1 text-2xl font-semibold">{country.name} · {selectedActivity.name}</h2>
           <p className="mt-2 max-w-2xl text-sm text-foreground/70">{climate.beschreibung} {selectedActivity.beschreibung}</p>
         </div>
-        <button
-          type="button"
-          onClick={addBundleToCart}
-          disabled={articles.length === 0 || isLoading}
-          className="min-h-12 shrink-0 rounded-full bg-foreground px-5 font-medium text-background transition hover:-translate-y-0.5 hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-45"
-        >
-          {isLoading ? "Kit wird geladen …" : "Kit auswählen & bearbeiten"}
-        </button>
+        <div className="flex shrink-0 flex-col items-start gap-2 sm:items-end">
+          {/* The price is shown before choosing the kit — surprise costs are the top reason to abandon a purchase. */}
+          <p className="text-sm text-foreground/70 sm:text-right" aria-live="polite">
+            {isLoading || articles.length === 0 ? "Preis wird berechnet …" : (
+              <>
+                {articles.length} Produkte · <strong className="text-lg text-foreground">{euro.format(kitPriceCents / 100)}</strong>
+                <span className="block text-xs">inkl. MwSt. · Produkte im Warenkorb abwählbar</span>
+              </>
+            )}
+          </p>
+          <button
+            type="button"
+            onClick={addBundleToCart}
+            disabled={articles.length === 0 || isLoading}
+            className="min-h-12 rounded-full bg-foreground px-5 font-medium text-background transition hover:-translate-y-0.5 hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-45"
+          >
+            {isLoading ? "Kit wird geladen …" : "Kit auswählen & bearbeiten"}
+          </button>
+        </div>
       </div>
       <TravelAdvice country={country} activity={activity} />
       {displayArticles && (
@@ -98,6 +114,7 @@ export default function BundleDisplay({ country, activity, displayArticles }: Pr
           {!isLoading && articles.length === 0 && <p className="mt-3 text-sm text-foreground/65">Für diese Auswahl sind im aktuellen Katalog noch keine Artikel hinterlegt.</p>}
         </div>
       )}
+      <MedicineNotice className="mt-4 text-foreground/70" />
     </section>
   );
 }

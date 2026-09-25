@@ -266,7 +266,7 @@ ${heading("Deine Bestellung")}
 ${itemsTable(order.items, order.totalCents, { withPzn: false })}
 ${heading("Lieferadresse")}
 <p style="margin:0;">${addressBlock(order.shippingName, order.shippingAddress)}</p>
-<p style="margin:24px 0 0;">Fragen zu deiner Bestellung? Antworte einfach auf diese E-Mail oder ruf die ${escapeHtml(pharmacy.name)} an: <a href="tel:+49991998910" style="color:${colors.ink};">${escapeHtml(pharmacy.phone)}</a>.</p>
+<p style="margin:24px 0 0;">Fragen zu deiner Bestellung? Antworte einfach auf diese E-Mail oder ruf die ${escapeHtml(pharmacy.name)} an: <a href="${pharmacy.phoneHref}" style="color:${colors.ink};">${escapeHtml(pharmacy.phone)}</a>.</p>
 <p style="margin:16px 0 0;font-size:12px;color:${colors.muted};">Diese E-Mail bestätigt den Eingang deiner Bestellung. Es gelten unsere <a href="${escapeHtml(`${siteUrl}/agb`)}" style="color:${colors.muted};">AGB</a>.</p>`;
 
     return { subject, text, html: layout(subject, body, pharmacyFooter(siteUrl)) };

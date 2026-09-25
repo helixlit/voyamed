@@ -68,8 +68,13 @@ export default function ShoppingCartModal() {
       </div>
 
       <footer className="safe-bottom border-t border-foreground/15 bg-background px-5 pt-4 sm:px-6">
+        {/* All costs are visible before checkout: unexpected extra costs are the top reason carts get abandoned. */}
+        <div className="mb-1 flex items-baseline justify-between gap-4 text-sm text-foreground/70">
+          <span>Versand</span>
+          <span>kostenlos</span>
+        </div>
         <div className="mb-3 flex items-baseline justify-between gap-4">
-          <span className="text-sm text-foreground/70">Gesamt</span>
+          <span className="text-sm text-foreground/70">Gesamt <span className="text-xs">inkl. MwSt.</span></span>
           <strong className="text-xl">{price.format(total / 100)}</strong>
         </div>
         {checkoutError && <p role="alert" className="mb-3 rounded-xl bg-tertiary/12 px-3 py-2 text-sm text-tertiary">{checkoutError}</p>}
@@ -81,7 +86,10 @@ export default function ShoppingCartModal() {
         >
           {isCheckingOut ? "Checkout wird geöffnet …" : "Sicher zur Kasse"}
         </button>
-        <p className="pt-3 text-center text-xs text-foreground/55">Lieferung innerhalb Deutschlands</p>
+        <p className="flex items-center justify-center gap-1.5 pt-3 text-center text-xs text-foreground/60">
+          <svg aria-hidden="true" viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="currentColor"><path d="M17 9V7A5 5 0 0 0 7 7v2H5v12h14V9h-2ZM9 7a3 3 0 0 1 6 0v2H9V7Z" /></svg>
+          Sichere Zahlung über Stripe · Versand innerhalb Deutschlands
+        </p>
       </footer>
     </aside>
   );

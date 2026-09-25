@@ -6,6 +6,7 @@ import { ShopArticle } from "@voyamed/catalog/contract";
 import { ArticleWithId } from "@/utils/types";
 import Link from "next/link";
 import { useShoppingCartStore } from "@/lib/state/shopping-cart-state";
+import MedicineNotice from "@/components/medicine-notice";
 
 const take = 100;
 const quickSearches = ["Sonnenschutz", "Mückenschutz", "Durchfall", "Wunde", "Husten", "Schmerz"];
@@ -186,6 +187,7 @@ export default function ArticleBrowser() {
             )}
           </ul>
         )}
+        <MedicineNotice className="mt-4 text-background/85" />
       </div>
     </section>
     </div>

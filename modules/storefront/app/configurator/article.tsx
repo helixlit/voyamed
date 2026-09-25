@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { formatPackageLabel, formatUnitPrice } from "@/lib/article-price";
 import { triggerCartFly } from "@/components/cart-fly-animation";
+import { getIndication } from "@/lib/product-info";
 
 type Props = {
   article: ArticleClient;
@@ -25,6 +26,7 @@ export default function Article({ article, mode = "catalog" }: Props) {
     currency: "EUR",
   }).format(article.priceCents / 100);
   const unitPrice = formatUnitPrice(article);
+  const indication = getIndication(article.pzn);
 
   function addToKit(event: React.MouseEvent<HTMLButtonElement>) {
     if (!selectedBundleName) return;
@@ -47,6 +49,7 @@ export default function Article({ article, mode = "catalog" }: Props) {
         />
       </div>
       <div className="min-w-0 flex-1">
+        {indication && <p className="mb-1 inline-flex rounded-full bg-prim/40 px-2 py-0.5 text-xs font-medium text-secondary">{indication}</p>}
         <p className="line-clamp-2 font-medium leading-snug">{article.name}</p>
         <p className="mt-1 text-xs text-foreground/60">PZN {article.pzn}{article.supplier ? ` · ${article.supplier}` : ""}</p>
         <div className="mt-3 flex flex-wrap items-end justify-between gap-3">

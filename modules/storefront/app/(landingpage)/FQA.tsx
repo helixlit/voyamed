@@ -1,145 +1,78 @@
-"use client";
+import Link from "next/link";
+import type { ReactNode } from "react";
+import { pharmacy } from "@/lib/pharmacy";
 
-import { useRef } from "react";
-
-const questions = [
+// Only answers we can stand behind: on a pharmacy shop every promise here is read as a commitment.
+const questions: Array<{ question: string; answer: ReactNode }> = [
   {
-    question:
-      "Was unterscheidet eure Reiseapotheken von einer herkömmlichen Zusammenstellung aus der Drogerie?",
-    answer:
-      "Während Drogerien nur frei verkäufliche Produkte ohne medizinische Beratung führen, bieten wir kuratierte Sets an, die auf wissenschaftlichen Standards der Reisemedizin basieren. Wir kombinieren sinnvolle Präparate gegen Infektionen, Schmerzen und Verdauungsprobleme mit einer fachlichen Anleitung.",
+    question: "Wer steht hinter Voyamed?",
+    answer: <>Voyamed stellt Reiseapotheken passend zu Reiseziel und Aktivität zusammen. Deine Bestellung prüft und bearbeitet die {pharmacy.name} in {pharmacy.city.replace(/^\d+\s/, "")} ({pharmacy.owner}).</>,
   },
   {
-    question: "Wie lange sind die Produkte in meinem Set haltbar?",
-    answer:
-      "Wir garantieren eine Mindesthaltbarkeit von mindestens 12 Monaten ab dem Versanddatum. Falls ein Produkt eine kürzere Restlaufzeit haben sollte, informieren wir dich vor dem Versand persönlich.",
+    question: "Wie wird mein Reisekit zusammengestellt?",
+    answer: <>Aus dem Klima deines Reiseziels, dem Hygienerisiko vor Ort und deiner Aktivität entsteht ein Vorschlag mit rezeptfreien Produkten. Im Konfigurator kannst du weitere Produkte ergänzen, im Warenkorb entfernst du, was du nicht brauchst.</>,
   },
   {
-    question: "Sind alle enthaltenen Medikamente für Kinder geeignet?",
-    answer:
-      "Unsere Basis-Sets sind primär für Erwachsene zusammengestellt. Wir bieten jedoch spezielle 'Family-Editions' an, die kindgerechte Dosierungen (z. B. Säfte statt Tabletten) enthalten. Bitte achte bei der Auswahl deines Sets auf die entsprechende Kennzeichnung.",
+    question: "Warum kostet ein Kit so viel?",
+    answer: <>Der Kitpreis ist einfach die Summe der enthaltenen Produkte – jedes steht mit Einzel- und Grundpreis im Konfigurator. Wenn du etwas schon zu Hause hast, entfernst du es im Warenkorb und zahlst nur, was du wirklich brauchst.</>,
   },
   {
-    question: "Was sollte ich tun, wenn ich eine Vorerkrankung habe?",
-    answer:
-      "Menschen mit chronischen Erkrankungen sollten vor Reiseantritt zwingend Rücksprache mit ihrem behandelnden Arzt halten. Unsere Sets sind für die Selbstmedikation von typischen Reisebeschwerden konzipiert, können aber eine individuelle ärztliche Therapie nicht ersetzen.",
+    question: "Ersetzt das Kit eine ärztliche Beratung?",
+    answer: <>Nein. Die Produkte sind für typische Reisebeschwerden gedacht. Bei Vorerkrankungen, regelmäßiger Medikamenteneinnahme, in der Schwangerschaft oder für Kinder sprich vor der Reise mit deiner Ärztin, deinem Arzt oder der Apotheke. Hinweise zu Impfungen findest du bei deinem Reiseziel.</>,
   },
   {
-    question: "Kann ich die Apotheke auch für Geschäftsreisen nutzen?",
-    answer:
-      "Absolut. Unsere kompakten Sets sind ideal für Geschäftsreisende, die wenig Platz im Handgepäck haben, aber dennoch auf alle Eventualitäten vorbereitet sein wollen. Die Rechnung ist zudem ideal für deine Spesenabrechnung geeignet.",
+    question: "Was kostet der Versand?",
+    answer: <>Der Versand innerhalb Deutschlands ist derzeit kostenlos. Der Betrag im Warenkorb ist dein Endpreis inklusive Mehrwertsteuer.</>,
   },
   {
-    question: "Wie sicher ist der Versand von Arzneimitteln?",
-    answer:
-      "Wir nutzen ausschließlich zertifizierte Versandmethoden. Jedes Paket wird fachgerecht verpackt, um Temperaturschwankungen und Erschütterungen während des Transports zu minimieren. Zudem wird jede Sendung lückenlos verfolgt.",
+    question: "Wie bezahle ich – und ist das sicher?",
+    answer: <>Die Zahlung läuft über Stripe. Welche Zahlarten verfügbar sind, siehst du im Bezahlschritt. Deine Zahlungsdaten gibst du direkt bei Stripe ein, Voyamed selbst sieht sie nicht.</>,
   },
   {
-    question: "Darf ich die Medikamente im Flugzeug mitführen?",
-    answer:
-      "Ja, in den üblichen Mengen für den persönlichen Bedarf ist dies problemlos möglich. Wir empfehlen jedoch, die Reiseapotheke immer im Handgepäck zu verstauen, falls der Koffer verloren geht. Bei flüssigen Medikamenten über 100 ml solltest du zudem das ärztliche Attest bereithalten, das bei vielen unserer Sets enthalten ist.",
+    question: "Was passiert nach meiner Bestellung?",
+    answer: <>Du bekommst eine Bestätigung per E-Mail. Die {pharmacy.name} prüft deine Bestellung und meldet sich bei Rückfragen direkt bei dir. Verbindlich wird die Bestellung, sobald die Apotheke sie annimmt – Details in den <Link href="/agb" className="underline underline-offset-2">AGB</Link>.</>,
   },
   {
-    question:
-      "Was mache ich, wenn ein Medikament im Ausland nicht mehr ausreicht?",
-    answer:
-      "Unsere Sets enthalten eine Patientenbroschüre mit englischen Fachbegriffen für alle enthaltenen Wirkstoffe. Damit kannst du bei einem Arzt vor Ort oder in einer lokalen Apotheke präzise kommunizieren, was du bereits eingenommen hast und was du als Ersatz benötigst.",
+    question: "Wie lange sind die Produkte haltbar?",
+    answer: <>Das Haltbarkeitsdatum steht auf jeder Packung. Wenn du für eine lange Reise eine bestimmte Mindesthaltbarkeit brauchst, frag vor der Bestellung kurz bei der Apotheke nach: <a href={pharmacy.phoneHref} className="underline underline-offset-2">{pharmacy.phone}</a>.</>,
   },
   {
-    question: "Warum ist die Reiseapotheke nicht günstiger?",
-    answer:
-      "Der Preis setzt sich aus der hohen Qualität der Markenpräparate, der fachlichen Expertise eines approbierten Apothekers bei der Zusammenstellung sowie der sicheren, gesetzeskonformen Lagerung und Logistik zusammen. Sicherheit bei Gesundheitsprodukten sollte keine Kompromisse zulassen.",
+    question: "Darf ich die Medikamente im Flugzeug mitnehmen?",
+    answer: <>Pack die Reiseapotheke am besten ins Handgepäck, falls dein Koffer verloren geht. Für Flüssigkeiten gelten im Handgepäck die üblichen Mengengrenzen – ob Ausnahmen für Medikamente gelten, klärst du am besten vorab mit deiner Airline.</>,
   },
   {
-    question: "Erhalte ich Unterstützung bei der Auswahl meines Zielgebiets?",
-    answer:
-      "Ja! Wir haben unsere Sets nach Regionen optimiert (z. B. Tropen, Hochgebirge, Europa). Wenn du dir dennoch unsicher bist, findest du in unserem Blog einen interaktiven Ratgeber oder kannst uns direkt über unseren Support kontaktieren.",
+    question: "Kann ich meine Bestellung stornieren oder zurückgeben?",
+    answer: <>Melde dich so schnell wie möglich bei der {pharmacy.name} – telefonisch unter <a href={pharmacy.phoneHref} className="underline underline-offset-2">{pharmacy.phone}</a> oder per E-Mail an <a href={`mailto:${pharmacy.email}`} className="underline underline-offset-2">{pharmacy.email}</a>. Die Bedingungen findest du in den <Link href="/agb" className="underline underline-offset-2">AGB</Link>.</>,
   },
   {
-    question: "Kann ich meine Bestellung stornieren?",
-    answer:
-      "Eine Stornierung ist möglich, solange das Paket noch nicht versandt wurde. Da wir als Apotheke unter strengen Sicherheitsvorgaben arbeiten, sind Arzneimittel nach Versand aus hygienischen Gründen vom Rückgaberecht ausgeschlossen.",
-  },
-  {
-    question: "Wie sieht es mit dem Datenschutz bei meiner Bestellung aus?",
-    answer:
-      "Deine Gesundheitsdaten sind bei uns sicher. Wir verarbeiten deine Informationen gemäß den strengsten Datenschutzbestimmungen (DSGVO). Wir speichern nur die Daten, die für die Abwicklung deiner Bestellung zwingend erforderlich sind.",
+    question: "Was passiert mit meinen Daten?",
+    answer: <>Für die Bestellung brauchen wir Name, Lieferadresse, E-Mail-Adresse und Telefonnummer. Diese Daten erhält die {pharmacy.name}, damit sie deine Bestellung bearbeiten kann. Die Zahlung wickelt unser Zahlungsdienstleister Stripe ab.</>,
   },
 ];
 
 export default function FQA() {
   return (
-    <section className="w-full py-4 select-none">
-      <h2 className="text-center text-cl">Häufig gestellte Fragen</h2>
-      <h3 className="text-cs text-center pb-5 text-foreground/80">
-        Hier findest du Antworten auf deine Fragen
-      </h3>
-      <ul className="px-10 max-w-full">
-        {questions.map((q, i) => {
-          const input = useRef<HTMLInputElement>(null);
-          const p = useRef<HTMLParagraphElement>(null);
-          const pQ = useRef<HTMLParagraphElement>(null);
-          const div = useRef<HTMLDivElement>(null);
-          const label = useRef<HTMLLabelElement>(null);
-          return (
-            <div
-              key={q.question}
-              className="p-3 first:border-t border-b border-foreground/80 max-h-auto overflow-hidden m-auto relative max-w-250"
-            >
-              <label
-                htmlFor={q.question}
-                ref={label}
-                className={`group px-1 select-none w-full cursor-pointer flex  flex-col relative`}
-              >
-                <input
-                  ref={input}
-                  type="checkbox"
-                  id={q.question}
-                  className="peer hidden"
-                  onClick={() => {
-                    if (!div.current || !input.current) return;
-                    div.current.style.maxHeight = input.current.checked
-                      ? `${p.current?.scrollHeight}px`
-                      : `0px`;
-                  }}
-                />
-                <div className="flex flex-row justify-between align-middle itmes-center w-full hover:text-highlight gap-5">
-                  <p ref={pQ} className="text-cm">
-                    {q.question}
-                  </p>
-                  <div className="flex items-center justify-center ">
-                    <div className="relative w-5 h-5">
-                      <span
-                        className={`
-      absolute h-0.5 w-5 bg-current
-      translate-y-2.25
-      transition-transform duration-300
-      rotate-0 group-has-checked:rotate-135
-    `}
-                      />
-
-                      <span
-                        className={`
-      absolute h-5 w-0.5 bg-current -translate-x-1/2 translate-x-[0.25px] left-1/2
-      transition-transform duration-300 group-has-checked:rotate-135
-    `}
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div ref={div} className="max-h-0 transition-all duration-300">
-                  <p
-                    ref={p}
-                    className="w-full text-left pt-3 select-text transition-all duration-300 text-cs text-foreground/80 cursor-text z-100"
-                  >
-                    {q.answer}
-                  </p>
-                </div>
-              </label>
-            </div>
-          );
-        })}
-      </ul>
+    <section aria-labelledby="faq-title" className="w-full px-5 py-12">
+      <div className="mx-auto max-w-3xl">
+        <p className="text-center text-sm font-medium text-highlight">FAQ</p>
+        <h2 id="faq-title" className="mt-1 text-center text-2xl font-semibold sm:text-3xl">Häufig gestellte Fragen</h2>
+        <p className="mt-2 text-center text-foreground/70">
+          Deine Frage ist nicht dabei? Die Apotheke hilft dir weiter: <a href={pharmacy.phoneHref} className="font-medium text-foreground underline underline-offset-2">{pharmacy.phone}</a>
+        </p>
+        <ul className="mt-8 divide-y divide-foreground/15 border-y border-foreground/15">
+          {questions.map((item) => (
+            <li key={item.question}>
+              <details className="group">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-5 py-4 text-left font-medium transition-colors hover:text-secondary [&::-webkit-details-marker]:hidden">
+                  {item.question}
+                  <span aria-hidden="true" className="grid h-7 w-7 shrink-0 place-items-center rounded-full border border-foreground/20 text-lg leading-none transition-transform duration-300 group-open:rotate-45">+</span>
+                </summary>
+                <p className="pb-5 pr-10 leading-relaxed text-foreground/75">{item.answer}</p>
+              </details>
+            </li>
+          ))}
+        </ul>
+      </div>
     </section>
   );
 }

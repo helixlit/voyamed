@@ -5,7 +5,7 @@ interface Props {
   bundle: ShoppingCartBundle,
 }
 export default function ShoppingCartBundleComponent({ bundle }: Props) {
-  const { changeBundleQuantity, setBundleQuantity } = useShoppingCartStore(state => state);
+  const { changeBundleQuantity, setBundleQuantity, setArticleQuantity } = useShoppingCartStore(state => state);
   const [quantity, setQuantity] = useState(bundle.quantity);
 
 
@@ -80,9 +80,30 @@ export default function ShoppingCartBundleComponent({ bundle }: Props) {
             </button>
           </span>
         </span>
-        <button type="button" className="rounded-full border border-foreground/15 px-3 py-2 text-sm font-medium hover:bg-background" onClick={() => setShowBundleArticles((value) => !value)}>{showBundleArticles ? "Weniger Infos" : "Mehr Infos"}</button>
+        <button type="button" className="rounded-full border border-foreground/15 px-3 py-2 text-sm font-medium hover:bg-background" onClick={() => setShowBundleArticles((value) => !value)}>{showBundleArticles ? "Ausblenden" : "Inhalt anpassen"}</button>
       </div>
-      {showBundleArticles && <div className="mt-4 overflow-hidden rounded-xl border border-foreground/10 bg-background text-sm"><div className="grid grid-cols-[minmax(0,1fr)_auto_auto] gap-3 border-b border-foreground/10 bg-foreground/[0.03] px-3 py-2 text-xs font-semibold text-foreground/60"><span>Arzneimittel</span><span>Menge</span><span>Preis</span></div>{bundle.articles.map(({ article, quantity: articleQuantity }) => <div key={article.pzn} className="grid grid-cols-[minmax(0,1fr)_auto_auto] gap-3 px-3 py-2.5"><span className="line-clamp-2">{article.name}</span><span>{articleQuantity * bundle.quantity}×</span><span>{price.format(article.priceCents * articleQuantity * bundle.quantity / 100)}</span></div>)}</div>}
+      {showBundleArticles && (
+        <div className="mt-4 overflow-hidden rounded-xl border border-foreground/10 bg-background text-sm">
+          <div className="grid grid-cols-[minmax(0,1fr)_auto_auto_2rem] gap-3 border-b border-foreground/10 bg-foreground/[0.03] px-3 py-2 text-xs font-semibold text-foreground/60"><span>Arzneimittel</span><span>Menge</span><span>Preis</span><span className="sr-only">Entfernen</span></div>
+          {bundle.articles.map(({ article, quantity: articleQuantity }) => (
+            <div key={article.pzn} className="grid grid-cols-[minmax(0,1fr)_auto_auto_2rem] items-center gap-3 px-3 py-2">
+              <span className="line-clamp-2">{article.name}</span>
+              <span>{articleQuantity * bundle.quantity}×</span>
+              <span>{price.format(article.priceCents * articleQuantity * bundle.quantity / 100)}</span>
+              {/* Letting people drop what they already own keeps a large kit from being all-or-nothing. */}
+              <button
+                type="button"
+                onClick={() => setArticleQuantity(bundle.name, article.pzn, 0)}
+                aria-label={`${article.name} aus dem Kit entfernen`}
+                title="Aus dem Kit entfernen"
+                className="grid h-8 w-8 place-items-center rounded-full text-base text-foreground/50 transition-colors hover:bg-tertiary/10 hover:text-tertiary focus-visible:outline-2 focus-visible:outline-highlight"
+              >
+                ×
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
     </section>
   )
 

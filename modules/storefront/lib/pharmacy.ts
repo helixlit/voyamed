@@ -5,5 +5,6 @@ export const pharmacy = {
     street: "Oberer Stadtplatz 19",
     city: "94469 Deggendorf",
     phone: "0991 99 89 10",
+    phoneHref: "tel:+49991998910",
     email: "sekretariat@antoniusapotheke.de",
 } as const;
