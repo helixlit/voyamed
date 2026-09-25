@@ -22,6 +22,7 @@ export default function Search({
 }: Props) {
 
   const [query, setQuery] = useState("");
+  const [showResults, setShowResults] = useState(false);
   const [selectedCountryIndex, setSelectedCountryIndex] = useState(0);
   const filteredCountries = useMemo(() => {
     const normalizedQuery = query.toLowerCase().replace(/\s/g, "");
@@ -62,6 +63,7 @@ export default function Search({
         const country = filteredCountries[selectedCountryIndex]
         if (!country) return;
         setSelectedCountry(country);
+        setShowResults(false);
         break;
       }
     }
@@ -78,6 +80,7 @@ export default function Search({
 
   const handleSelect = (country: Feature) => {
     setSelectedCountry(country);
+    setShowResults(false);
     if (!country.properties) return;
     setQuery(country.properties.name);
   };
@@ -90,11 +93,14 @@ export default function Search({
           onKeyDown={handleKeyDown}
           placeholder="Suche nach einem Land..."
           value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          onChange={(e) => {
+            setQuery(e.target.value);
+            setShowResults(true);
+          }}
           className="min-h-11 w-full rounded-xl bg-background px-4 text-foreground outline-none ring-2 ring-transparent placeholder:text-foreground/45 focus:ring-highlight"
         />
         {
-          query && (
+          query && showResults && (
             <ul className={"max-h-60 overflow-y-auto rounded-xl bg-foreground p-1 text-background"}>
               {filteredCountries.length > 0 ? (
                 filteredCountries.map((country, index) => {

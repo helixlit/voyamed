@@ -4,6 +4,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import type { Feature, FeatureCollection } from "geojson";
+import type { GlobeMethods } from "react-globe.gl";
 import { MeshBasicMaterial } from "three";
 import { area, centroid, polygon } from "@turf/turf";
 
@@ -32,7 +33,7 @@ type Props = {
 };
 
 export default function WorldGlobe({ countries, setCountries, selectedCountry, setSelectedCountry }: Props) {
-  const globeRef = useRef<any>(null);
+  const globeRef = useRef<GlobeMethods | undefined>(undefined);
   const containerRef = useRef<HTMLDivElement>(null);
   const hoveredCountryId = useRef<string | number | null>(null);
   const [size, setSize] = useState({ width: 0, height: 0 });

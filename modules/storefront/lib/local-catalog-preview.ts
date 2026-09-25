@@ -5,6 +5,12 @@ import { parsePackageSize } from "@/lib/article-price";
 
 type LocalProduct = (typeof productData.produkte)[number];
 
+// The pharmacy list repeats some PZNs (one Otriven PZN appears with three order
+// quantities). The live catalog returns one article per PZN, so the fallback does too.
+const uniqueProducts = productData.produkte.filter(
+  (product, index, all) => all.findIndex((item) => item.pzn === product.pzn) === index,
+);
+
 function toArticle(product: LocalProduct): Article {
   const packageSize = parsePackageSize(product.name_original);
   return {
@@ -37,19 +43,19 @@ function matchesQuery(product: LocalProduct, query: string) {
 }
 
 export function getLocalShopArticle(pzn: string) {
-  const product = productData.produkte.find((item) => item.pzn === pzn);
+  const product = uniqueProducts.find((item) => item.pzn === pzn);
   return product ? toShopArticle(product) : null;
 }
 
 export function getLocalShopArticles(query: string, take: number, skip: number) {
-  return productData.produkte
+  return uniqueProducts
     .filter((product) => matchesQuery(product, query))
     .slice(skip, skip + take)
     .map(toShopArticle);
 }
 
 export function getLocalShopArticleCount(query: string) {
-  return productData.produkte.filter((product) => matchesQuery(product, query)).length;
+  return uniqueProducts.filter((product) => matchesQuery(product, query)).length;
 }
 
 /**

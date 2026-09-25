@@ -17,8 +17,9 @@ export function parsePackageSize(value: string): PackageSize | null {
 }
 
 export function formatPackageLabel(article: Article) {
-  if (article.purchaseUnit > 1 && article.unit !== "Packung") return `${article.purchaseUnit} ${article.unit}`;
-  return article.unit === "Packung" ? "Packung" : `${article.purchaseUnit} ${article.unit}`;
+  const quantity = new Intl.NumberFormat("de-DE").format(article.purchaseUnit);
+  if (article.purchaseUnit > 1 && article.unit !== "Packung") return `${quantity} ${article.unit}`;
+  return article.unit === "Packung" ? "Packung" : `${quantity} ${article.unit}`;
 }
 
 export function formatUnitPrice(article: Article) {
