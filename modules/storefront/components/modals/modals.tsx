@@ -13,6 +13,15 @@ export default function Modals() {
     return () => { document.body.style.overflow = ""; };
   }, [isBlurred]);
 
+  useEffect(() => {
+    if (!isBlurred) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") close();
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [isBlurred, close]);
+
   return (
     <div>
       {isBlurred && (

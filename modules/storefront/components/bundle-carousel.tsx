@@ -64,7 +64,7 @@ export default function BundleCarousel({ onSelect, selectedCountryCode, selected
   }, [activeIndex, isPaused]);
 
   return (
-    <section aria-label="Beliebte Reisekits" className="w-full max-w-6xl">
+    <section aria-label="Beliebte Reisekits" className="w-full min-w-0 max-w-6xl">
       <div className="mb-3 flex items-end justify-between gap-4">
         <div>
           <h2 className="text-xl font-semibold">Fünf Reisewelten entdecken</h2>

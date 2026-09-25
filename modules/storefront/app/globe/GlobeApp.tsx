@@ -31,6 +31,7 @@ export default function GlobeContext() {
 
     return (
         <div className="h-full grid relative overflow-hidden bg-background">
+            <h1 className="sr-only">Reiseziel auf dem Globus wählen</h1>
             <Search
                 countries={countries}
                 selectedCountry={selectedCountry}
@@ -43,7 +44,7 @@ export default function GlobeContext() {
                 setSelectedCountry={setSelectedCountry}
             />
             {selectedCountry !== null && countryDetails && (
-                <aside className="absolute right-3 top-3 z-40 w-[min(25rem,calc(100vw-1.5rem))] rounded-2xl bg-background p-4 text-foreground shadow-2xl ring-1 ring-foreground/10 sm:right-5 sm:top-5">
+                <aside className="absolute right-3 top-20 z-40 w-[min(25rem,calc(100vw-1.5rem))] rounded-2xl bg-background p-4 text-foreground shadow-2xl ring-1 ring-foreground/10 sm:right-5 sm:top-24 lg:top-5">
                     <div className="flex items-start justify-between gap-3">
                       <div><p className="text-xs font-medium text-highlight">Ausgewähltes Reiseziel</p><h2 className="mt-1 text-xl font-semibold">{countryDetails.name}</h2><p className="mt-1 text-sm text-foreground/65">{getClimate({ id: countryDetails.code, ...countryDetails })?.beschreibung}</p></div>
                       <button type="button" onClick={() => setSelectedCountry(null)} aria-label="Reiseziel schließen" className="grid h-9 w-9 place-items-center rounded-full text-lg hover:bg-foreground/5">×</button>
@@ -58,7 +59,7 @@ export default function GlobeContext() {
                     {selectedActivity && <button type="button" onClick={() => setShowKit((value) => !value)} className="mt-4 min-h-11 w-full rounded-full bg-foreground px-4 text-sm font-medium text-background">{showKit ? "Kit-Details schließen" : "Passendes Kit anzeigen"}</button>}
                 </aside>
             )}
-            {showKit && countryDetails && <div className="absolute inset-x-3 bottom-3 z-40 max-h-[56dvh] overflow-y-auto sm:inset-x-5 sm:bottom-5"><BundleDisplay country={{ id: countryDetails.code, ...countryDetails }} activity={selectedActivity} displayArticles={false} /></div>}
+            {showKit && countryDetails && <div className="absolute inset-x-3 bottom-3 z-40 mx-auto max-h-[45dvh] max-w-6xl lg:max-h-[56dvh] overflow-y-auto rounded-3xl bg-background shadow-2xl ring-1 ring-foreground/10 sm:inset-x-5 sm:bottom-5"><BundleDisplay country={{ id: countryDetails.code, ...countryDetails }} activity={selectedActivity} displayArticles={false} /></div>}
         </div>
     );
 }

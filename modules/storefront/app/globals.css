@@ -9,6 +9,7 @@
   --prim: #94d2bd;
   --secondary: #005f73;
   --tertiary: #ae2012;
+  --header-height: 4.375rem;
 }
 
 @theme inline {
@@ -37,9 +38,12 @@ body {
   overscroll-behavior-y: none;
 }
 
-h1 {
-  font-size: xx-large;
-  font-weight: 500;
+/* In the base layer so Tailwind size utilities on headings still apply. */
+@layer base {
+  h1 {
+    font-size: xx-large;
+    font-weight: 500;
+  }
 }
 
 @keyframes fade-in {

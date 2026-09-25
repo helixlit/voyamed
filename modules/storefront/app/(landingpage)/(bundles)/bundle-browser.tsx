@@ -46,10 +46,6 @@ export default function BundleBrowser() {
     run();
   }, [query])
 
-  useEffect(() => {
-    console.debug(`Current Kit: ${selectedCountry?.name} -> ${selectedActivity}`)
-  }, [selectedActivity, selectedCountry])
-
   function selectQuickKit(countryCode: string, activity: Activity) {
     const country = countries.countries.find((item) => item.code === countryCode);
     if (!country) return;
@@ -75,7 +71,7 @@ export default function BundleBrowser() {
         selectedActivity={selectedActivity}
       />
       <div className="w-full max-w-6xl">
-        <h1 className="text-2xl font-semibold sm:text-3xl">Gib dein Reiseziel &amp; deine Aktivität an</h1>
+        <h2 className="text-2xl font-semibold sm:text-3xl">Gib dein Reiseziel &amp; deine Aktivität an</h2>
         <p className="mt-1 text-foreground/65">Oder wähle oben ein Reisekit als schnellen Einstieg.</p>
       </div>
       <div className="flex w-full max-w-6xl flex-col gap-3 sm:flex-row sm:items-start">

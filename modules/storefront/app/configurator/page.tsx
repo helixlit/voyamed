@@ -1,4 +1,7 @@
+import type { Metadata } from "next";
 import Browser from "./article-browser";
+
+export const metadata: Metadata = { title: "Reiseapotheke zusammenstellen" };
 
 export default function page() {
   return (

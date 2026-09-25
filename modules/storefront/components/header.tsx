@@ -15,10 +15,10 @@ export default function Header() {
   ));
 
   return (
-    <header className="sticky top-0 z-40 border-b-2 border-foreground/15 bg-background/95 px-4 py-3 font-outfit backdrop-blur-md sm:px-6 select-none">
+    <header className="sticky top-0 z-40 h-(--header-height) border-b-2 border-foreground/15 bg-background/95 px-4 py-3 font-outfit backdrop-blur-md sm:px-6 select-none">
       <div className="mx-auto flex max-w-360 items-center justify-between gap-3">
       <div className="flex items-center">
-        <Link href={"/"}>
+        <Link href={"/"} aria-label="Voyamed – zur Startseite">
           <div className="flex items-center gap-2 sm:gap-3">
             <Image
               src={"/logo.png"}
@@ -27,9 +27,9 @@ export default function Header() {
               height={42}
               className="hidden sm:block"
             />
-            <h1 className="text-2xl leading-none sm:text-3xl">
+            <span className="text-2xl font-medium leading-none sm:text-3xl">
               Voya<span className="text-highlight">med</span>
-            </h1>
+            </span>
           </div>
         </Link>
       </div>

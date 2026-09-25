@@ -14,8 +14,11 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "Voyamed",
-  description: "Voyamed - Travelmedicine",
+  title: {
+    default: "Voyamed – Deine Reiseapotheke",
+    template: "%s | Voyamed",
+  },
+  description: "Stell dir die passende Reiseapotheke für dein Reiseziel und deine Aktivität zusammen – geprüft von der Antonius-Apotheke.",
 };
 
 export default function RootLayout({
@@ -30,10 +33,8 @@ export default function RootLayout({
     >
       <body className="min-h-[100dvh] max-w-screen overflow-x-hidden">
         <Header />
-        <main>
-          {children}
-          <Footer />
-        </main>
+        <main>{children}</main>
+        <Footer />
         <Modals />
         <CartFlyAnimation />
       </body>
