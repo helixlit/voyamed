@@ -4,6 +4,7 @@ import FQA from "./FQA"
 import Hero from "./hero"
 import TrustBar from "@/components/trust-bar"
 import HowItWorks from "@/components/how-it-works"
+import WhyVoyamed from "@/components/why-voyamed"
 
 function page() {
   return (
@@ -12,6 +13,7 @@ function page() {
       <Hero />
       <TrustBar />
       <HowItWorks />
+      <WhyVoyamed />
       <BundleBrowser />
       <FQA />
     </div >

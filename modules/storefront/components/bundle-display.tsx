@@ -4,6 +4,8 @@ import type { Article as TArticle } from "@voyamed/catalog/contract";
 import Article from "@/app/configurator/article";
 import TravelAdvice from "@/components/travel-advice";
 import MedicineNotice from "@/components/medicine-notice";
+import PackingList from "@/components/packing-list";
+import { pharmacy } from "@/lib/pharmacy";
 import { buildKitPzns, getActivity, getClimate } from "@/lib/travel-kit";
 import { ShoppingCartBundle, useShoppingCartStore } from "@/lib/state/shopping-cart-state";
 import { triggerCartFly } from "@/components/cart-fly-animation";
@@ -92,16 +94,25 @@ export default function BundleDisplay({ country, activity, displayArticles }: Pr
               </>
             )}
           </p>
-          <button
-            type="button"
-            onClick={addBundleToCart}
-            disabled={articles.length === 0 || isLoading}
-            className="min-h-12 rounded-full bg-foreground px-5 font-medium text-background transition hover:-translate-y-0.5 hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-45"
-          >
-            {isLoading ? "Kit wird geladen …" : "Kit auswählen & bearbeiten"}
-          </button>
+          <div className="flex flex-wrap gap-2 sm:justify-end">
+            <PackingList title={`${country.name} · ${selectedActivity.name}`} articles={articles} disabled={articles.length === 0 || isLoading} />
+            <button
+              type="button"
+              onClick={addBundleToCart}
+              disabled={articles.length === 0 || isLoading}
+              className="min-h-12 rounded-full bg-foreground px-5 font-medium text-background transition hover:-translate-y-0.5 hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-45"
+            >
+              {isLoading ? "Kit wird geladen …" : "Kit auswählen & bearbeiten"}
+            </button>
+          </div>
         </div>
       </div>
+      {/* The kit doesn't ask who travels — say so, and hand those cases to the pharmacy. */}
+      <p className="mt-4 rounded-2xl bg-background/70 px-4 py-3 text-sm text-foreground/75 ring-1 ring-foreground/10">
+        <span className="font-semibold text-foreground">Mit Kindern, in der Schwangerschaft oder mit Vorerkrankungen unterwegs?</span>{" "}
+        Der Vorschlag ist für Erwachsene ohne Besonderheiten gedacht. Lass ihn vor der Bestellung kurz von der Apotheke prüfen:{" "}
+        <a href={pharmacy.phoneHref} className="font-medium text-foreground underline underline-offset-2">{pharmacy.phone}</a>
+      </p>
       <TravelAdvice country={country} activity={activity} />
       {displayArticles && (
         <div className="mt-5">

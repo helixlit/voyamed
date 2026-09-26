@@ -14,8 +14,9 @@ const items = [
     icon: "M17 9V7A5 5 0 0 0 7 7v2H5v12h14V9h-2ZM9 7a3 3 0 0 1 6 0v2H9V7Zm3 10a2 2 0 1 1 0-4 2 2 0 0 1 0 4Z",
   },
   {
-    title: "Versand in ganz Deutschland",
-    text: "Direkt zu dir nach Hause, rechtzeitig vor der Reise bestellen.",
+    // Large online pharmacies ship free only above 19–55 €; keep in sync with the cart and FAQ if shipping ever costs.
+    title: "Kostenloser Versand",
+    text: "Ohne Mindestbestellwert, innerhalb Deutschlands.",
     icon: "M3 6h11v9H3V6Zm11 3h4l3 3v3h-7V9ZM7 19a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm10 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z",
   },
 ];
