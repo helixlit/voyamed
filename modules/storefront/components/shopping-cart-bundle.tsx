@@ -1,12 +1,11 @@
 import { ShoppingCartBundle, useShoppingCartStore } from "@/lib/state/shopping-cart-state";
 import { useEffect, useState } from "react";
-import ShoppingCartArticle from "./shopping-cart-article";
 
 interface Props {
   bundle: ShoppingCartBundle,
 }
 export default function ShoppingCartBundleComponent({ bundle }: Props) {
-  const { changeBundleQuantity, setBundleQuantity } = useShoppingCartStore(state => state);
+  const { changeBundleQuantity, setBundleQuantity, setArticleQuantity } = useShoppingCartStore(state => state);
   const [quantity, setQuantity] = useState(bundle.quantity);
 
 
@@ -16,35 +15,40 @@ export default function ShoppingCartBundleComponent({ bundle }: Props) {
     setQuantity(bundle.quantity)
   }, [bundle.quantity]);
 
-  return (
-    <div className="grid gap-2">
-      {bundle.name}
+  const price = new Intl.NumberFormat("de-DE", { style: "currency", currency: "EUR" });
 
-      <div className="flex justify-between pr-4">
-        <span className="flex h-fit">
-          <p className="text-nowrap">Menge: &nbsp;</p>
-          <span className="bg-background rounded-full border cursor-pointer flex">
+  return (
+    <section className="rounded-2xl border border-foreground/10 bg-foreground/[0.035] p-4">
+      <div className="flex items-start justify-between gap-3">
+        <div><p className="text-xs font-medium text-highlight-ink">Reisekit</p><h3 className="mt-0.5 font-semibold">{bundle.name}</h3><p className="mt-1 text-sm text-foreground/65">{bundle.articles.length} Arzneimittel · {price.format(bundle.priceCents / 100)} pro Kit</p></div>
+        <strong className="shrink-0">{price.format((bundle.priceCents * bundle.quantity) / 100)}</strong>
+      </div>
+      <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
+        <span className="flex h-fit items-center gap-2 text-sm">
+          <span>Menge</span>
+          <span className="flex rounded-full border border-foreground/15 bg-background">
             <button
               onClick={() =>
                 setQuantity(
                   changeBundleQuantity(bundle.name, -1),
                 )
               }
-              className="cursor-pointer text-foreground px-2"
+              aria-label="Ein Kit weniger"
+              className="px-3 py-1.5"
             >
               <div className="flex items-center">-</div>
             </button>
             <form
-              className="min-w-fit w-15 flex items-center justify-center"
+              className="w-10 flex items-center justify-center"
               onSubmit={(e) => {
                 e.preventDefault();
                 setBundleQuantity(bundle.name, quantity);
               }}
             >
               <input
-                className="select-auto border-background px-4 bg-highlight rounded-full field-sizing-content min-w-fit w-15 text-center"
+                aria-label="Kit-Menge"
+                className="w-full bg-transparent text-center outline-none"
                 name="quantity"
-                defaultValue={bundle.quantity}
                 value={quantity}
                 onChange={(e) => {
                   if (e.target.value === "" || Number(e.target.value) === 0) {
@@ -64,7 +68,8 @@ export default function ShoppingCartBundleComponent({ bundle }: Props) {
               ></input>
             </form>
             <button
-              className="cursor-pointer text-foreground px-2"
+              aria-label="Ein Kit mehr"
+              className="px-3 py-1.5"
               onClick={() => {
                 setQuantity(
                   changeBundleQuantity(bundle.name, 1),
@@ -75,29 +80,31 @@ export default function ShoppingCartBundleComponent({ bundle }: Props) {
             </button>
           </span>
         </span>
-        {showBundleArticles ? (
-          <button
-            className="cursor-pointer"
-            onClick={() => { setShowBundleArticles(false) }}
-          >- weniger anzeigen</button>
-        ) : (
-          <button
-            className="cursor-pointer"
-            onClick={() => { setShowBundleArticles(true) }}
-          >+ mehr anzeigen</button>
-        )}
+        <button type="button" className="rounded-full border border-foreground/15 px-3 py-2 text-sm font-medium hover:bg-background" onClick={() => setShowBundleArticles((value) => !value)}>{showBundleArticles ? "Ausblenden" : "Inhalt anpassen"}</button>
       </div>
-      <ul>
-        {showBundleArticles && bundle.articles.map((article) => (
-          <li key={article.article.pzn} className="pl-4 border-l">
-            <ShoppingCartArticle
-              article={article}
-              bundleName={bundle.name}
-            />
-          </li>
-        ))}
-      </ul>
-    </div >
+      {showBundleArticles && (
+        <div className="mt-4 overflow-hidden rounded-xl border border-foreground/10 bg-background text-sm">
+          <div className="grid grid-cols-[minmax(0,1fr)_auto_auto_2rem] gap-3 border-b border-foreground/10 bg-foreground/[0.03] px-3 py-2 text-xs font-semibold text-foreground/60"><span>Arzneimittel</span><span>Menge</span><span>Preis</span><span className="sr-only">Entfernen</span></div>
+          {bundle.articles.map(({ article, quantity: articleQuantity }) => (
+            <div key={article.pzn} className="grid grid-cols-[minmax(0,1fr)_auto_auto_2rem] items-center gap-3 px-3 py-2">
+              <span className="line-clamp-2">{article.name}</span>
+              <span>{articleQuantity * bundle.quantity}×</span>
+              <span>{price.format(article.priceCents * articleQuantity * bundle.quantity / 100)}</span>
+              {/* Letting people drop what they already own keeps a large kit from being all-or-nothing. */}
+              <button
+                type="button"
+                onClick={() => setArticleQuantity(bundle.name, article.pzn, 0)}
+                aria-label={`${article.name} aus dem Kit entfernen`}
+                title="Aus dem Kit entfernen"
+                className="grid h-8 w-8 place-items-center rounded-full text-base text-foreground/50 transition-colors hover:bg-tertiary/10 hover:text-tertiary focus-visible:outline-2 focus-visible:outline-highlight"
+              >
+                ×
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
+    </section>
   )
 
 }

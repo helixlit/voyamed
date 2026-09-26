@@ -1,198 +1,146 @@
-//@ts-nocheck
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import type { Feature, FeatureCollection } from "geojson";
+import type { GlobeMethods } from "react-globe.gl";
 import { MeshBasicMaterial } from "three";
-import { FeatureSchema } from "../../schemas/Feature";
-import { area, centroid, polygon } from "@turf/turf";
 
-const Globe = dynamic(() => import("react-globe.gl"),
-    { ssr: false }
-);
+const Globe = dynamic(() => import("react-globe.gl"), { ssr: false });
 
+type Ring = number[][];
+
+// Planar shoelace area — only used to pick a country's largest landmass, so no spherical maths needed.
+function ringArea(ring: Ring) {
+  let sum = 0;
+  for (let i = 0; i < ring.length - 1; i++) sum += ring[i][0] * ring[i + 1][1] - ring[i + 1][0] * ring[i][1];
+  return Math.abs(sum / 2);
+}
+
+// Mean of the outer ring's vertices (without the closing one) — the same centre turf's `centroid` returns.
+function ringCenter(ring: Ring) {
+  const points = ring.slice(0, -1);
+  const [lng, lat] = points.reduce(([x, y], [px, py]) => [x + px, y + py], [0, 0]);
+  return [lng / points.length, lat / points.length];
+}
 
 function getCenter(feature: Feature) {
-    const geometry = feature.geometry
+  const geometry = feature.geometry;
+  if (geometry?.type === "Polygon") return ringCenter(geometry.coordinates[0]);
+  if (geometry?.type === "MultiPolygon") {
+    const largest = geometry.coordinates.reduce((best, current) => ringArea(current[0]) > ringArea(best[0]) ? current : best);
+    return ringCenter(largest[0]);
+  }
+  return null;
+}
 
-    if (geometry.type === 'Polygon') {
-        return centroid(geometry).geometry.coordinates;
-    }
-    if (geometry.type === 'MultiPolygon') {
-        const largestPolygon = polygon(geometry.coordinates.sort((a, b) =>
-            area(polygon(b)) - area(polygon(a)))[0]);
-        return centroid(largestPolygon).geometry.coordinates;
-    }
-
-    return centroid(geometry).geometry.coordinates;
+function isSelectableFeature(value: unknown): value is Feature {
+  return Boolean(value && typeof value === "object" && (value as Feature).type === "Feature" && (value as Feature).geometry && (value as Feature).id);
 }
 
 type Props = {
-    countries: FeatureCollection | null;
-    setCountries: (value: FeatureCollection | null) => void;
+  countries: FeatureCollection | null;
+  setCountries: (value: FeatureCollection | null) => void;
+  selectedCountry: Feature | null;
+  setSelectedCountry: (value: Feature | null) => void;
+};
 
-    selectedCountry: Feature | null;
-    setSelectedCountry: (value: Feature | null) => void;
-}
+export default function WorldGlobe({ countries, setCountries, selectedCountry, setSelectedCountry }: Props) {
+  const globeRef = useRef<GlobeMethods | undefined>(undefined);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const hoveredCountryId = useRef<string | number | null>(null);
+  const [size, setSize] = useState({ width: 0, height: 0 });
+  const [hoveredCountry, setHoveredCountry] = useState<Feature | null>(null);
 
-export default function WorldGlobe({
-    countries, setCountries, selectedCountry, setSelectedCountry
-}: Props) {
+  useEffect(() => {
+    const controller = new AbortController();
+    // Country shapes: holtzy/D3-graph-gallery (MIT), self-hosted and rounded to 3 decimals — no request to GitHub.
+    fetch("/data/world.geojson", { signal: controller.signal })
+      .then((res) => {
+        if (!res.ok) throw new Error(`Länderdaten konnten nicht geladen werden (${res.status})`);
+        return res.json();
+      })
+      .then((data) => setCountries(data))
+      .catch((error) => { if (error.name !== "AbortError") console.error("Globus konnte nicht geladen werden", error); });
+    return () => controller.abort();
+  }, [setCountries]);
 
-    const globeRef = useRef(Globe);
-    const containerRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!selectedCountry) return;
+    const center = getCenter(selectedCountry);
+    if (!center) return;
+    const [lng, lat] = center;
+    globeRef.current?.pointOfView({ lat, lng, altitude: 0.9 }, 750);
+  }, [selectedCountry]);
 
-    const [size, setSize] = useState({ width: 0, height: 0 });
+  useEffect(() => {
+    if (!containerRef.current) return;
+    const observer = new ResizeObserver(([entry]) => {
+      const next = { width: Math.round(entry.contentRect.width), height: Math.round(entry.contentRect.height) };
+      setSize((current) => current.width === next.width && current.height === next.height ? current : next);
+    });
+    observer.observe(containerRef.current);
+    return () => observer.disconnect();
+  }, []);
 
-    const [hoveredCountry, setHoveredCountry] = useState<Feature | null>(null);
+  const configureControls = useCallback(() => {
+    const controls = globeRef.current?.controls?.();
+    if (!controls) return;
+    controls.enableRotate = true;
+    controls.enableZoom = true;
+    controls.enableDamping = true;
+    controls.minPolarAngle = 0.35;
+    controls.maxPolarAngle = Math.PI - 0.1;
+    controls.minDistance = 150;
+    controls.maxDistance = 300;
+    controls.dampingFactor = 0.08;
+    controls.zoomSpeed = 0.65;
+  }, []);
 
-    const [loading, setLoading] = useState(true);
-    const [animateLoad, setAnimateLoad] = useState(false);
+  // White water, dark blue land; the atmosphere gives the white sphere an edge against the page.
+  const globeMaterial = useMemo(() => new MeshBasicMaterial({ color: "#ffffff" }), []);
+  const handlePolygonHover = useCallback((country: unknown) => {
+    const nextCountry = isSelectableFeature(country) ? country : null;
+    const nextId = nextCountry?.id ?? null;
+    if (hoveredCountryId.current === nextId) return;
+    hoveredCountryId.current = nextId;
+    setHoveredCountry(nextCountry);
+  }, []);
 
-    useEffect(() => {
-        fetch(
-            'https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson'
-        )
-            .then((res) => res.json())
-            .then((data) => setCountries(data));
-
-
-        setTimeout(() => {
-            setAnimateLoad(true);
-        }, 250);
-
-        setTimeout(() => {
-            setLoading(false);
-        }, 750);
-
-    }, []);
-
-    useEffect(() => {
-        if (!selectedCountry) return;
-        const globe = globeRef.current;
-        const [lng, lat] = getCenter(selectedCountry);
-
-        globe.pointOfView({
-            lat, lng, altitude: 0.5
-        }, 1000);
-    }, [selectedCountry]);
-
-    useEffect(() => {
-        if (!containerRef.current) return;
-
-        const observer = new ResizeObserver(([entry]) => {
-            setSize({
-                width: entry.contentRect.width,
-                height: entry.contentRect.height
-            });
-        });
-
-        observer.observe(containerRef.current);
-        return () => observer.disconnect();
-    }, [containerRef.current]);
-
-
-    useEffect(() => {
-        if (!globeRef.current) return;
-        const globe = globeRef.current;
-
-
-        if (!globe.controls) return;
-
-        const controls = globe.controls();
-
-        controls.enableRotate = true;
-        controls.enableZoom = true;
-
-
-        controls.minPolarAngle = 0.35;
-        controls.maxPolarAngle = Math.PI - 0.1;
-
-        controls.minDistance = 150;
-        controls.maxDistance = 300;
-
-        controls.dampingFactor = 0.01;
-        controls.zoomSpeed = 0.5;
-
-        return;
-
-    }, [globeRef.current]);
-
-    return (
-        <div ref={containerRef} className=" relative min-h-0 bg-background pointer-events-auto">
-            <Globe
-                ref={globeRef}
-
-                width={size.width}
-                height={size.height}
-
-                enablePointerInteraction={true}
-
-                rendererConfig={{
-                    antialias: true,
-                    alpha: true,
-                }}
-
-                polygonsData={countries?.features}
-                polygonCapColor={(object) => {
-                    const country = FeatureSchema.parse(object);
-
-                    if (selectedCountry && selectedCountry.id == country.id) return "rgba(34,197,94,0.8)";
-
-                    if (hoveredCountry && hoveredCountry.id == country.id) return "rgba(255,215,0,0.9)";
-
-                    return "rgba(37,99,235,1)"
-                }
-                }
-
-                polygonStrokeColor={() => "#ffffff"}
-
-
-                onPolygonClick={(object) => {
-                    const country = FeatureSchema.parse(object);
-                    setSelectedCountry(country);
-                }}
-
-                polygonAltitude={(object) => {
-                    const country = FeatureSchema.parse(object);
-                    if (!selectedCountry) return 0.01;
-                    return (
-                        selectedCountry.id == country.id
-                            ? 0.03
-                            : 0.01
-                    )
-                }
-                }
-
-                onPolygonHover={(country) => {
-                    setHoveredCountry(country);
-                }}
-
-                polygonsTransitionDuration={200}
-
-                backgroundColor="rgba(0,0,0,0)"
-
-                globeImageUrl={null}
-                globeMaterial={new MeshBasicMaterial({
-                    color: "#5896fc",
-                })}
-
-                showAtmosphere={false}
-
-                animateIn={false}
-            />
-            {loading && (<div className={`absolute inset-0 flex items-center justify-center bg-background z-50 transition-opacity duration-500
-            ${animateLoad ? "opacity-0" : "opacity-100"}
-                `}>
-                <div className="relative">
-                    <div className="h-40 w-40 rounded-full bg-foreground opacity-30 blur-2xl animate-pulse" />
-                    <div className="absolute inset-0 flex items-center justify-center text-white/80 text-center">
-                        Loading globe...
-                    </div>
-                </div>
-            </div>
-            )}
-        </div>
-    );
+  return (
+    <div ref={containerRef} className="relative min-h-0 bg-background pointer-events-auto">
+      <Globe
+        ref={globeRef}
+        width={size.width}
+        height={size.height}
+        onGlobeReady={() => {
+          configureControls();
+          globeRef.current?.pointOfView({ altitude: 1.65 }, 0);
+        }}
+        enablePointerInteraction
+        rendererConfig={{ antialias: false, alpha: true }}
+        polygonsData={countries?.features}
+        polygonCapColor={(object) => {
+          if (!isSelectableFeature(object)) return "#1e3a8a";
+          if (selectedCountry?.id === object.id) return "rgba(34,197,94,0.8)";
+          if (hoveredCountry?.id === object.id) return "rgba(255,215,0,0.9)";
+          return "#1e3a8a";
+        }}
+        polygonSideColor={() => "#172554"}
+        polygonStrokeColor={() => "#ffffff"}
+        onPolygonClick={(object) => { if (isSelectableFeature(object)) setSelectedCountry(object); }}
+        polygonAltitude={(object) => isSelectableFeature(object) && selectedCountry?.id === object.id ? 0.03 : 0.01}
+        onPolygonHover={handlePolygonHover}
+        polygonsTransitionDuration={0}
+        polygonCapCurvatureResolution={3}
+        backgroundColor="rgba(0,0,0,0)"
+        globeImageUrl={null}
+        globeMaterial={globeMaterial}
+        showAtmosphere
+        atmosphereColor="#93c5fd"
+        atmosphereAltitude={0.12}
+        animateIn={false}
+      />
+    </div>
+  );
 }

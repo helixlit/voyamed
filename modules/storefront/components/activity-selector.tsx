@@ -5,14 +5,16 @@ import React from "react";
 interface Props {
   selectedActivity: Activity | "",
   setSelectedActivity: React.Dispatch<React.SetStateAction<Activity | "">>,
+  availableActivities?: Activity[],
 };
 export default function ActivitySelector(props: Props) {
+  const available: Activity[] = props.availableActivities ?? (Object.keys(kits.activities) as Activity[]);
   return (
     <section
       id="activity-selector"
-      className="bg-prim rounded-full p-1 w-fit flex text-nowrap items-center px-3 gap-2 text-foreground"
+      className="flex w-full min-w-0 flex-col gap-1 rounded-2xl bg-prim px-4 py-2 text-foreground sm:w-auto sm:flex-row sm:items-center sm:rounded-full"
     >
-      <label htmlFor="activities">Wähle eine Aktivität:</label>
+      <label htmlFor="activities" className="text-sm font-medium">Aktivität</label>
       <select
         name="activities"
         id="activities"
@@ -20,16 +22,20 @@ export default function ActivitySelector(props: Props) {
         onChange={(e) => {
           props.setSelectedActivity(e.target.value as Activity)
         }}
-        className="text-right max-w-fit"
+        disabled={props.availableActivities !== undefined && available.length === 0}
+        className="min-w-0 bg-transparent text-left text-sm outline-none sm:text-right"
       >
         <option value="" key="">
-          Bitte wähle eine Aktivität
+          {available.length ? "Bitte wählen" : "Zuerst ein Land wählen"}
         </option>
-        {Object.entries(kits.activities).map(([key, activity]) => (
+        {available.map((key) => {
+          const activity = kits.activities[key];
+          return (
           <option value={key} key={key}>
             {activity.name}
           </option>
-        ))}
+          );
+        })}
       </select>
     </section >
   )

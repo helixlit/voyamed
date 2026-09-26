@@ -7,6 +7,10 @@ import { type } from 'arktype';
 
 const input = type({
     stripeSecretKey: secretString(),
+    stripeWebhookSecret: secretString(),
+    resendApiKey: secretString(),
+    orderNotificationEmail: secretString(),
+    orderNotificationFrom: secretString(),
 });
 
 export default compute({

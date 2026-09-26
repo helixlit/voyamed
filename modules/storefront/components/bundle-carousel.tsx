@@ -1,0 +1,114 @@
+"use client";
+
+import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
+import { bundles } from "@/utils/Bundles";
+import type { Activity } from "@/utils/types";
+
+const quickSelections: Record<string, { countryCode: string; activity: Activity; label: string }> = {
+  "Wüstenkit": { countryCode: "EG", activity: "wuestenreise", label: "Ägypten · Wüstenreise" },
+  "Tropen Kit": { countryCode: "TH", activity: "safari_dschungel", label: "Thailand · Tropen & Dschungel" },
+  "Monsun Kit": { countryCode: "IN", activity: "backpacking_rundreise", label: "Indien · Rundreise" },
+  "Hochgebirgs Kit": { countryCode: "NP", activity: "wandern_trekking", label: "Nepal · Trekking" },
+  "Kaltklima Kit": { countryCode: "NO", activity: "wintersport", label: "Norwegen · Wintersport" },
+  "Wander Kit": { countryCode: "AT", activity: "wandern_trekking", label: "Österreich · Wandern" },
+  "Städte Reisen Kit": { countryCode: "DE", activity: "staedtetrip", label: "Deutschland · Städtetrip" },
+  "Welten Kit": { countryCode: "DE", activity: "backpacking_rundreise", label: "Deutschland · Rundreise" },
+};
+
+const featuredKitNames = ["Welten Kit", "Tropen Kit", "Städte Reisen Kit", "Wander Kit", "Kaltklima Kit"];
+const featuredBundles = featuredKitNames
+  .map((name) => bundles.find((bundle) => bundle.name === name))
+  .filter((bundle): bundle is (typeof bundles)[number] => Boolean(bundle));
+
+type Props = {
+  onSelect: (countryCode: string, activity: Activity) => void;
+  selectedCountryCode?: string;
+  selectedActivity?: Activity | "";
+};
+
+export default function BundleCarousel({ onSelect, selectedCountryCode, selectedActivity }: Props) {
+  const track = useRef<HTMLDivElement>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+
+  function scrollToCard(index: number) {
+    const carousel = track.current;
+    const card = carousel?.children.item(index) as HTMLElement | null;
+    if (!carousel || !card) return;
+
+    // Deliberately move only the horizontal carousel. `scrollIntoView` also
+    // scrolls the document vertically, which caused the jump back to the top.
+    const carouselBounds = carousel.getBoundingClientRect();
+    const cardBounds = card.getBoundingClientRect();
+    const targetLeft = carousel.scrollLeft
+      + cardBounds.left
+      - carouselBounds.left
+      - (carousel.clientWidth - card.clientWidth) / 2;
+    carousel.scrollTo({ left: Math.max(0, targetLeft), behavior: "smooth" });
+  }
+
+  function moveCarousel(direction: 1 | -1) {
+    const next = (activeIndex + direction + featuredBundles.length) % featuredBundles.length;
+    setActiveIndex(next);
+    scrollToCard(next);
+  }
+
+  useEffect(() => {
+    if (isPaused || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    // Two seconds of rest on a card, followed by a short smooth transition.
+    const timer = window.setInterval(() => moveCarousel(1), 3000);
+
+    return () => window.clearInterval(timer);
+  }, [activeIndex, isPaused]);
+
+  return (
+    <section aria-label="Beliebte Reisekits" className="w-full min-w-0 max-w-6xl">
+      <div className="mb-3 flex items-end justify-between gap-4">
+        <div>
+          <h2 className="text-xl font-semibold">Fünf Reisewelten entdecken</h2>
+          <p className="text-sm text-foreground/65">Weltweit, Tropen, Städte, Wandern und Winter – mit Bildern und einem kurzen Überblick.</p>
+        </div>
+        <div className="hidden gap-2 sm:flex">
+          <button type="button" aria-label="Vorherige Kits" onClick={() => moveCarousel(-1)} className="grid h-10 w-10 place-items-center rounded-full border border-foreground/15 bg-background text-lg hover:bg-foreground/5">‹</button>
+          <button type="button" aria-label="Nächste Kits" onClick={() => moveCarousel(1)} className="grid h-10 w-10 place-items-center rounded-full border border-foreground/15 bg-background text-lg hover:bg-foreground/5">›</button>
+        </div>
+      </div>
+      <div
+        ref={track}
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
+        onTouchStart={() => setIsPaused(true)}
+        onTouchEnd={() => setIsPaused(false)}
+        className="flex snap-x snap-mandatory gap-4 overflow-x-auto px-2 pb-5 pt-2 [perspective:1200px] [scrollbar-width:thin]"
+      >
+        {featuredBundles.map((bundle, index) => {
+          const selection = quickSelections[bundle.name];
+          const isSelected = selection?.countryCode === selectedCountryCode && selection.activity === selectedActivity;
+          return (
+          <button
+            key={bundle.name}
+            type="button"
+            onClick={() => {
+              setActiveIndex(index);
+              scrollToCard(index);
+              if (selection) onSelect(selection.countryCode, selection.activity);
+            }}
+            aria-pressed={isSelected}
+            className={`group relative h-56 min-w-[17rem] snap-center overflow-hidden rounded-2xl bg-foreground text-left text-background shadow-sm transition-[transform,opacity,box-shadow] duration-700 ease-out focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-highlight sm:min-w-[20rem] ${index === activeIndex ? "scale-100 opacity-100 [transform:rotateY(0deg)_translateZ(24px)] shadow-xl" : "scale-[0.96] opacity-85 [transform:rotateY(-8deg)_translateZ(0px)] hover:scale-[0.98] hover:opacity-100 hover:[transform:rotateY(0deg)_translateZ(12px)]"} ${isSelected ? "ring-4 ring-highlight" : ""}`}
+          >
+            <Image src={bundle.img} alt="" fill sizes="(max-width: 640px) 272px, 320px" className="object-cover opacity-75" />
+            <div className="absolute inset-0 bg-gradient-to-t from-foreground via-foreground/35 to-transparent" />
+            <div className="absolute inset-x-0 bottom-0 p-4">
+              <h3 className="text-lg font-semibold">{bundle.name}</h3>
+              <p className="mt-1 line-clamp-2 text-sm text-background/80">{bundle.beschreibung}</p>
+              <span className="mt-3 inline-flex rounded-full bg-background/90 px-3 py-1.5 text-xs font-semibold text-foreground transition group-hover:bg-highlight">{isSelected ? "Ausgewählt" : selection?.label}</span>
+            </div>
+          </button>
+          );
+        })}
+      </div>
+    </section>
+  );
+}

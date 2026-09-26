@@ -1,10 +1,11 @@
+import type { Metadata } from "next";
 import Browser from "./article-browser";
-import Suitcase from "./suitcase";
+
+export const metadata: Metadata = { title: "Reiseapotheke zusammenstellen" };
 
 export default function page() {
   return (
-    <div className="flex flex-row max-[1000px]:flex-col w-full p-4 gap-4">
-      <Suitcase />
+    <div className="mx-auto w-full max-w-6xl p-3 sm:p-5">
       <Browser />
     </div>
   );

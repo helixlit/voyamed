@@ -6,6 +6,8 @@ import "./globals.css";
 import Modals from "../components/modals/modals";
 import Header from "../components/header";
 import Footer from "../components/footer";
+import CartFlyAnimation from "../components/cart-fly-animation";
+import CartHydration from "../components/cart-hydration";
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -13,8 +15,11 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "Voyamed",
-  description: "Voyamed - Travelmedicine",
+  title: {
+    default: "Voyamed – Deine Reiseapotheke",
+    template: "%s | Voyamed",
+  },
+  description: "Stell dir die passende Reiseapotheke für dein Reiseziel und deine Aktivität zusammen – geprüft von der Antonius-Apotheke.",
 };
 
 export default function RootLayout({
@@ -24,16 +29,16 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
-      className={`${outfit.variable} h-full overflow-hidden antialiased`}
+      lang="de"
+      className={`${outfit.variable} h-full antialiased`}
     >
-      <body className=" h-screen flex flex-col max-w-screen ">
+      <body className="min-h-[100dvh] max-w-screen overflow-x-hidden">
         <Header />
-        <div className="overflow-scroll">
-          {children}
-          <Footer />
-        </div>
+        <main>{children}</main>
+        <Footer />
         <Modals />
+        <CartFlyAnimation />
+        <CartHydration />
       </body>
     </html>
   );

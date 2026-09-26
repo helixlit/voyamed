@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 const slides = [
   {
     image: "/hero1.jpg",
-    title1: "Für die ganze Famile.",
+    title1: "Für die ganze Familie.",
     title2: "Sorglos verreisen.",
   },
   {
@@ -19,10 +19,6 @@ const slides = [
 
 export default function Hero() {
   const [index, setIndex] = useState(0);
-
-  // useEffect(() => {
-  //   setIndex(0);
-  // }, [])
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -40,52 +36,74 @@ export default function Hero() {
         <Image
           key={slide.image}
           src={slide.image}
-          alt="...loading"
+          alt=""
           fill
-          priority
+          preload={i === 0}
+          // Next 16 no longer raises fetchpriority for preloaded images; the first slide is the LCP element.
+          fetchPriority={i === 0 ? "high" : "low"}
+          sizes="100vw"
           className={`
-            object-cover text-center transition-opacity duration-1500 brightness-80
-            ${i === index ? "opacity-0" : "opacity-100"}
+            object-cover transition-opacity duration-1500 brightness-80
+            ${i === index ? "opacity-100" : "opacity-0"}
           `}
         />
       ))}
+      {/* Keeps the headline readable on bright parts of the photos. */}
+      <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/35 to-black/50" />
 
       <div className="relative flex flex-col w-full h-full">
-        <div className="h-[clamp(20rem,40vw,50rem)] relative text-background gap-5 z-50 flex flex-col items-center justify-center w-fit m-auto text-[clamp(1rem,8vw,5rem)] pb-10 dark:text-foreground">
-          <div className=" z-50 w-full text-center [text-shadow:0_1px_10px_rgba(0,0,0,0.3)] overflow-visible">
-            <h1
-              key={slides[index].title1}
-              className="text-fade-in text-background"
-            >
-              {slides[index].title1}
+        <div className="min-h-[clamp(24rem,42vw,50rem)] relative text-background gap-6 z-10 flex flex-col items-center justify-center w-full max-w-3xl m-auto px-5 py-12 pb-6">
+          <div className="w-full text-center [text-shadow:0_1px_12px_rgba(0,0,0,0.45)] overflow-visible">
+            <h1 aria-live="polite" className="text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl">
+              <span
+                key={slides[index].title1}
+                className="block text-fade-in text-background"
+              >
+                {slides[index].title1}
+              </span>
+              <span
+                key={slides[index].title2}
+                className="block text-fade-in text-highlight"
+              >
+                {slides[index].title2}
+              </span>
             </h1>
-            <h1
-              key={slides[index].title2}
-              className="text-fade-in text-highlight"
-            >
-              {slides[index].title2}
-            </h1>
+            {/* Say what the product is right away — the first glance decides whether visitors stay. */}
+            <p className="mx-auto mt-4 max-w-xl text-base text-background/90 sm:text-lg">
+              Deine Reiseapotheke passend zu Reiseziel und Aktivität – in wenigen Schritten zusammengestellt, geprüft von der Antonius-Apotheke.
+            </p>
           </div>
-          <Link
-            href="/globe"
-            className=" text-background/90 dark:text-background/90 shadow-[0_0_20px_5px_rgba(0,0,0,0.6)] border-3 border-background/10 hover:border-to-background/80 text-center bg-highlight/30 rounded-4xl p-3 backdrop-blur-[3px] transition-all duration-400 hover:bg-highlight/80 text-[clamp(1rem,6vw,4rem)]"
-          >
-            <h1>Hier bestellen</h1>
-          </Link>
+          <div className="flex flex-col items-center gap-3 sm:flex-row">
+            <Link
+              href="/globe"
+              className="rounded-full bg-highlight px-7 py-4 text-lg font-semibold text-foreground shadow-lg transition-all hover:-translate-y-0.5 hover:shadow-xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-background"
+            >
+              Reiseapotheke zusammenstellen
+            </Link>
+            <Link
+              href="#so-funktionierts"
+              className="rounded-full px-5 py-3 text-base font-medium text-background underline-offset-4 transition-colors hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-background"
+            >
+              So funktioniert&apos;s
+            </Link>
+          </div>
         </div>
-        <ul className="z-100 relative bottom-0 p-4 left-0 flex gap-10 w-screen justify-center align-middle">
+        <div className="z-10 relative bottom-0 p-4 left-0 flex gap-10 w-full justify-center">
           {slides.map((slide, i) => (
-            <li
+            <button
               key={slide.title1}
+              type="button"
+              aria-label={`Bild ${i + 1} von ${slides.length} anzeigen`}
+              aria-current={i === index}
               onClick={() => {
                 if (index != i) setIndex(i);
               }}
-              className={`w-10 h-2.5 bg-background dark:bg-foreground rounded-full hover:w-20 transition-all duration-400
-              ${i === index ? "opacity-100 w-20 !hover:bg-foreground" : "opacity-50 hover:bg-highlight"}
+              className={`h-2.5 rounded-full bg-background transition-all duration-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-highlight
+              ${i === index ? "w-20 opacity-100" : "w-10 opacity-50 hover:w-20 hover:bg-highlight"}
             `}
-            ></li>
+            ></button>
           ))}
-        </ul>
+        </div>
       </div>
     </section>
   );

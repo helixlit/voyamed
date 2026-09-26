@@ -16,6 +16,10 @@ export default module('voyamed', ({ provision }) => {
         deps: { catalog: catalog.rpc },
         input: {
             stripeSecretKey: envSecret('STRIPE_SECRET_KEY'),
+            stripeWebhookSecret: envSecret('STRIPE_WEBHOOK_SECRET'),
+            resendApiKey: envSecret('RESEND_API_KEY'),
+            orderNotificationEmail: envSecret('ORDER_NOTIFICATION_EMAIL'),
+            orderNotificationFrom: envSecret('ORDER_NOTIFICATION_FROM'),
         }
     })
 });
