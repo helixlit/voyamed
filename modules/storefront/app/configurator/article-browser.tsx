@@ -99,7 +99,7 @@ export default function ArticleBrowser() {
       <aside className="rounded-3xl border border-foreground/10 bg-background p-4 shadow-sm lg:sticky lg:top-[calc(var(--header-height)+1rem)]">
         <div className="flex items-start justify-between gap-3 lg:mb-4">
           <div>
-            <p className="text-sm font-medium text-highlight">Katalogfilter</p>
+            <p className="text-sm font-medium text-highlight-ink">Katalogfilter</p>
             <h2 className="mt-1 text-xl font-semibold">Passend auswählen</h2>
             <p className="mt-1 hidden text-sm text-foreground/65 lg:block">Filtere nach Preis und Hersteller. Alle angezeigten Artikel sind im Katalog verfügbar.</p>
           </div>
@@ -148,9 +148,9 @@ export default function ArticleBrowser() {
       <div className="border-b border-background/15 px-4 py-5 sm:px-6">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <p className="text-sm font-medium text-highlight">Arzneimittel individuell ergänzen</p>
+            <p className="text-sm font-medium text-highlight-soft">Arzneimittel individuell ergänzen</p>
             <h1 className="mt-1 text-2xl font-semibold">Deine Reiseapotheke</h1>
-            <p className="mt-1 text-sm text-background/75">Durchsuche alle Produkte, vergleiche Packungs- und Grundpreise und ergänze sie gezielt zu deinem Kit.</p>
+            <p className="mt-1 text-sm text-background/90">Durchsuche alle Produkte, vergleiche Packungs- und Grundpreise und ergänze sie gezielt zu deinem Kit.</p>
           </div>
           <div className={`rounded-2xl px-4 py-3 text-sm ${selectedBundleName ? "bg-prim text-foreground" : "bg-background/10 text-background"}`}>
             {selectedBundleName ? <><span className="block text-xs font-medium opacity-70">Aktives Reisekit</span><span className="font-semibold">{selectedBundleName}</span></> : <><span className="font-semibold">Zuerst ein Reisekit auswählen.</span><Link href="/" className="ml-2 underline underline-offset-2">Kit zusammenstellen</Link></>}
@@ -180,14 +180,14 @@ export default function ArticleBrowser() {
             {displayedArticles.length > 0 ? (
               displayedArticles.map((a) => {
                 const article = { pzn: a.id, ...a };
-                return <Article article={article} key={article.pzn} />;
+                return <li key={article.pzn}><Article article={article} /></li>;
               })
             ) : (
               <li key="li-no-results" className="rounded-xl bg-background/10 p-5 text-center text-sm text-background/80">Keine passenden Artikel gefunden.</li>
             )}
           </ul>
         )}
-        <MedicineNotice className="mt-4 text-background/85" />
+        <MedicineNotice className="mt-4 text-background" />
       </div>
     </section>
     </div>

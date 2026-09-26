@@ -39,7 +39,7 @@ export default function ShoppingCartArticle({ article, bundleName }: Props) {
         <div className="min-w-0 flex-1">
           <p className="line-clamp-2 text-sm font-medium">{article.article.name}</p>
           <p className="mt-1 text-xs text-foreground/60">PZN {article.article.pzn}</p>
-          {unitPrice && <p className="mt-1 text-xs font-medium text-highlight">{unitPrice}</p>}
+          {unitPrice && <p className="mt-1 text-xs font-medium text-highlight-ink">{unitPrice}</p>}
         </div>
         <div className="flex min-w-[9.5rem] flex-col items-end gap-2">
           <span className="min-w-0 text-right text-sm">

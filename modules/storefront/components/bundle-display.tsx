@@ -9,7 +9,7 @@ import { pharmacy } from "@/lib/pharmacy";
 import { buildKitPzns, getActivity, getClimate } from "@/lib/travel-kit";
 import { ShoppingCartBundle, useShoppingCartStore } from "@/lib/state/shopping-cart-state";
 import { triggerCartFly } from "@/components/cart-fly-animation";
-import { getShopArticleByPZN } from "@/utils/fetch-api";
+import { getShopArticlesByPZNs } from "@/utils/fetch-api";
 import type { Activity, CountryKit } from "@/utils/types";
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -47,15 +47,10 @@ export default function BundleDisplay({ country, activity, displayArticles }: Pr
     }
 
     setIsLoading(true);
-    Promise.all(kitPzns.map(async (pzn) => {
-      try {
-        const result = await getShopArticleByPZN(pzn);
-        return result?.article as TArticle | undefined;
-      } catch {
-        return undefined;
-      }
-    })).then((results) => {
-      if (!cancelled) setArticles(results.filter((article): article is TArticle => Boolean(article)));
+    getShopArticlesByPZNs(kitPzns).then((results) => {
+      if (!cancelled) setArticles(results.map((result) => result.article));
+    }).catch(() => {
+      if (!cancelled) setArticles([]);
     }).finally(() => {
       if (!cancelled) setIsLoading(false);
     });
@@ -80,7 +75,7 @@ export default function BundleDisplay({ country, activity, displayArticles }: Pr
     <section id="bundle-display" className="w-full max-w-6xl rounded-3xl bg-foreground/5 p-4 sm:p-6">
       <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-start">
         <div>
-          <p className="text-sm font-medium text-highlight">Dein Vorschlag</p>
+          <p className="text-sm font-medium text-highlight-ink">Dein Vorschlag</p>
           <h2 className="mt-1 text-2xl font-semibold">{country.name} · {selectedActivity.name}</h2>
           <p className="mt-2 max-w-2xl text-sm text-foreground/70">{climate.beschreibung} {selectedActivity.beschreibung}</p>
         </div>

@@ -56,7 +56,7 @@ export default function Article({ article, mode = "catalog" }: Props) {
           <div>
             <p className="text-lg font-semibold">{formattedPrice}</p>
             <p className="text-xs text-foreground/60">{formatPackageLabel(article)}</p>
-            {unitPrice && <p className="mt-0.5 text-xs font-medium text-highlight">{unitPrice}</p>}
+            {unitPrice && <p className="mt-0.5 text-xs font-medium text-highlight-ink">{unitPrice}</p>}
           </div>
           {mode === "included" ? (
             <span className="rounded-full bg-prim/40 px-3 py-2 text-xs font-medium">Im Reisekit enthalten</span>
@@ -64,7 +64,8 @@ export default function Article({ article, mode = "catalog" }: Props) {
             <div className="flex items-center gap-2">
               <button
                 type="button"
-                aria-label={selectedBundleName ? `${article.name} zum ausgewählten Reisekit hinzufügen` : "Wähle zuerst ein Reisekit aus"}
+                // The accessible name starts with the visible label, so voice control ("click Zum Kit") works.
+                aria-label={justAdded ? `Hinzugefügt: ${article.name}` : selectedBundleName ? `Zum Kit: ${article.name} hinzufügen` : "Kit wählen – zuerst ein Reisekit auswählen"}
                 title={selectedBundleName ? `Zu ${selectedBundleName} hinzufügen` : "Wähle zuerst ein Reisekit aus"}
                 disabled={!selectedBundleName}
                 onClick={addToKit}

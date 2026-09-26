@@ -20,7 +20,7 @@ export default function HowItWorks() {
   return (
     <section id="so-funktionierts" aria-labelledby="how-it-works-title" className="scroll-mt-(--header-height) px-5 py-12">
       <div className="mx-auto max-w-6xl">
-        <p className="text-sm font-medium text-highlight">So funktioniert&apos;s</p>
+        <p className="text-sm font-medium text-highlight-ink">So funktioniert&apos;s</p>
         <h2 id="how-it-works-title" className="mt-1 text-2xl font-semibold sm:text-3xl">In drei Schritten zur passenden Reiseapotheke</h2>
         <ol className="mt-6 grid gap-4 md:grid-cols-3">
           {steps.map((step, index) => (

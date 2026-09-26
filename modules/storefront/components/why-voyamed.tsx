@@ -31,7 +31,7 @@ export default function WhyVoyamed() {
   return (
     <section aria-labelledby="why-voyamed-title" className="bg-foreground/5 px-5 py-12">
       <div className="mx-auto max-w-6xl">
-        <p className="text-sm font-medium text-highlight">Warum Voyamed</p>
+        <p className="text-sm font-medium text-highlight-ink">Warum Voyamed</p>
         <h2 id="why-voyamed-title" className="mt-1 text-2xl font-semibold sm:text-3xl">Deine Reise statt Einheitsset</h2>
         <p className="mt-2 max-w-2xl text-foreground/70">Fertige Reiseapotheken enthalten oft Dinge, die du nicht brauchst – und es fehlt, was dein Reiseziel verlangt.</p>
         {/* A grid instead of a table, so each row can stack on phones. */}

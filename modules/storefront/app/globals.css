@@ -6,6 +6,9 @@
   --background: #f4f3f2;
   --foreground: #001219;
   --highlight: #ee9b00;
+  /* #ee9b00 has only 2:1 contrast as text; these keep the amber look at WCAG AA (4.5:1). */
+  --highlight-ink: #9a5800;
+  --highlight-soft: #ffd27a;
   --prim: #94d2bd;
   --secondary: #005f73;
   --tertiary: #ae2012;
@@ -16,6 +19,8 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-highlight: var(--highlight);
+  --color-highlight-ink: var(--highlight-ink);
+  --color-highlight-soft: var(--highlight-soft);
   --color-prim: var(--prim);
   --color-secondary: var(--secondary);
   --color-tertiary: var(--tertiary);

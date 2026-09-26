@@ -38,7 +38,9 @@ export default function Hero() {
           src={slide.image}
           alt=""
           fill
-          priority={i === 0}
+          preload={i === 0}
+          // Next 16 no longer raises fetchpriority for preloaded images; the first slide is the LCP element.
+          fetchPriority={i === 0 ? "high" : "low"}
           sizes="100vw"
           className={`
             object-cover transition-opacity duration-1500 brightness-80

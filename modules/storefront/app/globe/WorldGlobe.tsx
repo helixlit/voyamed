@@ -1,4 +1,3 @@
-//@ts-nocheck
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -6,19 +5,33 @@ import dynamic from "next/dynamic";
 import type { Feature, FeatureCollection } from "geojson";
 import type { GlobeMethods } from "react-globe.gl";
 import { MeshBasicMaterial } from "three";
-import { area, centroid, polygon } from "@turf/turf";
 
 const Globe = dynamic(() => import("react-globe.gl"), { ssr: false });
 
+type Ring = number[][];
+
+// Planar shoelace area — only used to pick a country's largest landmass, so no spherical maths needed.
+function ringArea(ring: Ring) {
+  let sum = 0;
+  for (let i = 0; i < ring.length - 1; i++) sum += ring[i][0] * ring[i + 1][1] - ring[i + 1][0] * ring[i][1];
+  return Math.abs(sum / 2);
+}
+
+// Mean of the outer ring's vertices (without the closing one) — the same centre turf's `centroid` returns.
+function ringCenter(ring: Ring) {
+  const points = ring.slice(0, -1);
+  const [lng, lat] = points.reduce(([x, y], [px, py]) => [x + px, y + py], [0, 0]);
+  return [lng / points.length, lat / points.length];
+}
+
 function getCenter(feature: Feature) {
   const geometry = feature.geometry;
-  if (!geometry) return null;
-  if (geometry.type === "Polygon") return centroid(geometry).geometry.coordinates;
-  if (geometry.type === "MultiPolygon") {
-    const largestPolygon = polygon(geometry.coordinates.sort((a, b) => area(polygon(b)) - area(polygon(a)))[0]);
-    return centroid(largestPolygon).geometry.coordinates;
+  if (geometry?.type === "Polygon") return ringCenter(geometry.coordinates[0]);
+  if (geometry?.type === "MultiPolygon") {
+    const largest = geometry.coordinates.reduce((best, current) => ringArea(current[0]) > ringArea(best[0]) ? current : best);
+    return ringCenter(largest[0]);
   }
-  return centroid(geometry).geometry.coordinates;
+  return null;
 }
 
 function isSelectableFeature(value: unknown): value is Feature {
@@ -41,7 +54,8 @@ export default function WorldGlobe({ countries, setCountries, selectedCountry, s
 
   useEffect(() => {
     const controller = new AbortController();
-    fetch("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson", { signal: controller.signal })
+    // Country shapes: holtzy/D3-graph-gallery (MIT), self-hosted and rounded to 3 decimals — no request to GitHub.
+    fetch("/data/world.geojson", { signal: controller.signal })
       .then((res) => {
         if (!res.ok) throw new Error(`Länderdaten konnten nicht geladen werden (${res.status})`);
         return res.json();

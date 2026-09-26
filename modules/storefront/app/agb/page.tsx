@@ -6,7 +6,7 @@ export const metadata: Metadata = { title: "AGB" };
 export default function AgbPage() {
   return (
     <div className="mx-auto w-full max-w-3xl px-5 py-12 sm:py-16">
-      <p className="text-sm font-medium text-highlight">Rechtliches</p>
+      <p className="text-sm font-medium text-highlight-ink">Rechtliches</p>
       <h1 className="mt-2 text-3xl font-semibold sm:text-4xl">Allgemeine Geschäftsbedingungen</h1>
       <div className="mt-8 rounded-3xl bg-foreground/[0.045] p-5 text-foreground/80 sm:p-8">
         <h2 className="text-lg font-semibold text-foreground">Bestellungen über VoyaMed</h2>

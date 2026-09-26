@@ -54,7 +54,7 @@ export default function FQA() {
   return (
     <section aria-labelledby="faq-title" className="w-full px-5 py-12">
       <div className="mx-auto max-w-3xl">
-        <p className="text-center text-sm font-medium text-highlight">FAQ</p>
+        <p className="text-center text-sm font-medium text-highlight-ink">FAQ</p>
         <h2 id="faq-title" className="mt-1 text-center text-2xl font-semibold sm:text-3xl">Häufig gestellte Fragen</h2>
         <p className="mt-2 text-center text-foreground/70">
           Deine Frage ist nicht dabei? Die Apotheke hilft dir weiter: <a href={pharmacy.phoneHref} className="font-medium text-foreground underline underline-offset-2">{pharmacy.phone}</a>

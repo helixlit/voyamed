@@ -20,7 +20,7 @@ export default function ShoppingCartBundleComponent({ bundle }: Props) {
   return (
     <section className="rounded-2xl border border-foreground/10 bg-foreground/[0.035] p-4">
       <div className="flex items-start justify-between gap-3">
-        <div><p className="text-xs font-medium text-highlight">Reisekit</p><h3 className="mt-0.5 font-semibold">{bundle.name}</h3><p className="mt-1 text-sm text-foreground/65">{bundle.articles.length} Arzneimittel · {price.format(bundle.priceCents / 100)} pro Kit</p></div>
+        <div><p className="text-xs font-medium text-highlight-ink">Reisekit</p><h3 className="mt-0.5 font-semibold">{bundle.name}</h3><p className="mt-1 text-sm text-foreground/65">{bundle.articles.length} Arzneimittel · {price.format(bundle.priceCents / 100)} pro Kit</p></div>
         <strong className="shrink-0">{price.format((bundle.priceCents * bundle.quantity) / 100)}</strong>
       </div>
       <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
