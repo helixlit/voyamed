@@ -39,5 +39,13 @@ export function buildKitPzns(country: CountryKit, activity: Activity) {
   ];
 
   const excluded = new Set(selectedActivity.entfernen ?? []);
-  return [...new Set(pzns.filter((pzn) => !excluded.has(pzn)))];
+  const kit = new Set(pzns.filter((pzn) => !excluded.has(pzn)));
+
+  // A product listed in `ersetzt` covers the same need as the ones it replaces (e.g. Ibuprofen 50 vs. 20),
+  // so only one of them ends up in the kit.
+  const replacements = kits.ersetzt as Record<string, string[]>;
+  for (const pzn of [...kit]) {
+    for (const replaced of replacements[pzn] ?? []) kit.delete(replaced);
+  }
+  return [...kit];
 }
